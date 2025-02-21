@@ -6,10 +6,12 @@
 </template>
 
 <script>
-import HeaderMain from "./HeaderMain.vue";
-import HeaderBottom from "./HeaderBottom.vue";
+import HeaderMain from "./HeaderMain";
+import HeaderBottom from "./HeaderBottom";
 
 export default {
+  name: 'HeaderApp', // Nombre del componente con más de una palabra
+
   components: {
     HeaderMain,
     HeaderBottom,
