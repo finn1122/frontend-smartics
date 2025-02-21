@@ -12,7 +12,7 @@
         </div>
 
         <!-- Barra de Búsqueda (ocupa el resto del espacio disponible) -->
-        <div class="col d-flex align-items-center p-0 ms-3" style="margin-top: 6vh; margin-bottom: 6vh;">
+        <div class="col d-flex align-items-center p-0 ms-3" style="margin-top: 2vh; margin-bottom: 2vh;">
           <HeaderSearch />
         </div>
 
