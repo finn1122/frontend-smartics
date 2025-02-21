@@ -1,5 +1,5 @@
 <template>
-  <div class="tp-header-search pl-70">
+  <div class="tp-header-search">
     <form @submit.prevent="handleSearch">
       <div class="tp-header-search-wrapper d-flex align-items-center">
         <!-- Campo de Búsqueda -->
@@ -13,7 +13,7 @@
         </div>
 
         <!-- Selector de Categoría -->
-        <div class="tp-header-search-category">
+        <div class="tp-header-search-category d-none d-lg-block">
           <div class="nice-select" @click="toggleDropdown">
             <span class="current">{{ selectedCategory || "Select Category" }}</span>
             <ul class="list" v-if="isDropdownOpen">
@@ -29,35 +29,15 @@
           </div>
         </div>
 
-        <!-- Botón de Búsqueda -->
+        <!-- Botón de Búsqueda (Ícono de Font Awesome) -->
         <div class="tp-header-search-btn">
           <button type="submit" class="search-button">
-            <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                  d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-              />
-              <path
-                  d="M19 19L14.65 14.65"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-              />
-            </svg>
+            <i class="fas fa-search"></i> <!-- Ícono de Font Awesome -->
           </button>
         </div>
       </div>
     </form>
+
   </div>
 </template>
 
@@ -88,41 +68,43 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos para el formulario de búsqueda */
+/* Estilos base para el HeaderSearch */
 .tp-header-search {
-  width: 100%;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 800px; /* Ajusta este valor según el ancho deseado */
+  margin-left: 0; /* Asegura que no haya margen izquierdo */
+  padding-left: 0; /* Asegura que no haya padding izquierdo */
 }
+
 
 .tp-header-search-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.tp-header-search-box {
-  flex: 1;
+  gap: 0; /* Eliminamos el espacio entre los elementos */
 }
 
 .search-input {
-  width: 100%;
+  flex: 2; /* Aumenta el espacio que ocupa el input */
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
   font-size: 14px;
+  border-right: none; /* Elimina el borde derecho para unir con el selector */
 }
 
 .tp-header-search-category {
   position: relative;
+  flex: 1; /* Ajusta el espacio que ocupa el selector */
 }
 
 .nice-select {
-  position: relative;
-  cursor: pointer;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
+  border-radius: 0; /* Sin bordes redondeados para unir con el input y el botón */
   font-size: 14px;
+  cursor: pointer;
+  background-color: #fff;
+  border-right: none; /* Elimina el borde derecho para unir con el botón */
 }
 
 .nice-select .current {
@@ -149,22 +131,41 @@ export default {
 .nice-select .list .option:hover {
   background-color: #f0f0f0;
 }
+.tp-header-search input {
+  width: 100%; /* Hace que el input use todo el espacio disponible */
+  max-width: 500px; /* Puedes ajustar el tamaño según lo necesites */
+}
 
 .tp-header-search-btn .search-button {
-  padding: 10px;
+  padding: 10px 15px;
   background-color: #007bff;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.tp-header-search-btn .search-button svg {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: #fff;
+.tp-header-search-btn .search-button i {
+  font-size: 16px; /* Tamaño del ícono de Font Awesome */
+}
+
+
+/* Estilos responsivos para pantallas menores a 992px */
+@media (max-width: 991.98px) {
+  .tp-header-search-category {
+    display: none; /* Oculta el selector de categorías */
+  }
+
+  .search-input {
+    border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
+    border-right: 1px solid #ccc; /* Restaura el borde derecho */
+  }
+
+  .search-button {
+    border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
+  }
 }
 </style>

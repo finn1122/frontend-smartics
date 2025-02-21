@@ -2,7 +2,7 @@
   <div class="tp-header-main tp-header-sticky">
     <div class="container">
       <div class="row align-items-center">
-        <!-- Logo -->
+        <!-- Logo (2 columnas) -->
         <div class="col-xl-2 col-lg-2 col-md-4 col-6">
           <div class="logo">
             <a href="/">
@@ -11,13 +11,13 @@
           </div>
         </div>
 
-        <!-- Barra de Búsqueda -->
-        <div class="col-xl-6 col-lg-7 d-none d-lg-block">
+        <!-- Barra de Búsqueda (9 columnas) -->
+        <div class="col-xl-9 col-lg-9 col-md-8 col-6 d-flex align-items-center header-search-container">
           <HeaderSearch />
         </div>
 
-        <!-- Acciones del Usuario -->
-        <div class="col-xl-4 col-lg-3 col-md-8 col-6">
+        <!-- Acciones del Usuario (3 columnas) -->
+        <div class="col-xl-1 col-lg-1 col-md-4 col-6">
           <HeaderActions />
         </div>
       </div>
@@ -40,6 +40,7 @@ export default {
 };
 </script>
 
+
 <style scoped>
 /* Estilos para el HeaderMain */
 .tp-header-main {
@@ -47,6 +48,11 @@ export default {
   padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
 }
+.header-search-container {
+  padding-left: 0 !important; /* Elimina cualquier padding extra a la izquierda */
+  justify-content: flex-start; /* Asegura que los elementos estén alineados a la izquierda */
+}
+
 
 .container {
   max-width: 1200px;
@@ -73,11 +79,11 @@ export default {
 
 /* Estilos para las columnas */
 .col-xl-2,
-.col-xl-6,
-.col-xl-4,
+.col-xl-9,
+.col-xl-1,
 .col-lg-2,
-.col-lg-7,
-.col-lg-3,
+.col-lg-9,
+.col-lg-1,
 .col-md-4,
 .col-md-8,
 .col-6 {
