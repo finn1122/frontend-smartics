@@ -4,7 +4,9 @@
     <div class="tp-header-login d-none d-lg-block">
       <a href="/profile" class="d-flex align-items-center user-profile">
         <div class="tp-header-login-icon">
-          <i class="fas fa-user icon"></i> <!-- Icono de usuario -->
+          <div class="icon-circle">
+            <i class="fas fa-user icon"></i> <!-- Icono de usuario -->
+          </div>
         </div>
         <div class="tp-header-login-content d-none d-xl-block">
           <span class="greeting">Hello, Sign In</span>
@@ -62,12 +64,25 @@ export default {
   gap: 20px; /* Espacio entre elementos */
 }
 
+/* Estilos para el círculo alrededor del ícono de usuario */
+.icon-circle {
+  width: 40px; /* Tamaño del círculo */
+  height: 40px; /* Tamaño del círculo */
+  background-color: #f0f0f0; /* Color de fondo del círculo */
+  border-radius: 50%; /* Hace que el div sea un círculo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; /* Asegura que no haya padding adicional */
+}
 /* Estilos para los iconos */
 .icon {
-  width: 20px;
-  height: 20px;
+  font-size: 20px; /* Ajusta el tamaño del icono */
   color: #333; /* Color del icono */
+  margin: 0; /* Asegura que no haya margen adicional */
 }
+
+
 
 /* Estilos para el perfil de usuario */
 .user-profile {
@@ -79,12 +94,13 @@ export default {
 }
 
 .user-profile .greeting {
-  font-size: 14px;
+  font-size: 12px; /* Tamaño más pequeño para "Hello, Sign In" */
+  color: #666; /* Color más suave */
 }
 
 .user-profile .account-title {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px; /* Tamaño del texto "Your Account" */
   font-weight: bold;
 }
 
