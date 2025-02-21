@@ -1,23 +1,23 @@
 <template>
   <div class="tp-header-main tp-header-sticky">
     <div class="container">
-      <div class="row align-items-center">
-        <!-- Logo (2 columnas) -->
-        <div class="col-xl-2 col-lg-2 col-md-4 col-6">
+      <div class="row align-items-center d-flex g-0">
+        <!-- Logo (tamaño automático) -->
+        <div class="col-auto p-0">
           <div class="logo">
             <a href="/">
-              <img src="@/assets/logo.png" alt="logo" class="logo-img" />
+              <img src="@/assets/logo.png" alt="logo" class="logo-img img-fluid" />
             </a>
           </div>
         </div>
 
-        <!-- Barra de Búsqueda (9 columnas) -->
-        <div class="col-xl-9 col-lg-9 col-md-8 col-6 d-flex align-items-center header-search-container">
+        <!-- Barra de Búsqueda (ocupa el resto del espacio disponible) -->
+        <div class="col d-flex align-items-center p-0 ms-3"> <!-- ms-3 añade separación del logo -->
           <HeaderSearch />
         </div>
 
-        <!-- Acciones del Usuario (3 columnas) -->
-        <div class="col-xl-1 col-lg-1 col-md-4 col-6">
+        <!-- Acciones del Usuario (alineadas a la derecha) -->
+        <div class="col-auto p-0 ms-auto">
           <HeaderActions />
         </div>
       </div>
