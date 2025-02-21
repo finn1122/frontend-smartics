@@ -12,7 +12,7 @@
         </div>
 
         <!-- Barra de Búsqueda (ocupa el resto del espacio disponible) -->
-        <div class="col d-flex align-items-center p-0 ms-3"> <!-- ms-3 añade separación del logo -->
+        <div class="col d-flex align-items-center p-0 ms-3" style="margin-top: 6vh; margin-bottom: 6vh;">
           <HeaderSearch />
         </div>
 
@@ -73,7 +73,7 @@ export default {
 }
 
 .logo-img {
-  height: 40px; /* Ajusta el tamaño del logo */
+  height: 60px; /* Ajusta el tamaño del logo */
   width: auto; /* Mantiene la proporción */
 }
 
