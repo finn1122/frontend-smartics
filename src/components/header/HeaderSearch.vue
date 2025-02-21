@@ -13,7 +13,7 @@
         </div>
 
         <!-- Selector de Categoría -->
-        <div class="tp-header-search-category d-none d-lg-block">
+        <div class="tp-header-search-category">
           <div class="nice-select" @click="toggleDropdown">
             <span class="current">{{ selectedCategory || "Select Category" }}</span>
             <ul class="list" v-if="isDropdownOpen">
@@ -57,6 +57,7 @@ export default {
       console.log("Searching for:", this.searchQuery, "in category:", this.selectedCategory);
     },
     toggleDropdown() {
+      console.log('toggle dropdown');
       this.isDropdownOpen = !this.isDropdownOpen;
     },
     selectCategory(category) {
@@ -80,31 +81,33 @@ export default {
 .tp-header-search-wrapper {
   display: flex;
   align-items: center;
-  gap: 0; /* Eliminamos el espacio entre los elementos */
+  gap: 0px; /* Espacio entre elementos */
 }
 
+
 .search-input {
-  flex: 2; /* Aumenta el espacio que ocupa el input */
-  padding: 10px;
+  flex: 2;
+  padding: 14px; /* Aumenta la altura sin distorsionar */
   border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
-  font-size: 14px;
-  border-right: none; /* Elimina el borde derecho para unir con el selector */
+  border-radius: 6px 0 0 6px;
+  font-size: 16px; /* Texto más grande */
+  border-right: none;
 }
 
 .tp-header-search-category {
-  position: relative;
-  flex: 1; /* Ajusta el espacio que ocupa el selector */
+  flex: 1;
+  border-radius: 0; /* Sin bordes redondeados */
 }
 
 .nice-select {
-  padding: 10px;
+  position: relative; /* Asegura que el dropdown se posicione correctamente */
+  padding: 14px;
   border: 1px solid #ccc;
-  border-radius: 0; /* Sin bordes redondeados para unir con el input y el botón */
-  font-size: 14px;
-  cursor: pointer;
+  font-size: 16px;
+  border-radius: 0;
+  border-right: none;
   background-color: #fff;
-  border-right: none; /* Elimina el borde derecho para unir con el botón */
+  cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
 }
 
 .nice-select .current {
@@ -115,17 +118,20 @@ export default {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%;
+  width: 100%; /* Asegúrate de que el dropdown tenga el mismo ancho que el select */
   background-color: #fff;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 5px;
-  z-index: 10;
+  border-top: none;
+  z-index: 1000; /* Asegúrate de que el dropdown esté por encima de otros elementos */
+  margin: 0; /* Elimina márgenes predeterminados */
+  padding: 0; /* Elimina padding predeterminado */
+  list-style: none; /* Elimina los estilos de lista predeterminados */
 }
 
 .nice-select .list .option {
   padding: 10px;
   cursor: pointer;
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 .nice-select .list .option:hover {
@@ -137,15 +143,16 @@ export default {
 }
 
 .tp-header-search-btn .search-button {
-  padding: 10px 15px;
+  padding: 14px 18px; /* Ajusta el tamaño */
+  font-size: 16px;
+  border-radius: 0 6px 6px 0;
   background-color: #007bff;
   color: #fff;
-  border: none;
-  border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
-  cursor: pointer;
-  display: flex;
+  border: 1px solid #ccc;
+  border-left: none; /* Elimina el borde izquierdo para unir con el select */
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .tp-header-search-btn .search-button i {
