@@ -58,7 +58,6 @@
 import apiService from '@/services/api'; // Importa el servicio de autenticación
 import AppNotification from '@/components/AppNotification.vue'; // Importa el componente de notificación
 import AppLoader from '@/components/AppLoader.vue';
-import api from "@/services/api"; // Importa el componente de loader
 
 export default {
   components: { AppNotification, AppLoader },
@@ -80,21 +79,16 @@ export default {
   },
   methods: {
     async handleSignIn() {
-      this.loading = true; // Muestra el loader
+      this.loading = true;
       try {
         const userData = {
-          email: this.signInEmail, // Usa el email del formulario de inicio de sesión
-          password: this.signInPassword, // Usa la contraseña del formulario de inicio de sesión
+          email: this.signInEmail,
+          password: this.signInPassword,
         };
 
-        // Hace la solicitud de inicio de sesión
-        const response = await api.login(userData);
+        await apiService.login(userData); // El token se almacena en la cookie automáticamente
 
-        // Si el inicio de sesión es exitoso
         this.showNotification('¡Bienvenido!', 'success');
-
-        // Guarda el token de autenticación (si es necesario)
-        localStorage.setItem('authToken', response.data.token); // Ajusta según la respuesta de tu API
 
         // Redirige al usuario a la página de inicio
         this.$router.push('/');
@@ -102,18 +96,15 @@ export default {
         // Cierra el modal
         this.$emit('close');
       } catch (error) {
-        // Si hay un error
         if (error.response?.data?.error === "Email not verified") {
-          // Maneja el caso específico de correo no verificado
           this.showNotification('Por favor, verifica tu correo electrónico.', 'error');
-          this.$router.push('/verify-email'); // Redirige a la página de verificación de correo
+          this.$router.push('/verify-email');
         } else {
-          // Maneja otros errores
           const errorMessage = error.response?.data?.message || 'Error en el inicio de sesión';
           this.showNotification(errorMessage, 'error');
         }
       } finally {
-        this.loading = false; // Oculta el loader
+        this.loading = false;
       }
     },
     async handleSignUp() {
@@ -139,6 +130,15 @@ export default {
         this.showNotification(errorMessage, 'error');
       } finally {
         this.loading = false; // Oculta el loader
+      }
+    },
+    async handleSignOut() {
+      try {
+        await apiService.logout();
+        this.showNotification('Sesión cerrada correctamente', 'success');
+        this.$router.push('/login');
+      } catch (error) {
+        this.showNotification('Error al cerrar sesión', 'error');
       }
     },
     showNotification(message, type) {

@@ -21,8 +21,22 @@
           {{ cartStore.totalItems }}
         </span>
       </router-link>
-      <div class="user-icon" @click="toggleAuthModal">
-        <i class="fas fa-user"></i> <!-- Ícono de FontAwesome -->
+
+
+      <!-- Si el usuario está autenticado, mostrar menú de usuario -->
+      <div v-if="isAuthenticated" class="user-menu">
+        <span @click="toggleUserMenu" class="user-icon">
+          <i class="fas fa-user"></i>
+        </span>
+        <div v-if="showUserMenu" class="dropdown-menu">
+          <router-link to="/account">Mi Cuenta</router-link>
+          <button @click="logout">Cerrar Sesión</button>
+        </div>
+      </div>
+
+      <!-- Si no está autenticado, mostrar el ícono de inicio de sesión -->
+      <div v-else class="user-icon" @click="toggleAuthModal">
+        <i class="fas fa-user"></i>
       </div>
     </div>
 
@@ -39,8 +53,14 @@ export default {
   components: { AuthModal },
   data() {
     return {
-      showAuthModal: false, // Controla la visibilidad del modal
+      showAuthModal: false,
+      showUserMenu: false,
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return !!localStorage.getItem("authToken"); // Si hay token, el usuario está autenticado
+    },
   },
   setup() {
     const cartStore = useCartStore();
@@ -49,6 +69,13 @@ export default {
   methods: {
     toggleAuthModal() {
       this.showAuthModal = !this.showAuthModal;
+    },
+    toggleUserMenu() {
+      this.showUserMenu = !this.showUserMenu;
+    },
+    logout() {
+      localStorage.removeItem("authToken"); // Elimina el token
+      this.$router.push("/"); // Redirige al usuario al inicio
     },
   },
 };
