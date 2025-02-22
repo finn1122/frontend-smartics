@@ -73,8 +73,8 @@ export default {
 .tp-header-search {
   width: 100%; /* Ocupa todo el ancho disponible */
   max-width: 800px; /* Ajusta este valor según el ancho deseado */
-  margin-left: 0; /* Asegura que no haya margen izquierdo */
-  padding-left: 0; /* Asegura que no haya padding izquierdo */
+  margin: 20px 0; /* 20px de margen arriba y abajo, 0 en los lados */
+  padding: 10px; /* Padding interno si lo necesitas */
 }
 
 
