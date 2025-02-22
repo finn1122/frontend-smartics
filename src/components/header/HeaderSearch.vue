@@ -13,7 +13,7 @@
         </div>
 
         <!-- Selector de Categoría -->
-        <div class="tp-header-search-category">
+        <div class="tp-header-search-category d-none d-lg-block">
           <div class="nice-select" @click="toggleDropdown">
             <span class="current">{{ selectedCategory || "Select Category" }}</span>
             <ul class="list" v-if="isDropdownOpen">
@@ -57,7 +57,6 @@ export default {
       console.log("Searching for:", this.searchQuery, "in category:", this.selectedCategory);
     },
     toggleDropdown() {
-      console.log('toggle dropdown');
       this.isDropdownOpen = !this.isDropdownOpen;
     },
     selectCategory(category) {
@@ -73,41 +72,48 @@ export default {
 .tp-header-search {
   width: 100%; /* Ocupa todo el ancho disponible */
   max-width: 800px; /* Ajusta este valor según el ancho deseado */
-  margin: 20px 0; /* 20px de margen arriba y abajo, 0 en los lados */
-  padding: 10px; /* Padding interno si lo necesitas */
+  margin-left: 0; /* Asegura que no haya margen izquierdo */
+  padding-left: 0; /* Asegura que no haya padding izquierdo */
 }
 
 
 .tp-header-search-wrapper {
   display: flex;
   align-items: center;
-  gap: 0px; /* Espacio entre elementos */
+  gap: 0; /* Eliminamos el espacio entre los elementos */
 }
-
-
+.tp-header-search-box {
+  width: 50%; /* Ancho específico */
+  margin-right: 0px;
+}
 .search-input {
-  flex: 2;
-  padding: 14px; /* Aumenta la altura sin distorsionar */
+  box-sizing: border-box; /* Incluye padding y border en el ancho total */
+  flex: 2; /* Aumenta el espacio que ocupa el input */
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 6px 0 0 6px;
-  font-size: 16px; /* Texto más grande */
-  border-right: none;
+  border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
+  font-size: 14px;
+  border-right: none; /* Elimina el borde derecho para unir con el selector */
 }
 
 .tp-header-search-category {
-  flex: 1;
-  border-radius: 0; /* Sin bordes redondeados */
+  position: relative;
+  flex: 0 0 auto; /* Ajusta el espacio que ocupa el selector */
 }
 
 .nice-select {
-  position: relative; /* Asegura que el dropdown se posicione correctamente */
-  padding: 14px;
+  padding: 10px;
   border: 1px solid #ccc;
-  font-size: 16px;
-  border-radius: 0;
-  border-right: none;
+  border-radius: 0; /* Sin bordes redondeados para unir con el input y el botón */
+  font-size: 14px;
+  cursor: pointer;
   background-color: #fff;
-  cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+  border-right: none; /* Elimina el borde derecho para unir con el botón */
+  width: 100%; /* Asegura que el selector ocupe todo el espacio disponible */
+  height: 100%; /* Asegura que el selector tenga la misma altura que los demás elementos */
+  display: flex;
+  align-items: center; /* Centra el texto verticalmente */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 .nice-select .current {
@@ -118,20 +124,17 @@ export default {
   position: absolute;
   top: 100%;
   left: 0;
-  width: 100%; /* Asegúrate de que el dropdown tenga el mismo ancho que el select */
+  width: 100%;
   background-color: #fff;
   border: 1px solid #ccc;
-  border-top: none;
-  z-index: 1000; /* Asegúrate de que el dropdown esté por encima de otros elementos */
-  margin: 0; /* Elimina márgenes predeterminados */
-  padding: 0; /* Elimina padding predeterminado */
-  list-style: none; /* Elimina los estilos de lista predeterminados */
+  border-radius: 4px;
+  margin-top: 5px;
+  z-index: 10;
 }
 
 .nice-select .list .option {
   padding: 10px;
   cursor: pointer;
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 .nice-select .list .option:hover {
@@ -141,18 +144,21 @@ export default {
   width: 100%; /* Hace que el input use todo el espacio disponible */
   max-width: 500px; /* Puedes ajustar el tamaño según lo necesites */
 }
+.tp-header-search-btn {
+  display: flex; /* Asegura que el botón ocupe toda la altura */
+}
 
 .tp-header-search-btn .search-button {
-  padding: 14px 18px; /* Ajusta el tamaño */
-  font-size: 16px;
-  border-radius: 0 6px 6px 0;
+  padding: 14px 15px;
   background-color: #007bff;
   color: #fff;
-  border: 1px solid #ccc;
-  border-left: none; /* Elimina el borde izquierdo para unir con el select */
+  border: none;
+  border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  height: 100%; /* Asegura que el botón tenga la misma altura que los demás elementos */
 }
 
 .tp-header-search-btn .search-button i {

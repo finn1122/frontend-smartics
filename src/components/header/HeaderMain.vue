@@ -1,9 +1,9 @@
 <template>
   <div class="tp-header-main tp-header-sticky">
     <div class="container">
-      <div class="row align-items-center d-flex g-0">
-        <!-- Logo (tamaño automático) -->
-        <div class="col-auto p-0">
+      <div class="row align-items-center g-0">
+        <!-- Logo (2 columnas) -->
+        <div class="col-2 p-0">
           <div class="logo">
             <a href="/">
               <img src="@/assets/logo.png" alt="logo" class="logo-img img-fluid" />
@@ -11,13 +11,13 @@
           </div>
         </div>
 
-        <!-- Barra de Búsqueda (ocupa el resto del espacio disponible) -->
-        <div class="col d-flex align-items-center p-0 ms-3" style="margin-top: 2vh; margin-bottom: 2vh;">
+        <!-- Barra de Búsqueda (7 columnas) -->
+        <div class="col-7 p-0">
           <HeaderSearch />
         </div>
 
-        <!-- Acciones del Usuario (alineadas a la derecha) -->
-        <div class="col-auto p-0 ms-auto">
+        <!-- Acciones del Usuario (3 columnas) -->
+        <div class="col-3 p-0">
           <HeaderActions />
         </div>
       </div>
