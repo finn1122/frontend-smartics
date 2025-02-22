@@ -171,6 +171,12 @@ export default {
   .tp-header-search-category {
     display: none; /* Oculta el selector de categorías */
   }
+  .tp-header-search-box {
+    display: none;
+  }
+  .tp-header-search-btn{
+    display: none;
+  }
 
   .search-input {
     border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
