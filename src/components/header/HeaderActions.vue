@@ -9,8 +9,10 @@
           </div>
         </div>
         <div class="tp-header-login-content d-none d-xl-block">
-          <span class="greeting">Hola, Inicia Sesión</span>
-          <h5 class="account-title">Tu Cuenta</h5>
+          <router-link to="/login" class="login-link">
+            <span>Hola, Inicia Sesión</span>
+            <h5 class="tp-header-login-title">Tu Cuenta</h5>
+          </router-link>
         </div>
       </a>
     </div>
@@ -225,9 +227,13 @@ export default {
   font-size: 14px; /* Tamaño del texto "Your Account" */
   font-weight: bold;
 }
-.tp-header-login-content {
-  display: flex;
+.tp-header-login-content span {
+  color: #767a7d;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
   flex-direction: column;
+  line-height: 1;
 }
 /* Icono Circular */
 .tp-header-login-icon {
@@ -236,5 +242,16 @@ export default {
 .tp-header-login {
   display: flex;
   align-items: center;
+}
+.tp-header-login-title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 0;
+  color: black;
+}
+.login-link {
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  color: inherit; /* Hereda el color del texto */
 }
 </style>

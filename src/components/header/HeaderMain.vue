@@ -29,8 +29,6 @@
 import HeaderSearch from "./HeaderSearch.vue";
 import HeaderActions from "./HeaderActions.vue";
 
-
-
 export default {
   name: "HeaderMain",
   components: {

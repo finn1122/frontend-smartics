@@ -1,7 +1,7 @@
 <template>
   <header>
     <HeaderMain />
-    <HeaderBottom />
+    <HeaderBottom v-if="!isLoginPage" />
   </header>
 </template>
 
@@ -15,6 +15,12 @@ export default {
   components: {
     HeaderMain,
     HeaderBottom,
+  },
+  computed: {
+    // Verifica si la ruta actual es '/login'
+    isLoginPage() {
+      return this.$route.path === "/login";
+    },
   },
 };
 </script>

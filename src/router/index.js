@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';        // Nombre actualizado
 import ProductsPage from '../views/ProductsPage.vue'; // Nombre actualizado
-import LoginPage from '../views/LoginPage.vue';      // Nombre actualizado
+import LoginPage from '../components/auth/LoginApp.vue';      // Nombre actualizado
 import CartPage from '../views/CartPage.vue';        // Nombre actualizado
 
 const routes = [
