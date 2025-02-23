@@ -1,7 +1,17 @@
 :root {
+    --tp-ff-body: "Jost", sans-serif;
+    --tp-ff-heading: "Jost", sans-serif;
+    --tp-ff-p: "Jost", sans-serif;
+    --tp-ff-jost: "Jost", sans-serif;
+    --tp-ff-fontawesome: "Font Awesome 6 Pro";
+    --tp-ff-roboto: "Roboto", sans-serif;
+    --tp-ff-oregano: "Oregano", cursive;
+    --tp-ff-charm: "Charm", cursive;
+
     --tp-heading-primary: #333; /* Color para títulos */
-    --tp-ff-heading: 'Arial', sans-serif; /* Fuente para títulos */
     --tp-common-white: #ffffff; /* Color de fondo blanco */
     --tp-text-body: #666; /* Color para texto del cuerpo */
     --tp-theme-primary: #0989ff;
+    --tp-common-black: #000000;
+
 }

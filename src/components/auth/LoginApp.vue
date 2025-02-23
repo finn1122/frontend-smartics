@@ -121,17 +121,24 @@ export default {
   font-weight: 500;
   line-height: 1;
   margin-bottom: 6px;
-  color: #333; /* Valor directo en lugar de var(--tp-heading-primary) */
+  color: var(--tp-heading-primary);
   font-family: 'Arial', sans-serif; /* Valor directo en lugar de var(--tp-ff-heading) */
 }
 
 .breadcrumb__list {
-  font-size: 14px;
-  color: #666;
+  font-size: 16px;
+  color: var(--tp-heading-primary);
+}
+.breadcrumb__list span {
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  color: var(--tp-heading-primary);
 }
 
+
 .breadcrumb__list a {
-  color: #007bff;
+  color: var(--tp-heading-primary);
   text-decoration: none;
 }
 
@@ -158,11 +165,44 @@ export default {
 
 .tp-login-title {
   font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 20px;
+  font-weight: 500;
+  margin-bottom: 4px;
   color: var(--tp-heading-primary);
   font-family: var(--tp-ff-heading),sans-serif;
 }
+
+.tp-login-mail {
+  position: relative;
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  color: var(--tp-heading-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.tp-login-mail::before,
+.tp-login-mail::after {
+  content: '';
+  flex: 1; /* Hace que las líneas se expandan */
+  height: 1px;
+  background-color: #e0e2e3;
+  margin: 0 10px; /* Espacio entre la línea y el texto */
+}
+
+.tp-login-mail p {
+  background-color: var(--tp-common-white);
+  color: var(--tp-heading-primary);
+  font-size: 15px;
+  margin: 0;
+  padding: 0 10px;
+  display: inline-block;
+  position: relative;
+  z-index: 2; /* Asegura que el texto esté por encima de las líneas */
+}
+
 
 .tp-login-option {
   margin-bottom: 30px;
@@ -177,22 +217,22 @@ export default {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .tp-login-option-item:hover {
   background-color: #e0e0e0;
 }
 
-.tp-login-mail {
-  margin-bottom: 20px;
-}
+
 
 .tp-login-input-wrapper {
   margin-bottom: 20px;
 }
 
 .tp-login-input-box {
-  margin-bottom: 15px;
+  position: relative;
+  margin-bottom: 20px;
 }
 
 .tp-login-input {
@@ -202,14 +242,20 @@ export default {
 .tp-login-input input {
   width: 100%;
   padding: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.tp-login-input-title {
+.tp-login-input-title label {
+  background-color: var(--tp-common-white);
+  color: var(--tp-common-black);
   font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
+  left: 20px;
+  line-height: 1;
+  padding: 0 5px;
+  position: absolute;
+  top: -7px;
 }
 
 .tp-login-input-eye {
