@@ -1,20 +1,24 @@
+
 <template>
   <div class="tp-header-main-right d-flex align-items-center justify-content-end">
     <!-- Perfil de Usuario (Oculto en móviles, visible en desktop) -->
     <div class="tp-header-login d-none d-lg-block">
-      <a href="/profile" class="d-flex align-items-center user-profile">
+      <a v-if="authStore.isAuthenticated" href="/profile" class="d-flex align-items-center user-profile">
         <div class="tp-header-login-icon">
           <div class="icon-circle">
             <i class="fas fa-user icon"></i>
           </div>
         </div>
         <div class="tp-header-login-content d-none d-xl-block">
-          <router-link to="/login" class="login-link">
-            <span>Hola, Inicia Sesión</span>
-            <h5 class="tp-header-login-title">Tu Cuenta</h5>
-          </router-link>
+          <span>Bienvenido, {{ authStore.user?.name }}</span>
+          <h5 class="tp-header-login-title">Tu Cuenta</h5>
         </div>
       </a>
+
+      <router-link v-else to="/login" class="login-link">
+        <span>Hola, Inicia Sesión</span>
+        <h5 class="tp-header-login-title">Tu Cuenta</h5>
+      </router-link>
     </div>
 
     <!-- Acciones del Usuario -->
@@ -70,8 +74,27 @@
 </template>
 
 <script>
+import { useAuthStore } from "@/stores/authStore";
+import { onMounted, ref } from "vue";
+
 export default {
   name: "HeaderActions",
+  setup() {
+    const authStore = useAuthStore();
+    const isLoading = ref(true); // Indicador de carga
+
+    onMounted(async () => {
+      console.log("📢 Cargando el header, ejecutando checkAuth()...");
+      await authStore.checkAuth(); // Esperar a que termine
+      isLoading.value = false; // Deshabilitar loading
+      console.log("✅ checkAuth() terminado, usuario autenticado:", authStore.isAuthenticated);
+    });
+
+    return {
+      authStore,
+      isLoading,
+    };
+  },
   data() {
     return {
       mobileMenuOpen: false,
@@ -84,6 +107,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 /* Fondo oscuro al abrir el menú */

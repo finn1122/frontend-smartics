@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { createPinia } from 'pinia'; // Importa Pinia
 import App from './App.vue';
 import AppLoader from '@/components/AppLoader.vue';
+import { useAuthStore } from "@/stores/authStore";
 import router from './router';
 
 import './styles/global.css';
@@ -18,5 +19,9 @@ app.use(router); // Usa Vue Router
 
 // Loader
 app.component('AppLoader', AppLoader);
+
+// Verifica la autenticación al cargar la app
+const authStore = useAuthStore();
+authStore.checkAuth();
 
 app.mount('#app');
