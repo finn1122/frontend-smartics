@@ -49,11 +49,17 @@
                   <p>or Sign in with <a href="#">Email</a></p>
                 </div>
               </div>
-              <form>
+              <form @submit.prevent="handleLogin">
                 <div class="tp-login-input-wrapper">
                   <div class="tp-login-input-box">
                     <div class="tp-login-input">
-                      <input id="email" type="email" placeholder="shofy@mail.com">
+                      <input
+                          id="email"
+                          v-model="email"
+                          type="email"
+                          placeholder="shofy@mail.com"
+                          required
+                      />
                     </div>
                     <div class="tp-login-input-title">
                       <label for="email">Your Email</label>
@@ -65,19 +71,20 @@
                       <div class="tp-login-input">
                         <input
                             id="tp_password"
-                            ref="passwordInput"
+                            v-model="password"
                             :type="showPassword ? 'text' : 'password'"
                             name="password"
                             placeholder="Min. 6 character"
+                            required
                         />
                       </div>
                       <div class="tp-login-input-eye" @click="togglePasswordVisibility">
-                        <span v-if="showPassword">
-                          <i class="fas fa-eye-slash"></i> <!-- Ícono de ojo cerrado -->
-                        </span>
-                                          <span v-else>
-                          <i class="fas fa-eye"></i> <!-- Ícono de ojo abierto -->
-                        </span>
+          <span v-if="showPassword">
+            <i class="fas fa-eye-slash"></i>
+          </span>
+                        <span v-else>
+            <i class="fas fa-eye"></i>
+          </span>
                       </div>
                       <div class="tp-login-input-title">
                         <label for="tp_password">Password</label>
@@ -88,7 +95,7 @@
                 </div>
                 <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
                   <div class="tp-login-remeber">
-                    <input id="remeber" type="checkbox">
+                    <input id="remeber" type="checkbox" v-model="rememberMe" />
                     <label for="remeber">Remember me</label>
                   </div>
                   <div class="tp-login-forgot">
@@ -108,11 +115,16 @@
 </template>
 
 <script>
+import api from '@/services/api';
 export default {
   name: 'LoginApp',
   data() {
     return {
-      showPassword: false, // Estado para controlar la visibilidad de la contraseña
+      email: '', // Estado para el email
+      password: '', // Estado para la contraseña
+      rememberMe: false, // Estado para "Remember me"
+      showPassword: false, // Estado para mostrar/ocultar contraseña
+      errorMessage: '', // Mensaje de error
     };
   },
   methods: {
@@ -123,6 +135,37 @@ export default {
         passwordInput.type = this.showPassword ? 'text' : 'password'; // Cambia el tipo de input
       }
     },
+    async handleLogin() {
+      this.errorMessage = ''; // Reinicia el mensaje de error
+
+      try {
+        const userData = {
+          email: this.email,
+          password: this.password,
+        };
+
+        // Envía los datos al backend
+        const response = await api.login(userData);
+
+        // Si el login es exitoso
+        if (response.data.success) {
+          // Guarda el token en localStorage si el usuario seleccionó "Remember me"
+          if (this.rememberMe) {
+            localStorage.setItem('authToken', response.data.token);
+          } else {
+            sessionStorage.setItem('authToken', response.data.token);
+          }
+
+          // Redirige al usuario
+          this.$router.push('/dashboard'); // Cambia '/dashboard' por la ruta que desees
+        } else {
+          this.errorMessage = response.data.message || 'Login failed. Please try again.';
+        }
+      } catch (error) {
+        // Maneja errores de red o del servidor
+        this.errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+      }
+    }
   },
 };
 </script>
