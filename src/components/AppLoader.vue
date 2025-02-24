@@ -1,13 +1,45 @@
 <template>
-  <div class="sk-folding-cube">
-    <div class="sk-cube1 sk-cube"></div>
-    <div class="sk-cube2 sk-cube"></div>
-    <div class="sk-cube4 sk-cube"></div>
-    <div class="sk-cube3 sk-cube"></div>
+  <div v-if="isLoading" class="loader-overlay">
+    <div class="sk-folding-cube" :style="{ width: size, height: size }">
+      <div class="sk-cube1 sk-cube"></div>
+      <div class="sk-cube2 sk-cube"></div>
+      <div class="sk-cube4 sk-cube"></div>
+      <div class="sk-cube3 sk-cube"></div>
+    </div>
   </div>
 </template>
 
+<script>
+export default {
+  name: "AppLoader",
+  props: {
+    isLoading: {
+      type: Boolean,
+      required: false, // La prop es opcional
+      default: false, // Valor por defecto
+    },
+    size: {
+      type: String,
+      default: "40px", // Tamaño predeterminado
+    },
+  },
+};
+</script>
+
 <style scoped>
+.loader-overlay {
+  position: fixed; /* Posicionamiento fijo */
+  top: 0;
+  left: 0;
+  width: 100%; /* Ocupa todo el ancho */
+  height: 100%; /* Ocupa todo el alto */
+  background-color: rgba(0, 0, 0, 0.3); /* Fondo semi-transparente */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
 .sk-folding-cube {
   margin: 20px auto;
   width: 40px;

@@ -57,7 +57,7 @@
 <script>
 import apiService from '@/services/api'; // Importa el servicio de autenticación
 import AppNotification from '@/components/AppNotification.vue'; // Importa el componente de notificación
-import AppLoader from '@/components/AppLoader.vue';
+import AppLoader from '@/components/AppLoader.vue'; // Importar el componente
 
 export default {
   components: { AppNotification, AppLoader },

@@ -1,5 +1,6 @@
 <template>
   <main>
+    <AppLoader :isLoading="isLoading" />
     <!-- Sección de Breadcrumb -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
       <div class="container">
@@ -115,15 +116,20 @@
 </template>
 
 <script>
+import AppLoader from '@/components/AppLoader.vue'; // Importar el componente
 import api from '@/services/api';
 export default {
   name: 'LoginApp',
+  components: {
+    AppLoader
+  },
   data() {
     return {
       email: '', // Estado para el email
       password: '', // Estado para la contraseña
       rememberMe: false, // Estado para "Remember me"
       showPassword: false, // Estado para mostrar/ocultar contraseña
+      isLoading: false,
       errorMessage: '', // Mensaje de error
     };
   },
@@ -136,34 +142,28 @@ export default {
       }
     },
     async handleLogin() {
-      this.errorMessage = ''; // Reinicia el mensaje de error
-
+      this.isLoading = true; // Activa el loader
       try {
         const userData = {
           email: this.email,
           password: this.password,
         };
-
-        // Envía los datos al backend
         const response = await api.login(userData);
-
-        // Si el login es exitoso
         if (response.data.success) {
-          // Guarda el token en localStorage si el usuario seleccionó "Remember me"
+          // Guarda el token y redirige
           if (this.rememberMe) {
             localStorage.setItem('authToken', response.data.token);
           } else {
             sessionStorage.setItem('authToken', response.data.token);
           }
-
-          // Redirige al usuario
-          this.$router.push('/dashboard'); // Cambia '/dashboard' por la ruta que desees
+          this.$router.push('/');
         } else {
           this.errorMessage = response.data.message || 'Login failed. Please try again.';
         }
       } catch (error) {
-        // Maneja errores de red o del servidor
         this.errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+      } finally {
+        this.isLoading = false; // Desactiva el loader
       }
     }
   },
