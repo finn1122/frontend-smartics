@@ -63,13 +63,20 @@
                   <div class="tp-login-input-box">
                     <div class="p-relative">
                       <div class="tp-login-input">
-                        <input id="tp_password" type="password" name="password" placeholder="Min. 6 character">
+                        <input
+                            id="tp_password"
+                            ref="passwordInput"
+                            :type="showPassword ? 'text' : 'password'"
+                            name="password"
+                            placeholder="Min. 6 character"
+                        />
                       </div>
-                      <div class="tp-login-input-eye" id="password-show-toggle">
-                        <span class="open-eye">
-                          <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- SVG code -->
-                          </svg>
+                      <div class="tp-login-input-eye" @click="togglePasswordVisibility">
+                        <span v-if="showPassword">
+                          <i class="fas fa-eye-slash"></i> <!-- Ícono de ojo cerrado -->
+                        </span>
+                                          <span v-else>
+                          <i class="fas fa-eye"></i> <!-- Ícono de ojo abierto -->
                         </span>
                       </div>
                       <div class="tp-login-input-title">
@@ -103,6 +110,20 @@
 <script>
 export default {
   name: 'LoginApp',
+  data() {
+    return {
+      showPassword: false, // Estado para controlar la visibilidad de la contraseña
+    };
+  },
+  methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword; // Cambia el estado de visibilidad
+      const passwordInput = this.$refs.passwordInput; // Obtén el input de contraseña
+      if (passwordInput) {
+        passwordInput.type = this.showPassword ? 'text' : 'password'; // Cambia el tipo de input
+      }
+    },
+  },
 };
 </script>
 
@@ -164,12 +185,17 @@ export default {
 }
 
 .tp-login-title {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 500;
   margin-bottom: 4px;
   color: var(--tp-heading-primary);
   font-family: var(--tp-ff-heading),sans-serif;
 }
+.tp-login-top a {
+  text-decoration: none; /* Elimina el subrayado */
+}
+
+
 
 .tp-login-mail {
   position: relative;
@@ -181,6 +207,10 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+.tp-login-mail a {
+  color: inherit; /* Hereda el color del texto padre */
+  text-decoration: none; /* Elimina el subrayado */
 }
 
 .tp-login-mail::before,
@@ -202,7 +232,11 @@ export default {
   position: relative;
   z-index: 2; /* Asegura que el texto esté por encima de las líneas */
 }
-
+.tp-login-top p {
+  color: #49535b;
+  font-size: 16px;
+  font-weight: 400;
+}
 
 .tp-login-option {
   margin-bottom: 30px;
@@ -297,5 +331,17 @@ export default {
 
 .tp-login-btn:hover {
   background-color: #0056b3;
+}
+.tp-login-input-eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666; /* Color del ícono */
+}
+
+.tp-login-input-eye:hover {
+  color: #000; /* Cambia el color al pasar el mouse */
 }
 </style>
