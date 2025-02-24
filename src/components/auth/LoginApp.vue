@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <div>
     <AppLoader :isLoading="isLoading" />
     <!-- Sección de Breadcrumb -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
@@ -112,16 +112,22 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script>
 import AppLoader from '@/components/AppLoader.vue'; // Importar el componente
 import api from '@/services/api';
+import { useNotificationStore } from '@/stores/notificationStore'; // Importa el store
+
 export default {
   name: 'LoginApp',
   components: {
     AppLoader
+  },
+  setup() {
+    const notificationStore = useNotificationStore(); // Usa el store
+    return { notificationStore };
   },
   data() {
     return {
@@ -142,28 +148,45 @@ export default {
       }
     },
     async handleLogin() {
-      this.isLoading = true; // Activa el loader
+      this.isLoading = true;
+
       try {
         const userData = {
           email: this.email,
           password: this.password,
         };
+
+        // Simulación de carga
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         const response = await api.login(userData);
-        if (response.data.success) {
-          // Guarda el token y redirige
-          if (this.rememberMe) {
-            localStorage.setItem('authToken', response.data.token);
-          } else {
-            sessionStorage.setItem('authToken', response.data.token);
-          }
-          this.$router.push('/');
+
+        if (response.data.user) {  // Validamos que devuelve el usuario
+          console.log("Notificación de éxito antes de mostrarse");
+
+          this.notificationStore.showNotification(
+              "Inicio de sesión exitoso. Redirigiendo...",
+              "success"
+          );
+
+          // Redirigir al usuario después de un breve tiempo
+          setTimeout(() => {
+            console.log("Redirigiendo a /");
+            this.$router.push('/');
+          }, 2000);
         } else {
-          this.errorMessage = response.data.message || 'Login failed. Please try again.';
+          this.notificationStore.showNotification(
+              response.data.message || "Inicio de sesión fallido. Inténtalo de nuevo.",
+              "error"
+          );
         }
       } catch (error) {
-        this.errorMessage = error.response?.data?.message || 'An error occurred. Please try again.';
+        this.notificationStore.showNotification(
+            error.response?.data?.message || "Ocurrió un error. Inténtalo de nuevo.",
+            "error"
+        );
       } finally {
-        this.isLoading = false; // Desactiva el loader
+        this.isLoading = false;
       }
     }
   },

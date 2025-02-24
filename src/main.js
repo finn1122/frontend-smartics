@@ -1,11 +1,10 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'; // Importa Pinia
 import App from './App.vue';
-import AppLoader from '@/components/AppLoader.vue'; // Ajusta la ruta según tu estructura
+import AppLoader from '@/components/AppLoader.vue';
 import router from './router';
 
 import './styles/global.css';
-
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
