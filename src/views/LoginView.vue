@@ -64,6 +64,7 @@ import LoginForm from '@/components/auth/LoginForm.vue';
 import AppLoader from '@/components/AppLoader.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
+import { useAuthStore } from "@/stores/authStore";
 
 export default {
   name: 'LoginView',
@@ -72,12 +73,22 @@ export default {
   },
   setup() {
     const notificationStore = useNotificationStore();
-    return { notificationStore };
+    const authStore = useAuthStore();
+    return { notificationStore, authStore };
   },
   data() {
     return {
       isLoading: false
     };
+  },
+  created() {
+    // Verifica si el usuario ya está autenticado usando el authStore
+    this.authStore.checkAuth();
+
+    if (this.authStore.isAuthenticated) {
+      // Redirige a la página principal si ya está autenticado
+      this.$router.push('/');
+    }
   },
   methods: {
     async handleLogin(formData) {

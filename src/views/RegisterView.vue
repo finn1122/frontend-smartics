@@ -62,21 +62,29 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
 import AppLoader from "@/components/AppLoader.vue";
+import {useAuthStore} from "@/stores/authStore";
 
 export default {
   name: 'RegisterApp',
   components: {
     AppLoader,
-    RegisterForm,
+    RegisterForm
   },
   setup() {
     const notificationStore = useNotificationStore();
-    return { notificationStore };
+    const authStore = useAuthStore();
+    return { notificationStore, authStore };
   },
   data() {
     return {
       isLoading: false,
     };
+  },
+  created() {
+    this.authStore.checkAuth();
+    if(this.authStore.isAuthenticated) {
+      this.$router.push('/');
+    }
   },
   methods: {
     async handleRegister(formData) {
