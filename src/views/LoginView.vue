@@ -94,7 +94,7 @@ export default {
           console.log(response)
           // Error específico del servidor
           if (response.message === "Email not verified") {
-            this.notificationStore.showNotification("Por favor, verifica tu correo electrónico antes de iniciar sesión.", "error");
+            this.notificationStore.showNotification("Por favor, verifica tu correo electrónico antes de iniciar sesión.", "danger");
           } else {
             this.notificationStore.showNotification(response.message || "Error en el inicio de sesión", "error");
           }

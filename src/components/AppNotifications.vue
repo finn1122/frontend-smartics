@@ -4,8 +4,6 @@
       {{ message }}
       <button @click="closeNotification">Cerrar</button>
     </div>
-    <!-- Botón de prueba -->
-    <button @click="testNotification">Probar notificación</button>
   </div>
 </template>
 
@@ -67,6 +65,10 @@ export default {
   background-color: #dc3545; /* Rojo para errores */
 }
 
+.notification.danger {
+  background-color: #ff9800; /* Naranja para advertencias o peligro */
+}
+
 button {
   margin-left: 15px;
   background: none;
@@ -76,5 +78,4 @@ button {
   cursor: pointer;
   font-size: 14px;
 }
-
 </style>
