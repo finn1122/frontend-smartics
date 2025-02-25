@@ -54,8 +54,14 @@ export default {
 
             return { authenticated: false, message: "Credenciales incorrectas" };
         } catch (error) {
-            console.error("❌ Error en login:", error);
-            throw new Error(error.response?.data?.message || "Error en el servidor");
+                console.error("❌ Error en login:", error);
+
+                // Devuelve un objeto con detalles del error
+                return {
+                    error: true,
+                    message: error.response?.data?.error || "Error en el servidor",
+                    code: error.response?.data?.code || "unknown_error", // Código de error (opcional)
+                };
         }
     },
 

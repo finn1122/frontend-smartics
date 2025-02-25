@@ -80,25 +80,35 @@ export default {
     };
   },
   methods: {
-
     async handleLogin(formData) {
       this.isLoading = true;
 
       try {
-        const response = await api.login(formData); // Ahora api.js maneja la lógica
+        const response = await api.login(formData); // Llama a la función login
 
         if (response.authenticated) {
+          // Inicio de sesión exitoso
           this.notificationStore.showNotification("Inicio de sesión exitoso", "success");
           setTimeout(() => this.$router.push('/'), 2000);
+        } else if (response.error) {
+          console.log(response)
+          // Error específico del servidor
+          if (response.message === "Email not verified") {
+            this.notificationStore.showNotification("Por favor, verifica tu correo electrónico antes de iniciar sesión.", "error");
+          } else {
+            this.notificationStore.showNotification(response.message || "Error en el inicio de sesión", "error");
+          }
         } else {
-          this.notificationStore.showNotification(response.message || "Error en el inicio de sesión", "error");
+          // Credenciales incorrectas
+          this.notificationStore.showNotification(response.message || "Credenciales incorrectas", "error");
         }
       } catch (error) {
+        // Error inesperado
         this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
         this.isLoading = false;
       }
-    }
+    },
   }
 };
 </script>
