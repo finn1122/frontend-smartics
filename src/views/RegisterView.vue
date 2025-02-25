@@ -48,94 +48,8 @@
                 <div class="tp-login-mail text-center mb-40">
                   <p>or Sign up with <a href="#">Email</a></p>
                 </div>
+                <RegisterForm @register="handleRegister" />
               </div>
-              <form @submit.prevent="handleRegister">
-                <div class="tp-login-input-wrapper">
-                  <div class="tp-login-input-box">
-                    <div class="tp-login-input">
-                      <input
-                          id="name"
-                          v-model="name"
-                          type="text"
-                          placeholder="Shahnewaz Sakil"
-                          required
-                      />
-                    </div>
-                    <div class="tp-login-input-title">
-                      <label for="name">Your Name</label>
-                    </div>
-                    <div style="color: red;"></div>
-                  </div>
-                  <div class="tp-login-input-box">
-                    <div class="tp-login-input">
-                      <input
-                          id="email"
-                          v-model="email"
-                          type="email"
-                          placeholder="shofy@mail.com"
-                          required
-                      />
-                    </div>
-                    <div class="tp-login-input-title">
-                      <label for="email">Your Email</label>
-                    </div>
-                    <div style="color: red;"></div>
-                  </div>
-                  <div class="tp-login-input-box">
-                    <div class="p-relative">
-                      <div class="tp-login-input">
-                        <input
-                            id="password"
-                            v-model="password"
-                            :type="showPassword ? 'text' : 'password'"
-                            placeholder="Min. 6 character"
-                            required
-                        />
-                      </div>
-                      <div class="tp-login-input-eye" @click="togglePasswordVisibility">
-                        <span v-if="showPassword">
-                          <i class="fas fa-eye-slash"></i>
-                        </span>
-                        <span v-else>
-                          <i class="fas fa-eye"></i>
-                        </span>
-                      </div>
-                      <div class="tp-login-input-title">
-                        <label for="password">Password</label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Campo para confirmar la contraseña -->
-                  <div class="tp-login-input-box">
-                    <div class="p-relative">
-                      <div class="tp-login-input">
-                        <input
-                            id="password_confirmation"
-                            v-model="passwordConfirmation"
-                            :type="showPassword ? 'text' : 'password'"
-                            placeholder="Confirm Password"
-                            required
-                        />
-                      </div>
-                      <div class="tp-login-input-eye" @click="togglePasswordVisibility">
-                        <span v-if="showPassword">
-                          <i class="fas fa-eye-slash"></i>
-                        </span>
-                        <span v-else>
-                          <i class="fas fa-eye"></i>
-                        </span>
-                      </div>
-                      <div class="tp-login-input-title">
-                        <label for="password_confirmation">Confirm Password</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tp-login-bottom">
-                  <button type="submit" class="tp-login-btn w-100">Sign Up</button>
-                </div>
-              </form>
             </div>
           </div>
         </div>
@@ -143,16 +57,17 @@
     </section>
   </div>
 </template>
-
 <script>
-import AppLoader from '@/components/AppLoader.vue';
+import RegisterForm from '@/components/auth/RegisterForm.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
+import AppLoader from "@/components/AppLoader.vue";
 
 export default {
   name: 'RegisterApp',
   components: {
-    AppLoader
+    AppLoader,
+    RegisterForm,
   },
   setup() {
     const notificationStore = useNotificationStore();
@@ -160,47 +75,43 @@ export default {
   },
   data() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
-      showPassword: false,
-      isLoading: false
+      isLoading: false,
     };
   },
   methods: {
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
-    },
-    async handleRegister() {
+    async handleRegister(formData) {
       this.isLoading = true;
-
       try {
-        const userData = {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.passwordConfirmation
-        };
+        const response = await api.register(formData);
+        console.log("Respuesta del servidor:", response); // Depuración
 
-        const response = await api.register(userData);
-
-        if (response.success) {
-          this.notificationStore.showNotification("Registro exitoso", "success");
-          setTimeout(() => this.$router.push('/login'), 2000);
+        if (response.status === 201) {
+          // Registro exitoso
+          this.notificationStore.showNotification(
+              response.data.message || "Registro exitoso. Por favor verifica tu correo.",
+              "success" // <-- Asegúrate de usar "success" aquí
+          );
+          this.$router.push({ path: '/confirm-email', query: { email: formData.email } });
         } else {
-          this.notificationStore.showNotification(response.message || "Error en el registro", "error");
+          // Error en el registro
+          this.notificationStore.showNotification(
+              response.data.message || "Error en el registro",
+              "error" // <-- Usa "error" para mensajes de error
+          );
         }
       } catch (error) {
-        this.notificationStore.showNotification(error.message || "Error inesperado", "error");
+        console.error("Error en handleRegister:", error); // Depuración
+        this.notificationStore.showNotification(
+            error.message || "Error inesperado",
+            "error" // <-- Usa "error" para errores inesperados
+        );
       } finally {
         this.isLoading = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
-
 <style scoped>
 .tp-login-area {
   background-color: #ffffff; /* Color de fondo de la otra sección */
@@ -334,19 +245,6 @@ export default {
   background-color: #e0e0e0;
 }
 
-.tp-login-input-wrapper {
-  margin-bottom: 20px;
-}
-
-.tp-login-input-box {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.tp-login-input {
-  position: relative;
-}
-
 .tp-login-input input {
   width: 100%;
   padding: 10px;
@@ -365,35 +263,23 @@ export default {
   position: absolute;
   top: -7px;
 }
+.tp-login-option {
+  margin-bottom: 30px;
+}
 
-.tp-login-input-eye {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
+.tp-login-social {
+  gap: 10px;
+}
+
+.tp-login-option-item {
+  background-color: #f5f5f5;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  color: #666; /* Color del ícono */
-}
-
-.tp-login-input-eye:hover {
-  color: #000; /* Cambia el color al pasar el mouse */
-}
-
-.tp-login-bottom {
   margin-top: 20px;
 }
 
-.tp-login-btn {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-}
-
-.tp-login-btn:hover {
-  background-color: #0056b3;
+.tp-login-option-item:hover {
+  background-color: #e0e0e0;
 }
 </style>
