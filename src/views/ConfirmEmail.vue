@@ -1,5 +1,6 @@
 <template>
   <div class="confirm-email-page">
+    <AppLoader :isLoading="isLoading" />
     <!-- Sección de Breadcrumb -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
       <div class="container">
@@ -48,29 +49,59 @@
 <script>
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
-
+import { useAuthStore } from "@/stores/authStore";
+import AppLoader from "@/components/AppLoader.vue";
 export default {
   name: 'ConfirmEmail',
+  components: {AppLoader},
   data() {
     return {
-      email: this.$route.query.email || '', // Obtén el email de la URL
+      email: '', // Obtén el email de la URL
+      isLoading: false,
     };
   },
   setup() {
     const notificationStore = useNotificationStore();
-    return { notificationStore };
+    const authStore = useAuthStore();
+    return { notificationStore,authStore };
+  },
+  mounted() {
+    // Obtén el email de la URL
+    this.email = this.$route.query.email || '';
+
+    // Verifica la autenticación
+    this.authStore.checkAuth();
+
+    // Redirige a la página principal si ya está autenticado y no hay email
+    if (this.authStore.isAuthenticated || !this.email) {
+      this.$router.push('/');
+    }
   },
   methods: {
     async resendConfirmationEmail() {
+      this.isLoading = true; // Activa el loader
+
       try {
+        // Realiza la solicitud para reenviar el correo de confirmación
         const response = await api.resendConfirmationEmail({ email: this.email });
-        if (response.success) {
-          this.notificationStore.showNotification('Confirmation email resent successfully!', 'success');
+
+        // Maneja la respuesta exitosa
+        if (response.data.message) {
+          this.notificationStore.showNotification(response.data.message, 'success');
         } else {
-          this.notificationStore.showNotification(response.message || 'Failed to resend confirmation email.', 'error');
+          this.notificationStore.showNotification('Se ha enviado un nuevo enlace de verificación.', 'success');
         }
       } catch (error) {
-        this.notificationStore.showNotification(error.message || 'An unexpected error occurred.', 'error');
+        // Maneja los errores
+        console.error("Error en el reenvío del correo de confirmación:", error);
+
+        if (error.message) {
+          this.notificationStore.showNotification(error.message, 'error');
+        } else {
+          this.notificationStore.showNotification("Error de conexión. Inténtalo de nuevo más tarde.", 'error');
+        }
+      } finally {
+        this.isLoading = false; // Desactiva el loader
       }
     },
   },

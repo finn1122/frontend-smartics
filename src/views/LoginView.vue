@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     async handleLogin(formData) {
-      this.isLoading = true;
+      this.isLoading = true; // Activa el loader
 
       try {
         const response = await api.login(formData); // Llama a la función login
@@ -100,9 +100,14 @@ export default {
         if (response.authenticated) {
           // Inicio de sesión exitoso
           this.notificationStore.showNotification("Inicio de sesión exitoso", "success");
-          setTimeout(() => this.$router.push('/'), 2000);
+
+          // Espera 2 segundos antes de redirigir
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+
+          // Redirige a la página principal
+          this.$router.push('/');
         } else if (response.error) {
-          console.log(response)
+          console.log(response);
           // Error específico del servidor
           if (response.message === "Email not verified") {
             this.notificationStore.showNotification("Por favor, verifica tu correo electrónico antes de iniciar sesión.", "danger");
@@ -117,7 +122,7 @@ export default {
         // Error inesperado
         this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
-        this.isLoading = false;
+        this.isLoading = false; // Desactiva el loader
       }
     },
   }
