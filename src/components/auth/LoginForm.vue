@@ -1,62 +1,62 @@
 <template>
   <div>
     <form @submit.prevent="handleLogin">
-                <div class="tp-login-input-wrapper">
-                  <div class="tp-login-input-box">
-                    <div class="tp-login-input">
-                      <input
-                          id="email"
-                          v-model="form.email"
-                          type="email"
-                          placeholder="shofy@mail.com"
-                          required
-                      />
-                    </div>
-                    <div class="tp-login-input-title">
-                      <label for="email">Your Email</label>
-                    </div>
-                    <div style="color: red;"></div>
-                  </div>
-                  <div class="tp-login-input-box">
-                    <div class="p-relative">
-                      <div class="tp-login-input">
-                        <input
-                            id="tp_password"
-                            v-model="form.password"
-                            :type="showPassword ? 'text' : 'password'"
-                            name="password"
-                            placeholder="Min. 6 character"
-                            required
-                        />
-                      </div>
-                      <div class="tp-login-input-eye" @click="togglePasswordVisibility">
-                        <span v-if="showPassword">
-                          <i class="fas fa-eye-slash"></i>
-                        </span>
-                                      <span v-else>
-                          <i class="fas fa-eye"></i>
-                        </span>
-                      </div>
-                      <div class="tp-login-input-title">
-                        <label for="tp_password">Password</label>
-                      </div>
-                    </div>
-                    <div style="color: red;"></div>
-                  </div>
-                </div>
-                <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
-                  <div class="tp-login-remeber">
-                    <input id="remeber" type="checkbox" v-model="rememberMe" />
-                    <label for="remeber">Remember me</label>
-                  </div>
-                  <div class="tp-login-forgot">
-                    <a href="/forgot" class="">Forgot Password?</a>
-                  </div>
-                </div>
-                <div class="tp-login-bottom">
-                  <button type="submit" class="tp-login-btn w-100">Login</button>
-                </div>
-              </form>
+      <div class="tp-login-input-wrapper">
+        <div class="tp-login-input-box">
+          <div class="tp-login-input">
+            <input
+                id="email"
+                v-model="form.email"
+                type="email"
+                placeholder="shofy@mail.com"
+                required
+            />
+          </div>
+          <div class="tp-login-input-title">
+            <label for="email">Your Email</label>
+          </div>
+          <div style="color: red;"></div>
+        </div>
+        <div class="tp-login-input-box">
+          <div class="p-relative">
+            <div class="tp-login-input">
+              <input
+                  id="tp_password"
+                  v-model="form.password"
+                  :type="showPassword ? 'text' : 'password'"
+                  name="password"
+                  placeholder="Min. 6 character"
+                  required
+              />
+            </div>
+            <div class="tp-login-input-eye" @click="togglePasswordVisibility">
+              <span v-if="showPassword">
+                <i class="fas fa-eye-slash"></i>
+              </span>
+              <span v-else>
+                <i class="fas fa-eye"></i>
+              </span>
+            </div>
+            <div class="tp-login-input-title">
+              <label for="tp_password">Password</label>
+            </div>
+          </div>
+          <div style="color: red;"></div>
+        </div>
+      </div>
+      <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
+        <div class="tp-login-remeber">
+          <input id="remeber" type="checkbox" v-model="rememberMe"/>
+          <label for="remeber">Remember me</label>
+        </div>
+        <div class="tp-login-forgot">
+          <a href="/forgot" class="">Forgot Password?</a>
+        </div>
+      </div>
+      <div class="tp-login-bottom">
+        <button type="submit" class="tp-login-btn w-100">Login</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -88,6 +88,7 @@ export default {
 .tp-login-area {
   background-color: #ffffff; /* Color de fondo de la otra sección */
 }
+
 /* Estilos para el Breadcrumb */
 .breadcrumb__area {
   background-color: #ffffff; /* Color de fondo */
@@ -107,6 +108,7 @@ export default {
   font-size: 16px;
   color: var(--tp-heading-primary);
 }
+
 .breadcrumb__list span {
   font-size: 16px;
   font-weight: 400;
@@ -146,12 +148,12 @@ export default {
   font-weight: 500;
   margin-bottom: 4px;
   color: var(--tp-heading-primary);
-  font-family: var(--tp-ff-heading),sans-serif;
+  font-family: var(--tp-ff-heading), sans-serif;
 }
+
 .tp-login-top a {
   text-decoration: none; /* Elimina el subrayado */
 }
-
 
 
 .tp-login-mail {
@@ -165,6 +167,7 @@ export default {
   justify-content: center;
   width: 100%;
 }
+
 .tp-login-mail a {
   color: inherit; /* Hereda el color del texto padre */
   text-decoration: none; /* Elimina el subrayado */
@@ -189,6 +192,7 @@ export default {
   position: relative;
   z-index: 2; /* Asegura que el texto esté por encima de las líneas */
 }
+
 .tp-login-top p {
   color: #49535b;
   font-size: 16px;
@@ -214,7 +218,6 @@ export default {
 .tp-login-option-item:hover {
   background-color: #e0e0e0;
 }
-
 
 
 .tp-login-input-wrapper {
@@ -289,6 +292,7 @@ export default {
 .tp-login-btn:hover {
   background-color: #0056b3;
 }
+
 .tp-login-input-eye {
   position: absolute;
   right: 10px;

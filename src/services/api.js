@@ -1,10 +1,30 @@
 import axios from "axios";
 import {useAuthStore} from "@/stores/authStore";
+import { delay } from "@/utils/delay"; // Importa la función de retraso
 
 const api = axios.create({
     baseURL: "http://localhost:8000/api/v1",
     withCredentials: true // Importante para enviar cookies
 });
+
+// Interceptor para aplicar un retraso mínimo
+api.interceptors.response.use(
+    async (response) => {
+        const startTime = Date.now(); // Guarda el tiempo de inicio
+
+        // Retraso mínimo de 1 segundo (1000 ms)
+        const elapsedTime = Date.now() - startTime;
+        if (elapsedTime < 1000) {
+            await delay(1000 - elapsedTime); // Espera el tiempo restante
+        }
+
+        return response; // Devuelve la respuesta
+    },
+    (error) => {
+        return Promise.reject(error); // Maneja errores
+    }
+);
+
 
 export default {
     async register(userData) {
