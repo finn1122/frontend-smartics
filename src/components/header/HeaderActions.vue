@@ -74,38 +74,40 @@
 </template>
 
 <script>
+import { defineComponent, ref, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/authStore";
-import { onMounted, ref } from "vue";
 
-export default {
+export default defineComponent({
   name: "HeaderActions",
   setup() {
     const authStore = useAuthStore();
     const isLoading = ref(true); // Indicador de carga
 
+    // ✅ Computed para obtener el estado de autenticación
+    const isAuthenticated = computed(() => authStore.isAuthenticated);
+
     onMounted(async () => {
       console.log("📢 Cargando el header, ejecutando checkAuth()...");
-      await authStore.checkAuth(); // Esperar a que termine
-      isLoading.value = false; // Deshabilitar loading
-      console.log("✅ checkAuth() terminado, usuario autenticado:", authStore.isAuthenticated);
+      await authStore.checkAuth(); // ✅ Esperamos la verificación
+      isLoading.value = false; // ⏳ Deshabilitamos el loading
+      console.log("✅ checkAuth() terminado, autenticado:", isAuthenticated.value);
     });
+
+    const mobileMenuOpen = ref(false);
+
+    const toggleMobileMenu = () => {
+      mobileMenuOpen.value = !mobileMenuOpen.value;
+    };
 
     return {
       authStore,
       isLoading,
+      isAuthenticated, // ✅ Hacer accesible en el template
+      mobileMenuOpen,
+      toggleMobileMenu,
     };
-  },
-  data() {
-    return {
-      mobileMenuOpen: false,
-    };
-  },
-  methods: {
-    toggleMobileMenu() {
-      this.mobileMenuOpen = !this.mobileMenuOpen;
-    },
-  },
-};
+  }
+});
 </script>
 
 

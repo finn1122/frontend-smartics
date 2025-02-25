@@ -116,9 +116,9 @@
 </template>
 
 <script>
-import AppLoader from '@/components/AppLoader.vue'; // Importar el componente
+import AppLoader from '@/components/AppLoader.vue';
 import api from '@/services/api';
-import { useNotificationStore } from '@/stores/notificationStore'; // Importa el store
+import { useNotificationStore } from '@/stores/notificationStore';
 
 export default {
   name: 'LoginApp',
@@ -126,27 +126,17 @@ export default {
     AppLoader
   },
   setup() {
-    const notificationStore = useNotificationStore(); // Usa el store
+    const notificationStore = useNotificationStore();
     return { notificationStore };
   },
   data() {
     return {
-      email: '', // Estado para el email
-      password: '', // Estado para la contraseña
-      rememberMe: false, // Estado para "Remember me"
-      showPassword: false, // Estado para mostrar/ocultar contraseña
-      isLoading: false,
-      errorMessage: '', // Mensaje de error
+      email: '',
+      password: '',
+      isLoading: false
     };
   },
   methods: {
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword; // Cambia el estado de visibilidad
-      const passwordInput = this.$refs.passwordInput; // Obtén el input de contraseña
-      if (passwordInput) {
-        passwordInput.type = this.showPassword ? 'text' : 'password'; // Cambia el tipo de input
-      }
-    },
     async handleLogin() {
       this.isLoading = true;
 
@@ -156,40 +146,21 @@ export default {
           password: this.password,
         };
 
-        // Simulación de carga
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        const response = await api.login(userData); // Ahora api.js maneja la lógica
 
-        const response = await api.login(userData);
-
-        if (response.data.user) {  // Validamos que devuelve el usuario
-          console.log("Notificación de éxito antes de mostrarse");
-
-          this.notificationStore.showNotification(
-              "Inicio de sesión exitoso. Redirigiendo...",
-              "success"
-          );
-
-          // Redirigir al usuario después de un breve tiempo
-          setTimeout(() => {
-            console.log("Redirigiendo a /");
-            this.$router.push('/');
-          }, 2000);
+        if (response.authenticated) {
+          this.notificationStore.showNotification("Inicio de sesión exitoso", "success");
+          setTimeout(() => this.$router.push('/'), 2000);
         } else {
-          this.notificationStore.showNotification(
-              response.data.message || "Inicio de sesión fallido. Inténtalo de nuevo.",
-              "error"
-          );
+          this.notificationStore.showNotification(response.message || "Error en el inicio de sesión", "error");
         }
       } catch (error) {
-        this.notificationStore.showNotification(
-            error.response?.data?.message || "Ocurrió un error. Inténtalo de nuevo.",
-            "error"
-        );
+        this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
         this.isLoading = false;
       }
     }
-  },
+  }
 };
 </script>
 

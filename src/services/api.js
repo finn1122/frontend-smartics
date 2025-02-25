@@ -1,40 +1,39 @@
 import axios from "axios";
+import { useAuthStore } from "@/stores/authStore";
 
 const api = axios.create({
-    baseURL: process.env.VUE_APP_API_BASE_URL,
-    withCredentials: true,
+    baseURL: "http://localhost:8000/api/v1",
+    withCredentials: true // Importante para enviar cookies
 });
-
-api.interceptors.request.use((config) => {
-    console.log("📡 Enviando solicitud a:", config.url);
-    console.log("📤 Headers enviados:", config.headers);
-    console.log("🍪 Cookies disponibles antes de enviar la petición:", document.cookie);
-    return config;
-});
-
-// 🔍 Interceptor para registrar respuestas o errores
-api.interceptors.response.use(
-    (response) => {
-        console.log("✅ Respuesta recibida de:", response.config.url);
-        return response;
-    },
-    (error) => {
-        console.error("❌ Error en respuesta de:", error.config?.url, error);
-        return Promise.reject(error);
-    }
-);
 
 export default {
-    register(userData) {
-        return api.post("/v1/register", userData);
+    async login(userData) {
+        try {
+            const response = await api.post("/login", userData);
+
+            if (response.data.authenticated) {
+                const authStore = useAuthStore();
+                authStore.setUser(response.data.user); // Guardamos el usuario en el store
+
+                console.log("🍪 Cookies después del login:", document.cookie);
+
+                return response.data;
+            }
+
+            return { authenticated: false, message: "Credenciales incorrectas" };
+        } catch (error) {
+            console.error("❌ Error en login:", error);
+            throw new Error(error.response?.data?.message || "Error en el servidor");
+        }
     },
-    login(userData) {
-        return api.post("/v1/login", userData);
-    },
-    logout() {
-        return api.post("/v1/logout");
-    },
-    getUserProfile() {
-        return api.get("/v1/profile");
-    },
+
+    async logout() {
+        try {
+            await api.post("/logout");
+            const authStore = useAuthStore();
+            authStore.logout();
+        } catch (error) {
+            console.error("❌ Error en logout:", error);
+        }
+    }
 };

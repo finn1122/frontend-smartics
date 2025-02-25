@@ -1,56 +1,41 @@
 import { defineStore } from "pinia";
-import api from "@/services/api";
 
 export const useAuthStore = defineStore("auth", {
     state: () => ({
         user: JSON.parse(localStorage.getItem("user")) || null,
-        token: localStorage.getItem("token") || null,
-        isAuthenticated: !!localStorage.getItem("token"),
+        isAuthenticated: false,
     }),
-
     actions: {
-        setToken(token) {
-            this.token = token;
-            this.isAuthenticated = true;
-            localStorage.setItem("token", token);
-        },
+        async checkAuth() {
+            console.log("🔄 Verificando autenticación...");
 
+            try {
+                const userData = JSON.parse(localStorage.getItem("user"));
+
+                if (userData) {
+                    this.user = userData;
+                    this.isAuthenticated = true; // ✅ Usuario autenticado
+                    console.log("✅ Usuario autenticado:", userData);
+                } else {
+                    this.user = null;
+                    this.isAuthenticated = false; // ❌ No autenticado
+                    console.log("⚠ No hay usuario autenticado.");
+                }
+            } catch (error) {
+                console.error("❌ Error verificando autenticación:", error);
+                this.user = null;
+                this.isAuthenticated = false;
+            }
+        },
         setUser(user) {
             this.user = user;
             localStorage.setItem("user", JSON.stringify(user));
+            console.log("✅ Usuario almacenado en el store y localStorage:", user);
         },
-
-        async login(userData) {
-            try {
-                const response = await api.login(userData);
-                if (response.data.authenticated) {
-                    console.log("✅ Login exitoso:", response.data);
-                    this.setUser(response.data.user);
-                    console.log("🍪 Cookies después del login:", document.cookie);
-
-                }
-            } catch (error) {
-                console.error("❌ Error en login:", error);
-                throw error;
-            }
-        },
-
-        async checkAuth() {
-            try {
-                const response = await api.getUserProfile();
-                this.setUser(response.data.user);
-            } catch (error) {
-                console.error("❌ Error obteniendo el perfil:", error);
-                this.logout();
-            }
-        },
-
         logout() {
-            this.token = null;
             this.user = null;
-            this.isAuthenticated = false;
-            localStorage.removeItem("token");
             localStorage.removeItem("user");
-        },
-    },
+            console.log("🚪 Usuario cerró sesión, datos eliminados");
+        }
+    }
 });
