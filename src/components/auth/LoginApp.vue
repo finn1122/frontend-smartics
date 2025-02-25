@@ -26,8 +26,7 @@
             <div class="tp-login-wrapper">
               <div class="tp-login-top text-center mb-30">
                 <h3 class="tp-login-title">Login to smartics.</h3>
-                <p>Don’t have an account? <span><a href="/register" class="">Create a free account</a></span></p>
-              </div>
+                <p>Don’t have an account? <span><router-link to="/register" class="">Create a free account</router-link></span></p>              </div>
               <div class="tp-login-option">
                 <div class="tp-login-social mb-10 d-flex flex-wrap align-items-center justify-content-center">
                   <div class="tp-login-option-item has-google">
@@ -80,12 +79,12 @@
                         />
                       </div>
                       <div class="tp-login-input-eye" @click="togglePasswordVisibility">
-          <span v-if="showPassword">
-            <i class="fas fa-eye-slash"></i>
-          </span>
-                        <span v-else>
-            <i class="fas fa-eye"></i>
-          </span>
+                        <span v-if="showPassword">
+                          <i class="fas fa-eye-slash"></i>
+                        </span>
+                                      <span v-else>
+                          <i class="fas fa-eye"></i>
+                        </span>
                       </div>
                       <div class="tp-login-input-title">
                         <label for="tp_password">Password</label>
@@ -133,10 +132,14 @@ export default {
     return {
       email: '',
       password: '',
+      showPassword: false,
       isLoading: false
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
     async handleLogin() {
       this.isLoading = true;
 

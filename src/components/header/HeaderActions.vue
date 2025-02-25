@@ -1,4 +1,3 @@
-
 <template>
   <div class="tp-header-main-right d-flex align-items-center justify-content-end">
     <!-- Perfil de Usuario (Oculto en móviles, visible en desktop) -->

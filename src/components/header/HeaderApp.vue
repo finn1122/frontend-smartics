@@ -1,7 +1,7 @@
 <template>
   <header>
     <HeaderMain />
-    <HeaderBottom v-if="!isLoginPage" />
+    <HeaderBottom v-if="!isLoginPage && !isRegisterPage" />
   </header>
 </template>
 
@@ -20,6 +20,9 @@ export default {
     // Verifica si la ruta actual es '/login'
     isLoginPage() {
       return this.$route.path === "/login";
+    },
+    isRegisterPage() {
+      return this.$route.path === "/register";
     },
   },
 };
