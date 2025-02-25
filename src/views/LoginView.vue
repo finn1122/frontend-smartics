@@ -81,16 +81,11 @@ export default {
   },
   methods: {
 
-    async handleLogin() {
+    async handleLogin(formData) {
       this.isLoading = true;
 
       try {
-        const userData = {
-          email: this.email,
-          password: this.password,
-        };
-
-        const response = await api.login(userData); // Ahora api.js maneja la lógica
+        const response = await api.login(formData); // Ahora api.js maneja la lógica
 
         if (response.authenticated) {
           this.notificationStore.showNotification("Inicio de sesión exitoso", "success");

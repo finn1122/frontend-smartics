@@ -6,7 +6,7 @@
                     <div class="tp-login-input">
                       <input
                           id="email"
-                          v-model="email"
+                          v-model="form.email"
                           type="email"
                           placeholder="shofy@mail.com"
                           required
@@ -22,7 +22,7 @@
                       <div class="tp-login-input">
                         <input
                             id="tp_password"
-                            v-model="password"
+                            v-model="form.password"
                             :type="showPassword ? 'text' : 'password'"
                             name="password"
                             placeholder="Min. 6 character"
@@ -65,10 +65,11 @@ export default {
   name: 'LoginForm',
   data() {
     return {
-      email: '',
-      password: '',
+      form: {
+        email: '',
+        password: '',
+      },
       showPassword: false,
-      isLoading: false
     };
   },
   methods: {
