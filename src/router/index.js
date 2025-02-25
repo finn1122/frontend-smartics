@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginPage from '../components/auth/LoginApp.vue';      // Nombre actualizado
+import LoginView from '@/views/LoginView.vue';      // Nombre actualizado
 import RegisterView from "@/views/RegisterView.vue";        // Nombre actualizado
 
 const routes = [
-    { path: '/login', component: LoginPage },
+    { path: '/login', component: LoginView },
     { path: '/register', component: RegisterView},
 ];
 

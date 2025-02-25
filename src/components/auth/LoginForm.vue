@@ -1,55 +1,6 @@
 <template>
   <div>
-    <AppLoader :isLoading="isLoading" />
-    <!-- Sección de Breadcrumb -->
-    <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
-      <div class="container">
-        <div class="row">
-          <div class="col-xxl-12">
-            <div class="breadcrumb__content p-relative z-index-1">
-              <h3 class="breadcrumb__title">My account</h3>
-              <div class="breadcrumb__list">
-                <span><a href="/" class="">Home</a></span>
-                <span>My account</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sección de Login -->
-    <section class="tp-login-area pb-140 p-relative z-index-1 fix">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-xl-6 col-lg-8">
-            <div class="tp-login-wrapper">
-              <div class="tp-login-top text-center mb-30">
-                <h3 class="tp-login-title">Login to smartics.</h3>
-                <p>Don’t have an account? <span><router-link to="/register" class="">Create a free account</router-link></span></p>              </div>
-              <div class="tp-login-option">
-                <div class="tp-login-social mb-10 d-flex flex-wrap align-items-center justify-content-center">
-                  <div class="tp-login-option-item has-google">
-                    <a href="#">
-                      <img src="/img/icon/login/google.svg" alt=""> Sign in with google
-                    </a>
-                  </div>
-                  <div class="tp-login-option-item">
-                    <a href="#">
-                      <img src="/img/icon/login/facebook.svg" alt="">
-                    </a>
-                  </div>
-                  <div class="tp-login-option-item">
-                    <a href="#">
-                      <img class="apple" src="/img/icon/login/apple.svg" alt="">
-                    </a>
-                  </div>
-                </div>
-                <div class="tp-login-mail text-center mb-40">
-                  <p>or Sign in with <a href="#">Email</a></p>
-                </div>
-              </div>
-              <form @submit.prevent="handleLogin">
+    <form @submit.prevent="handleLogin">
                 <div class="tp-login-input-wrapper">
                   <div class="tp-login-input-box">
                     <div class="tp-login-input">
@@ -106,28 +57,12 @@
                   <button type="submit" class="tp-login-btn w-100">Login</button>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 </template>
 
 <script>
-import AppLoader from '@/components/AppLoader.vue';
-import api from '@/services/api';
-import { useNotificationStore } from '@/stores/notificationStore';
-
 export default {
-  name: 'LoginApp',
-  components: {
-    AppLoader
-  },
-  setup() {
-    const notificationStore = useNotificationStore();
-    return { notificationStore };
-  },
+  name: 'LoginForm',
   data() {
     return {
       email: '',
@@ -141,27 +76,8 @@ export default {
       this.showPassword = !this.showPassword;
     },
     async handleLogin() {
-      this.isLoading = true;
-
-      try {
-        const userData = {
-          email: this.email,
-          password: this.password,
-        };
-
-        const response = await api.login(userData); // Ahora api.js maneja la lógica
-
-        if (response.authenticated) {
-          this.notificationStore.showNotification("Inicio de sesión exitoso", "success");
-          setTimeout(() => this.$router.push('/'), 2000);
-        } else {
-          this.notificationStore.showNotification(response.message || "Error en el inicio de sesión", "error");
-        }
-      } catch (error) {
-        this.notificationStore.showNotification(error.message || "Error inesperado", "error");
-      } finally {
-        this.isLoading = false;
-      }
+      // Emitir el objeto form al componente padre
+      this.$emit('login', this.form);
     }
   }
 };
