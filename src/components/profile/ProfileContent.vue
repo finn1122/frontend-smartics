@@ -154,7 +154,7 @@ export default {
 }
 
 .profile__main-info-icon i {
-  font-size: 24px;
+  font-size: 32px; /* Íconos más grandes */
   color: var(--tp-theme-primary);
 }
 
@@ -231,6 +231,7 @@ export default {
     margin-bottom: 25px;
   }
 }
+
 .profile__main-info-icon .profile-icon-count {
   background-color: var(--tp-theme-primary);
   border: 2px solid var(--tp-common-white);
