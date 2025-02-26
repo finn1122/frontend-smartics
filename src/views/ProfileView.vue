@@ -1,15 +1,13 @@
 <template>
-      <section class="profile__area pt-120 pb-120">
-        <div class="container">
-          <div class="profile__inner p-relative">
-            <div class="profile__shape">
-              <div class="profile-view col-xxl-4 col-lg-4">
-                <ProfileTabs />
-              </div>
-            </div>
-          </div>
+  <section class="profile__area pt-120 pb-120">
+    <div class="container">
+      <div class="profile__inner p-relative">
+        <div class="profile__shape">
+          <ProfileTabs />
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
