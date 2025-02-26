@@ -130,7 +130,7 @@ export default {
   border: 1px solid #eaeaef;
   padding: 27px 30px 25px;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 5rem;
   margin-bottom: 1.5rem;
 }
 
