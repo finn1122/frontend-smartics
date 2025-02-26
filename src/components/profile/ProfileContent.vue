@@ -231,4 +231,18 @@ export default {
     margin-bottom: 25px;
   }
 }
+.profile__main-info-icon .profile-icon-count {
+  background-color: var(--tp-theme-primary);
+  border: 2px solid var(--tp-common-white);
+  border-radius: 50%;
+  color: var(--tp-common-white);
+  font-size: 13px;
+  font-weight: 500;
+  height: 25px;
+  line-height: 20px;
+  position: absolute;
+  right: -8px;
+  top: 2px;
+  width: 25px;
+}
 </style>
