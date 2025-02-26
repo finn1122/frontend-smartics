@@ -7,19 +7,15 @@ export const useAuthStore = defineStore("auth", {
     }),
     actions: {
         async checkAuth() {
-            console.log("🔄 Verificando autenticación...");
-
             try {
                 const userData = JSON.parse(localStorage.getItem("user"));
 
                 if (userData) {
                     this.user = userData;
                     this.isAuthenticated = true; // ✅ Usuario autenticado
-                    console.log("✅ Usuario autenticado:", userData);
                 } else {
                     this.user = null;
                     this.isAuthenticated = false; // ❌ No autenticado
-                    console.log("⚠ No hay usuario autenticado.");
                 }
             } catch (error) {
                 console.error("❌ Error verificando autenticación:", error);
@@ -29,13 +25,12 @@ export const useAuthStore = defineStore("auth", {
         },
         setUser(user) {
             this.user = user;
+            this.isAuthenticated = true; // Asegúrate de marcar como autenticado
             localStorage.setItem("user", JSON.stringify(user));
-            console.log("✅ Usuario almacenado en el store y localStorage:", user);
         },
         logout() {
             this.user = null;
             localStorage.removeItem("user");
-            console.log("🚪 Usuario cerró sesión, datos eliminados");
         }
     }
 });
