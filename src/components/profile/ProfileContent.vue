@@ -130,7 +130,8 @@ export default {
   border: 1px solid #eaeaef;
   padding: 27px 30px 25px;
   text-align: center;
-  margin-bottom: 25px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .profile__main-info-icon {
@@ -172,19 +173,19 @@ export default {
 }
 
 .profile__main-thumb-img {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--tp-theme-primary);
+  margin-right: 16px;
 }
 
 .profile__main-thumb-edit {
   position: absolute;
   bottom: 0;
   right: 0;
-  background-color: var(--tp-theme-primary);
+  background-color: #007BFF;
   border-radius: 50%;
+  border: 2px solid #ffffff;
   padding: 8px;
   cursor: pointer;
   display: flex;
@@ -192,7 +193,7 @@ export default {
   justify-content: center;
   width: 30px;
   height: 30px;
-  transform: translate(0%, -10%); /* Ajusta la posición del ícono */
+  transform: translate(-20%, -15%); /* Ajusta la posición del ícono */
 }
 
 .profile__main-thumb-edit input {
@@ -210,11 +211,12 @@ export default {
 
 /* Estilos para el contenido debajo de la imagen */
 .profile__main-content {
-  text-align: center;
+  text-align: left;
 }
 
 .profile__main-content p {
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 0px;
   color: var(--tp-text-body);
 }
 
