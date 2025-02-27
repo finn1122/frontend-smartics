@@ -43,8 +43,7 @@ export default {
       const userId = authStore.user?.id; // Obtener el userId desde el store
 
       if (!userId) {
-        this.error = true;
-        this.errorMessage = "Usuario no autenticado";
+        this.$router.push('/login'); // 🔹 Redirigir si no hay usuario autenticado
         return;
       }
 
