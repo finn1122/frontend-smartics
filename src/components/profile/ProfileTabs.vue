@@ -24,7 +24,7 @@
         <Suspense>
           <template #default>
             <!-- Contenido para la pestaña "Profile" -->
-            <ProfileContent v-if="activeTab === 'nav-profile-tab'" :user="user" />
+            <ProfileContent v-if="activeTab === 'nav-profile-tab'" :user="user" @logout="emitLogout"/>
           </template>
           <template #fallback>
             <AppLoader/>
@@ -90,6 +90,11 @@ export default {
   watch: {
     activeTab(newTab) {
       localStorage.setItem('activeTab', newTab);
+    },
+  },
+  methods: {
+    emitLogout() {
+      this.$emit('logout'); // Enviar evento al componente padre
     },
   },
 };

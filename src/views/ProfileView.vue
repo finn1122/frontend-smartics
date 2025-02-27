@@ -80,7 +80,7 @@ export default {
           this.error = true;
           this.errorMessage = result.message; // Mostrar el mensaje de error
         } else {
-          //this.$router.push('/login'); // Redirigir al usuario a la página de login
+          this.$router.push('/'); // Redirigir al usuario a la página de login
         }
       } catch (error) {
         this.error = true;

@@ -62,13 +62,21 @@ export default {
     },
 
     async logout() {
+        const authStore = useAuthStore();
         try {
-            await api.post("/logout");
-            const authStore = useAuthStore();
-            authStore.logout();
+            const response = await api.post("/logout");
+            authStore.logout(); // Cerrar sesión en el store
+            return response.data;
         } catch (error) {
             console.error("❌ Error en logout:", error);
-            throw new Error(error.response?.data?.message || "Error en el logout");
+
+            // Cerrar sesión aunque falle la API (por seguridad)
+            authStore.logout();
+
+            // Obtener el mensaje de error de la API o definir uno genérico
+            const errorMessage = error.response?.data?.message || "Error inesperado al cerrar sesión";
+
+            throw new Error(errorMessage);
         }
     },
 
