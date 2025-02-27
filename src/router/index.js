@@ -1,20 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '@/views/LoginView.vue';      // Nombre actualizado
-import RegisterView from "@/views/RegisterView.vue";        // Nombre actualizado
-import ConfirmEmail from '@/views/ConfirmEmail.vue'; // Ajusta la ruta según tu estructura
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from "@/views/RegisterView.vue";
+import ConfirmEmail from '@/views/ConfirmEmail.vue';
 import ProfileView from "@/views/ProfileView.vue";
-
 
 const routes = [
     { path: '/login', component: LoginView },
-    { path: '/register', component: RegisterView},
-    { path: '/confirm-email', component: ConfirmEmail},
-    { path: '/profile', component: ProfileView}
-
+    { path: '/register', component: RegisterView },
+    { path: '/confirm-email', component: ConfirmEmail },
+    { path: '/profile', component: ProfileView }
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(process.env.NODE_ENV === 'production' ? '/frontend-smartics/' : '/'), // Ajusta '/repo-name/' al nombre de tu repositorio
     routes,
 });
 
