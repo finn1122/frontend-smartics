@@ -4,7 +4,14 @@
     <div class="container">
       <div class="profile__inner p-relative">
         <div class="profile__shape">
-          <ProfileTabs :user="user" />
+          <Suspense>
+            <template #default>
+              <ProfileTabs :user="user" @logout="handleLogout"/>
+            </template>
+            <template #fallback>
+              <AppLoader />
+            </template>
+          </Suspense>
         </div>
       </div>
     </div>
@@ -53,6 +60,27 @@ export default {
           this.errorMessage = result.message; // Mostrar el mensaje de error
         } else {
           this.user = result; // Guardar los datos del usuario
+        }
+      } catch (error) {
+        this.error = true;
+        this.errorMessage = "Error inesperado al obtener el usuario"; // Manejar errores inesperados
+      } finally {
+        this.isLoading = false; // Desactivar el indicador de carga
+      }
+    },
+    async handleLogout() {
+      console.log('handleLogout')
+      this.isLoading = true; // Activar el indicador de carga
+      this.error = false; // Reiniciar el estado de error
+
+      try {
+        const result = await api.logout(); // Hacer la solicitud
+
+        if (result.error) {
+          this.error = true;
+          this.errorMessage = result.message; // Mostrar el mensaje de error
+        } else {
+          //this.$router.push('/login'); // Redirigir al usuario a la página de login
         }
       } catch (error) {
         this.error = true;

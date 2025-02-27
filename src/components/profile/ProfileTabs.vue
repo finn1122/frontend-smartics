@@ -21,42 +21,55 @@
     <!-- Columna de contenido dinámico -->
     <div class="col-xxl-8 col-lg-8">
       <div class="profile__tab-content">
-        <!-- Contenido para la pestaña "Profile" -->
-        <ProfileContent v-if="activeTab === 'nav-profile-tab'" :user="user" />
+        <Suspense>
+          <template #default>
+            <!-- Contenido para la pestaña "Profile" -->
+            <ProfileContent v-if="activeTab === 'nav-profile-tab'" :user="user" />
+          </template>
+          <template #fallback>
+            <AppLoader/>
+          </template>
+        </Suspense>
 
-        <!-- Contenido para la pestaña "Information" -->
-        <ProfileInfo v-if="activeTab === 'nav-information-tab'" />
 
-        <!-- Contenido para la pestaña "Address" -->
-        <ProfileAddress v-if="activeTab === 'nav-address-tab'" />
+        <!-- Contenido para la pestaña "Information"
+        <ProfileInfo v-if="activeTab === 'nav-information-tab'" />-->
 
-        <!-- Contenido para la pestaña "Orders" -->
-        <ProfileOrders v-if="activeTab === 'nav-order-tab'" />
+        <!-- Contenido para la pestaña "Address"
+        <ProfileAddress v-if="activeTab === 'nav-address-tab'" />-->
 
-        <!-- Contenido para la pestaña "Notifications" -->
-        <ProfileNotifications v-if="activeTab === 'nav-notification-tab'" />
+        <!-- Contenido para la pestaña "Orders"
+        <ProfileOrders v-if="activeTab === 'nav-order-tab'" />-->
+
+        <!-- Contenido para la pestaña "Notifications"
+        <ProfileNotifications v-if="activeTab === 'nav-notification-tab'" />-->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ProfileTabItem from '@/components/profile/ProfileTabItem.vue';
-import ProfileContent from '@/components/profile/ProfileContent.vue';
+//import ProfileTabItem from '@/components/profile/ProfileTabItem.vue';
+//import ProfileContent from '@/components/profile/ProfileContent.vue';
 //import ProfileInfo from '@/components/profile/ProfileInfo.vue';
 //import ProfileAddress from '@/components/profile/ProfileAddress.vue';
 //import ProfileOrders from '@/components/profile/ProfileOrders.vue';
 //import ProfileNotifications from '@/components/profile/ProfileNotifications.vue';
+import { defineAsyncComponent } from 'vue';
+import AppLoader from "@/components/AppLoader.vue";
 
 export default {
+
   name: 'ProfileTabs',
   components: {
-    ProfileTabItem,
-    ProfileContent
-    /*ProfileInfo,
-    ProfileAddress,
-    ProfileOrders,
-    ProfileNotifications,*/
+    AppLoader,
+    ProfileTabItem: defineAsyncComponent(() => import('@/components/profile/ProfileTabItem.vue')),
+    ProfileContent: defineAsyncComponent(() => import('@/components/profile/ProfileContent.vue')),
+    // ProfileInfo: defineAsyncComponent(() => import('@/components/profile/ProfileInfo.vue')),
+    // ProfileAddress: defineAsyncComponent(() => import('@/components/profile/ProfileAddress.vue')),
+    // ProfileOrders: defineAsyncComponent(() => import('@/components/profile/ProfileOrders.vue')),
+    // ProfileNotifications: defineAsyncComponent(() => import('@/components/profile/ProfileNotifications.vue')),
+
   },
   props: {
     user: Object, // Recibe la información del usuario

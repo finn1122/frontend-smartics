@@ -20,9 +20,9 @@
           </div>
           <div class="col-md-6">
             <div class="profile__main-logout text-sm-end">
-              <a href="/login" class="tp-logout-btn">
+              <button @click="logout" class="tp-logout-btn">
                 <i class="fas fa-sign-out-alt"></i> Logout
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -80,6 +80,12 @@ export default {
       required: true,
     },
   },
+  methods: {
+    logout() {
+      console.log('logout')
+      this.$emit('logout');
+    }
+  }
 };
 </script>
 <style scoped>
