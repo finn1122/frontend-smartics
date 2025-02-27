@@ -59,19 +59,50 @@
   <div :class="['mobile-menu', { 'open': mobileMenuOpen }]">
     <button class="close-btn" @click="toggleMobileMenu">&times;</button>
     <ul class="mobile-menu-list">
-      <li>
-        <a href="/profile"><i class="fas fa-user"></i> Mi Cuenta</a>
+      <!-- Perfil de Usuario -->
+      <li v-if="authStore.isAuthenticated">
+        <a href="/profile">
+          <i class="fas fa-user"></i> Mi Cuenta
+        </a>
       </li>
-      <li>
-        <a href="/compare"><i class="fas fa-exchange-alt"></i> Comparar</a>
+      <li v-else>
+        <a href="/login">
+          <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+        </a>
       </li>
+
+      <!-- Comparar -->
       <li>
-        <a href="/wishlist"><i class="fas fa-heart"></i> Wishlist</a>
+        <a href="/compare">
+          <i class="fas fa-exchange-alt"></i> Comparar
+        </a>
+      </li>
+
+      <!-- Wishlist -->
+      <li>
+        <a href="/wishlist">
+          <i class="fas fa-heart"></i> Wishlist
+          <span class="badge">0</span>
+        </a>
+      </li>
+
+      <!-- Carrito -->
+      <li>
+        <a href="#" class="cartmini-open-btn">
+          <i class="fas fa-shopping-cart"></i> Carrito
+          <span class="badge">0</span>
+        </a>
+      </li>
+
+      <!-- Cerrar Sesión (Solo si está autenticado) -->
+      <li v-if="authStore.isAuthenticated">
+        <a href="#" @click="logout">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
       </li>
     </ul>
   </div>
 </template>
-
 <script>
 import { defineComponent, ref, computed, onMounted } from "vue";
 import { useAuthStore } from "@/stores/authStore";
