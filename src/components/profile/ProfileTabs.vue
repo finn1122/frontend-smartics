@@ -22,7 +22,7 @@
     <div class="col-xxl-8 col-lg-8">
       <div class="profile__tab-content">
         <!-- Contenido para la pestaña "Profile" -->
-        <ProfileContent v-if="activeTab === 'nav-profile-tab'" />
+        <ProfileContent v-if="activeTab === 'nav-profile-tab'" :user="user" />
 
         <!-- Contenido para la pestaña "Information" -->
         <ProfileInfo v-if="activeTab === 'nav-information-tab'" />
@@ -57,6 +57,9 @@ export default {
     ProfileAddress,
     ProfileOrders,
     ProfileNotifications,*/
+  },
+  props: {
+    user: Object, // Recibe la información del usuario
   },
   data() {
     return {

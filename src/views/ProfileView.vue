@@ -1,9 +1,10 @@
 <template>
   <section class="profile__area pt-120 pb-120">
+    <AppLoader :isLoading="isLoading" />
     <div class="container">
       <div class="profile__inner p-relative">
         <div class="profile__shape">
-          <ProfileTabs />
+          <ProfileTabs :user="user" />
         </div>
       </div>
     </div>
@@ -12,11 +13,57 @@
 
 <script>
 import ProfileTabs from '@/components/profile/ProfileTabs.vue';
+import AppLoader from "@/components/AppLoader.vue";
+import {useAuthStore} from "@/stores/authStore";
+import api from "@/services/api";
 
 export default {
   name: 'ProfileView',
   components: {
+    AppLoader,
     ProfileTabs,
+  },
+  data() {
+    return {
+      isLoading: false,
+      user: null,
+    };
+  },
+  methods: {
+    async fetchUser() {
+      this.isLoading = true;
+      const authStore = useAuthStore(); // Obtener el store
+      const userId = authStore.user?.id; // Obtener el userId desde el store
+
+      if (!userId) {
+        this.error = true;
+        this.errorMessage = "Usuario no autenticado";
+        return;
+      }
+
+      this.isLoading = true; // Activar el indicador de carga
+      this.error = false; // Reiniciar el estado de error
+
+      try {
+        const result = await api.getUser(userId); // Hacer la solicitud
+        this.user = result;
+
+        if (result.error) {
+          this.error = true;
+          this.errorMessage = result.message; // Mostrar el mensaje de error
+        } else {
+          this.user = result; // Guardar los datos del usuario
+        }
+      } catch (error) {
+        this.error = true;
+        this.errorMessage = "Error inesperado al obtener el usuario"; // Manejar errores inesperados
+      } finally {
+        this.isLoading = false; // Desactivar el indicador de carga
+      }
+    },
+  },
+  created() {
+    this.fetchUser();
   },
 };
 </script>

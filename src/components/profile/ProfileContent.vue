@@ -13,7 +13,7 @@
                 </div>
               </div>
               <div class="profile__main-content">
-                <h4 class="profile__main-title">Welcome Mr. Admin!</h4>
+                <h4 class="profile__main-title">Welcome {{ user?.name }}!</h4>
                 <p>You have <span>08</span> notifications</p>
               </div>
             </div>
@@ -74,9 +74,14 @@
 <script>
 export default {
   name: 'ProfileContent',
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
-
 <style scoped>
 /* Estilos generales */
 * {
