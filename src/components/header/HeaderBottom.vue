@@ -8,7 +8,7 @@
             <div class="tp-header-category tp-category-menu tp-header-category-toggle">
               <button class="tp-category-menu-btn tp-category-menu-toggle">
                 <span>
-                  <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="18" height="25" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H15C15.5523 0 16 0.447715 16 1C16 1.55228 15.5523 2 15 2H1C0.447715 2 0 1.55228 0 1ZM0 7C0 6.44772 0.447715 6 1 6H17C17.5523 6 18 6.44772 18 7C18 7.55228 17.5523 8 17 8H1C0.447715 8 0 7.55228 0 7ZM1 12C0.447715 12 0 12.4477 0 13C0 13.5523 0.447715 14 1 14H11C11.5523 14 12 13.5523 12 13C12 12.4477 11.5523 12 11 12H1Z" fill="currentColor"></path>
                   </svg>
                 </span>
@@ -76,8 +76,6 @@ export default {
 <style scoped>
 /* Estilos para el HeaderBottom */
 .tp-header-bottom {
-  background-color: #ffffff;
-  padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -86,40 +84,26 @@ export default {
   margin: 0 auto;
   padding: 0 15px;
 }
-
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 /* Estilos para el botón de categorías */
 .tp-header-category {
   position: relative;
 }
 
 .tp-category-menu-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
   font-size: 14px;
+  font-weight: 500;
+  padding: 12px 30px;
+  position: relative;
+  text-align: left;
+  width: 100%;
 }
-
-.tp-category-menu-btn svg {
-  width: 18px;
-  height: 14px;
-}
-
-/* Estilos para el menú de navegación */
-.main-menu {
-  display: flex;
-  justify-content: center;
+a, button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
 }
 
 .menu-list {
@@ -129,11 +113,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-
-.menu-list li {
-  position: relative;
-}
-
 .menu-list li a {
   text-decoration: none;
   color: #333;

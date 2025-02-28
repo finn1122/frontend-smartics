@@ -101,28 +101,11 @@ export default {
 </script>
 
 <style scoped>
-:root {
-  --tp-theme-primary: #0989ff; /* Define aquí tu color primario */
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 14px 30px;
+.nav-tabs {
   background-color: var(--tp-common-white);
   border: 0;
-  border-radius: 0;
-  color: #767a7d;
-  font-size: 15px;
-  font-weight: 500;
-  text-align: left;
-  transition: all 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  background-color: #0989ff0f; /* Fondo azul translúcido */
-  color: var(--tp-theme-primary); /* Usa el color primario */
+  box-shadow: 0 30px 50px #052f281f;
+  margin: 0;
+  padding: 0;
 }
 </style>
