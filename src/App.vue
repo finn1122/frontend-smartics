@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <AppHeader />
-    <AppNotifications /> <!-- Asegúrate de que esté aquí -->
+    <AppNotifications />
+    <SliderApp/>
     <router-view />
   </div>
 </template>
@@ -9,10 +10,12 @@
 <script>
 import AppHeader from './components/header/HeaderApp.vue';
 import AppNotifications from '@/components/AppNotifications.vue';
+import SliderApp from "@/components/slider/SliderApp.vue";
 
 export default {
   name: 'App',
   components: {
+    SliderApp,
     AppHeader,AppNotifications
   },
 }
