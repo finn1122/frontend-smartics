@@ -46,12 +46,6 @@ export default {
   padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
 }
-.header-search-container {
-  padding-left: 0 !important; /* Elimina cualquier padding extra a la izquierda */
-  justify-content: flex-start; /* Asegura que los elementos estén alineados a la izquierda */
-}
-
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -73,19 +67,5 @@ export default {
 .logo-img {
   height: 60px; /* Ajusta el tamaño del logo */
   width: auto; /* Mantiene la proporción */
-}
-
-/* Estilos para las columnas */
-.col-xl-2,
-.col-xl-9,
-.col-xl-1,
-.col-lg-2,
-.col-lg-9,
-.col-lg-1,
-.col-md-4,
-.col-md-8,
-.col-6 {
-  flex: 1;
-  padding: 0 10px;
 }
 </style>

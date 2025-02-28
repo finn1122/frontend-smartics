@@ -76,8 +76,6 @@ export default {
 <style scoped>
 /* Estilos para el HeaderBottom */
 .tp-header-bottom {
-  background-color: #ffffff;
-  padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -86,40 +84,26 @@ export default {
   margin: 0 auto;
   padding: 0 15px;
 }
-
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 /* Estilos para el botón de categorías */
 .tp-header-category {
   position: relative;
 }
 
 .tp-category-menu-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  background-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
   font-size: 14px;
+  font-weight: 500;
+  padding: 12px 30px;
+  position: relative;
+  text-align: left;
+  width: 100%;
 }
-
-.tp-category-menu-btn svg {
-  width: 18px;
-  height: 14px;
-}
-
-/* Estilos para el menú de navegación */
-.main-menu {
-  display: flex;
-  justify-content: center;
+a, button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
 }
 
 .menu-list {
@@ -129,11 +113,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-
-.menu-list li {
-  position: relative;
-}
-
 .menu-list li a {
   text-decoration: none;
   color: #333;
