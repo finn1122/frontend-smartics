@@ -44,6 +44,30 @@ api.interceptors.response.use(
 );
 
 export default {
+    async register(userData) {
+        try {
+            return await api.post("/register", userData); // Devuelve la respuesta completa
+        } catch (error) {
+            console.error("Error en el registro:", error);
+            if (error.response) {
+                throw new Error(error.response.data.message || "Error en el registro");
+            } else {
+                throw new Error("Error de conexión. Inténtalo de nuevo más tarde.");
+            }
+        }
+    },
+    async resendConfirmationEmail(userEmail) {
+        try {
+            return await api.post("/email/verification-notification", userEmail); // Devuelve la respuesta completa
+        } catch (error) {
+            console.error("Error en el registro:", error);
+            if (error.response) {
+                throw new Error(error.response.data.message || "Error en el registro");
+            } else {
+                throw new Error("Error de conexión. Inténtalo de nuevo más tarde.");
+            }
+        }
+    },
     async login(userData) {
         try {
             const response = await api.post("/login", userData);
