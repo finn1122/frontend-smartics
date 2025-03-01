@@ -74,11 +74,6 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos para el HeaderBottom */
-.tp-header-bottom {
-  border-bottom: 1px solid #e0e0e0;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
