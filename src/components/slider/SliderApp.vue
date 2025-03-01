@@ -16,7 +16,8 @@
           v-for="(slide, index) in slides"
           :key="index"
           class="slider-item d-flex align-items-center"
-          :class="slide.bgColor"
+          :class="!isHexColor(slide.bgColor) ? slide.bgColor : ''"
+          :style="isHexColor(slide.bgColor) ? { backgroundColor: slide.bgColor } : {}"
       >
         <!-- Contenido del slide -->
         <div class="container">
@@ -48,7 +49,12 @@
                   class="slider-image"
                   :class="{ 'text-end': slide.textPosition === 'left', 'text-start': slide.textPosition === 'right' }"
               >
-                <img :src="slide.image" :alt="slide.title" class="img-fluid" />
+                <img
+                    :src="slide.image"
+                    :alt="slide.title"
+                    class="img-fluid"
+                    style="width: 400px; height: auto;"
+                />
               </div>
             </div>
           </div>
@@ -77,7 +83,7 @@ import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 
 export default {
-  name: "SliderComponent",
+  name: "SliderApp",
   components: {
     Swiper,
     SwiperSlide,
@@ -95,26 +101,32 @@ export default {
           discount: "-35% off this week",
           buttonText: "Shop Now",
           buttonLink: "/shop",
-          image: "/img/slider/slider-img-1.png", // Ruta de la imagen
+          image: "https://webapi3.adata.com/storage/product/hd330_f.png", // Ruta de la imagen
           textPosition: "left", // Posición del texto (left o right)
         },
         {
-          bgColor: "bg-primary",
+          bgColor: "#115061", // Color hexadecimal
           price: "$999.00",
           title: "The best notebook collection 2023",
           subtitle: "Exclusive offer",
           discount: "-10% off this week",
           buttonText: "Shop Now",
           buttonLink: "/shop",
-          image: "/img/slider/slider-img-2.png",
+          image: "https://invictuspc.com.mx/cdn/shop/files/1024.png?v=1732727791",
           textPosition: "right", // Posición del texto (left o right)
         },
       ],
     },
   },
   setup() {
+    // Función para verificar si el valor es un color hexadecimal
+    const isHexColor = (color) => {
+      return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
+    };
+
     return {
       modules: [Autoplay, Pagination, Navigation],
+      isHexColor,
     };
   },
 };
