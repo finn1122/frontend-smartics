@@ -4,6 +4,15 @@ import App from './App.vue';
 import AppLoader from '@/components/AppLoader.vue';
 import router from './router';
 
+// Importa Font Awesome
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faArrowRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+
+// Añade los iconos a la librería
+library.add(faArrowRight, faChevronLeft, faChevronRight);
+
+// Importa estilos globales
 import './styles/global.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,10 +21,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 const app = createApp(App);
 const pinia = createPinia(); // Crea una instancia de Pinia
 
-app.use(pinia); // Usa Pinia en la aplicación
-app.use(router); // Usa Vue Router
+// Usa Pinia y Vue Router
+app.use(pinia);
+app.use(router);
 
-// Loader
+// Registra el componente FontAwesomeIcon globalmente
+app.component('font-awesome-icon', FontAwesomeIcon);
+
+// Registra el componente AppLoader
 app.component('AppLoader', AppLoader);
 
 app.mount('#app'); // Monta la app antes de acceder al store

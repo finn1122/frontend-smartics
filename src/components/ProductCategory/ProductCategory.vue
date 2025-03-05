@@ -28,7 +28,8 @@ export default {
   props: {
     categories: {
       type: Array,
-      required: true
+      required: false,
+      default: () => [], // Define un valor por defecto
     }
   }
 }
