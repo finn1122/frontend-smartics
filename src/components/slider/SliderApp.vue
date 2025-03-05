@@ -76,7 +76,6 @@
     </swiper>
   </section>
 </template>
-
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -175,14 +174,20 @@ export default {
   animation: fadeInRight 1s ease-in-out;
 }
 
+/* Navegación */
 .slider-navigation {
   position: absolute;
   top: 50%;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
   transform: translateY(-50%);
   z-index: 10;
+  opacity: 0; /* Ocultar por defecto */
+  transition: opacity 0.6s ease; /* Transición más lenta (0.6 segundos) */
+}
+
+/* Mostrar botones al hacer hover sobre el slider */
+.slider-area:hover .slider-navigation {
+  opacity: 1;
 }
 
 .slider-button-prev,
@@ -192,8 +197,31 @@ export default {
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  transition: all 0.3s ease; /* Transición para el efecto de resaltado */
 }
 
+/* Posicionar botón "anterior" a la izquierda */
+.slider-button-prev {
+  left: 20px;
+}
+
+/* Posicionar botón "siguiente" a la derecha */
+.slider-button-next {
+  right: 20px;
+}
+
+/* Resaltar los botones al hacer hover sobre ellos */
+.slider-button-prev:hover,
+.slider-button-next:hover {
+  color: #ffcc00; /* Cambiar el color al hacer hover */
+  transform: translateY(-50%) scale(1.2); /* Aumentar el tamaño */
+}
+
+/* Paginación */
 .slider-pagination {
   position: absolute;
   bottom: 20px;
