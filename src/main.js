@@ -7,10 +7,18 @@ import router from './router';
 // Importa Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faArrowRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowRight,
+    faChevronLeft,
+    faChevronRight,
+    faTruck, // Icono para "Free Delivery"
+    faUndo,  // Icono para "Return & Refund"
+    faPercent, // Icono para "Member Discount"
+    faHeadset // Icono para "Support 24/7"
+    } from '@fortawesome/free-solid-svg-icons';
 
 // Añade los iconos a la librería
-library.add(faArrowRight, faChevronLeft, faChevronRight);
+library.add(faArrowRight, faChevronLeft, faChevronRight, faTruck, faUndo, faPercent, faHeadset);
 
 // Importa estilos globales
 import './styles/global.css';

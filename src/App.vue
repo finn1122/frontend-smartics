@@ -7,6 +7,7 @@
         v-if="!isLoginPage && !isRegisterPage && !isProfilePage"
         :categories="categories"
     />
+    <FeatureSection />
     <router-view />
   </div>
 </template>
@@ -16,10 +17,12 @@ import AppHeader from './components/header/HeaderApp.vue';
 import AppNotifications from '@/components/AppNotifications.vue';
 import SliderApp from "@/components/slider/SliderApp.vue";
 import ProductCategory from "@/components/ProductCategory/ProductCategory.vue";
+import FeatureSection from "@/components/Feature/FeatureSection.vue";
 
 export default {
   name: 'App',
   components: {
+    FeatureSection,
     SliderApp,
     AppHeader,AppNotifications,
     ProductCategory,
