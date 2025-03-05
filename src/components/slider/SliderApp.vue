@@ -91,7 +91,7 @@ export default {
   props: {
     slides: {
       type: Array,
-      required: true,
+      required: false,
       default: () => [
         {
           bgColor: "bg-dark", // Clase de fondo

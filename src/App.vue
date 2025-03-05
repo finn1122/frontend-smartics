@@ -2,7 +2,7 @@
   <div id="app">
     <AppHeader />
     <AppNotifications />
-    <SliderApp/>
+    <SliderApp v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
     <router-view />
   </div>
 </template>
@@ -17,6 +17,18 @@ export default {
   components: {
     SliderApp,
     AppHeader,AppNotifications
+  },
+  computed: {
+    // Verifica si la ruta actual es '/login'
+    isLoginPage() {
+      return this.$route.path === "/login";
+    },
+    isRegisterPage() {
+      return this.$route.path === "/register";
+    },
+    isProfilePage() {
+      return this.$route.path === "/profile";
+    },
   },
 }
 </script>
