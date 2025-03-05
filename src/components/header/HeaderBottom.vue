@@ -57,7 +57,7 @@
               </div>
               <div class="tp-header-contact-content">
                 <h5>Hotline:</h5>
-                <p><a href="tel:402-763-282-46">+(402) 763 282 46</a></p>
+                <p><a href="tel:+52-951-357-22-52">+(951) 357 22 52</a></p>
               </div>
             </div>
           </div>
