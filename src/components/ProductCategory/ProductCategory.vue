@@ -1,5 +1,5 @@
 <template>
-  <section class="tp-product-category pt-60 pb-15">
+  <section class="tp-product-category d-flex align-items-center justify-content-center pt-60 pb-15">
     <div class="container">
       <div class="row row-cols-xl-5 row-cols-lg-5 row-cols-md-4">
         <div class="col" v-for="(category, index) in categories" :key="index">
