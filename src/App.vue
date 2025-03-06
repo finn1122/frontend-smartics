@@ -7,7 +7,7 @@
         v-if="!isLoginPage && !isRegisterPage && !isProfilePage"
         :categories="categories"
     />
-    <FeatureSection />
+    <FeatureSection v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
     <router-view />
   </div>
 </template>
