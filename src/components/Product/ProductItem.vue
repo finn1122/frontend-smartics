@@ -242,18 +242,6 @@ export default {
   border-bottom-right-radius: 8px;
 }
 
-.tp-product-tab-content {
-  margin-top: 3rem;
-}
-
-.tp-section-title {
-  position: relative;
-  display: inline-block;
-  font-size: 24px;
-  font-weight: 600;
-  color: #333;
-}
-
 .tp-section-title svg {
   position: absolute;
   bottom: -10px;
@@ -267,7 +255,6 @@ export default {
   .col-sm-6 {
     flex: 0 0 auto;
     width: 50%;
-    margin-bottom: 20px; /* Ajusta este valor según sea necesario */
   }
 }
 @media (min-width: 992px) {
@@ -275,5 +262,8 @@ export default {
     flex: 0 0 auto;
     width: 25%;
   }
+}
+.mb-25 {
+  margin-bottom: 25px;
 }
 </style>
