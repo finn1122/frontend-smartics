@@ -298,6 +298,8 @@ export default {
   font-weight: 500;
   color: #55585b;
   text-decoration: none;
+  display: block; /* Asegura que la categoría esté en una línea separada */
+  margin-bottom: -10px;
 }
 
 .tp-product-title > a {
@@ -321,10 +323,6 @@ export default {
   margin-left: 5px;
 }
 
-.tp-product-price-wrapper {
-  margin-top: 10px;
-}
-
 .tp-product-price.old-price {
   text-decoration: line-through;
   color: #999;
@@ -332,7 +330,7 @@ export default {
 }
 
 .tp-product-price.new-price {
-  color: #333;
+  color: #007bff;
   font-weight: 600;
 }
 
