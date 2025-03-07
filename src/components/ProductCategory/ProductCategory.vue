@@ -52,6 +52,7 @@ export default {
 .tp-product-category {
   padding-top: 60px;
   padding-bottom: 15px;
+  margin-bottom: 3rem;
 }
 
 .tp-product-category-thumb {

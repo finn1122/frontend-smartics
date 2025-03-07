@@ -169,14 +169,24 @@ export default {
 </script>
 
 <style scoped>
+.tp-product-area{
+  margin-bottom: 3rem;
+}
 .tp-product-thumb {
   position: relative;
   overflow: hidden;
+  border: 1px solid #eaebed;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: 10px; /* Espacio interno para la imagen */
 }
 
 .tp-product-thumb img {
   width: 100%;
-  transition: transform 0.3s ease;
+  height: auto; /* Asegura que la imagen mantenga su proporción */
+  display: block; /* Elimina el espacio adicional debajo de la imagen */
+  border-top-left-radius: 8px; /* Esquinas superiores redondeadas */
+  border-top-right-radius: 8px; /* Esquinas superiores redondeadas */
 }
 
 .tp-product-item:hover .tp-product-thumb img {
@@ -305,5 +315,16 @@ export default {
 .tp-product-price.new-price {
   color: #333;
   font-weight: 600;
+}
+.tp-product-content {
+  padding: 10px 30px 20px;
+  border-left: 1px solid #eaebed;
+  border-right: 1px solid #eaebed;
+  border-bottom: 1px solid #eaebed;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.tp-product-tab-content{
+  margin-top: 3rem;
 }
 </style>
