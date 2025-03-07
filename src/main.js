@@ -14,11 +14,27 @@ import {
     faTruck, // Icono para "Free Delivery"
     faUndo,  // Icono para "Return & Refund"
     faPercent, // Icono para "Member Discount"
-    faHeadset // Icono para "Support 24/7"
+    faHeadset, // Icono para "Support 24/7"
+    faStar,
+    faCartShopping,
+    faEye,
+    faHeart
     } from '@fortawesome/free-solid-svg-icons';
 
 // Añade los iconos a la librería
-library.add(faArrowRight, faChevronLeft, faChevronRight, faTruck, faUndo, faPercent, faHeadset);
+library.add(
+    faArrowRight,
+    faChevronLeft,
+    faChevronRight,
+    faTruck,
+    faUndo,
+    faPercent,
+    faHeadset,
+    faStar,
+    faCartShopping,
+    faEye,
+    faHeart
+);
 
 // Importa estilos globales
 import './styles/global.css';
