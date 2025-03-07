@@ -18,7 +18,8 @@ import {
     faStar,
     faCartShopping,
     faEye,
-    faHeart
+    faHeart,
+    faStarHalfStroke,
     } from '@fortawesome/free-solid-svg-icons';
 
 // Añade los iconos a la librería
@@ -33,7 +34,8 @@ library.add(
     faStar,
     faCartShopping,
     faEye,
-    faHeart
+    faHeart,
+    faStarHalfStroke
 );
 
 // Importa estilos globales
