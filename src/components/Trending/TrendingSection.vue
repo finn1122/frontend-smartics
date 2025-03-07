@@ -23,13 +23,6 @@
                 </span></button>
               </li>
               <li class="nav-item">
-                <button class="nav-link">Featured <span class="tp-product-tab-line">
-                  <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="currentColor" stroke-width="2" stroke-miterlimit="3.8637" stroke-linecap="round"></path>
-                  </svg>
-                </span></button>
-              </li>
-              <li class="nav-item">
                 <button class="nav-link">Top Sellers <span class="tp-product-tab-line">
                   <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="currentColor" stroke-width="2" stroke-miterlimit="3.8637" stroke-linecap="round"></path>
