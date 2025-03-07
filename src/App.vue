@@ -8,6 +8,7 @@
         :categories="categories"
     />
     <FeatureSection v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
+    <TrendingSection v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
     <router-view />
   </div>
 </template>
@@ -18,10 +19,12 @@ import AppNotifications from '@/components/AppNotifications.vue';
 import SliderApp from "@/components/slider/SliderApp.vue";
 import ProductCategory from "@/components/ProductCategory/ProductCategory.vue";
 import FeatureSection from "@/components/Feature/FeatureSection.vue";
+import TrendingSection from "@/components/Trending/TrendingSection.vue";
 
 export default {
   name: 'App',
   components: {
+    TrendingSection,
     FeatureSection,
     SliderApp,
     AppHeader,AppNotifications,
