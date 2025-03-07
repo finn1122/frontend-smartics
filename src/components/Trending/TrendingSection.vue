@@ -5,7 +5,7 @@
         <div class="col-xl-5 col-lg-6 col-md-5">
           <div class="tp-section-title-wrapper mb-40">
             <h3 class="tp-section-title">
-              Trending Products
+              {{ activeTab === 'new' ? 'New Products' : 'Top Sellers' }}
               <svg width="114" height="35" viewBox="0 0 114 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 30 C10 20, 30 10, 60 15 C90 20, 100 10, 113 5" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
@@ -16,18 +16,32 @@
           <div class="tp-product-tab tp-product-tab-border mb-45 tp-tab d-flex justify-content-md-end">
             <ul class="nav nav-tabs justify-content-sm-end" id="productTab">
               <li class="nav-item">
-                <button class="nav-link active">New <span class="tp-product-tab-line">
-                  <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="currentColor" stroke-width="2" stroke-miterlimit="3.8637" stroke-linecap="round"></path>
-                  </svg>
-                </span></button>
+                <button
+                    class="nav-link"
+                    :class="{ active: activeTab === 'new' }"
+                    @click="setActiveTab('new')"
+                >
+                  New
+                  <span class="tp-product-tab-line" v-if="activeTab === 'new'">
+                    <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                </button>
               </li>
               <li class="nav-item">
-                <button class="nav-link">Top Sellers <span class="tp-product-tab-line">
-                  <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="currentColor" stroke-width="2" stroke-miterlimit="3.8637" stroke-linecap="round"></path>
-                  </svg>
-                </span></button>
+                <button
+                    class="nav-link"
+                    :class="{ active: activeTab === 'top-sellers' }"
+                    @click="setActiveTab('top-sellers')"
+                >
+                  Top Sellers
+                  <span class="tp-product-tab-line" v-if="activeTab === 'top-sellers'">
+                    <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                  </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -37,62 +51,8 @@
         <div class="col-xl-12">
           <div class="tp-product-tab-content">
             <div class="row">
-              <div class="col-xl-3 col-lg-3 col-sm-6" v-for="product in products" :key="product.id">
-                <div class="mb-25 tp-product-item transition-3">
-                  <div class="tp-product-thumb p-relative fix m-img">
-                    <a :href="product.link" class="">
-                      <img :src="product.image" :alt="product.alt">
-                    </a>
-                    <div class="tp-product-badge" v-if="product.badge">
-                      <span class="product-hot">{{ product.badge }}</span>
-                    </div>
-                    <div class="tp-product-action">
-                      <button type="button" class="tp-product-action-btn tp-product-add-cart-btn">
-                        <div class="icon-rectangle">
-                          <font-awesome-icon :icon="['fas', 'cart-shopping']" />
-                          <span class="tp-product-tooltip">Add to Cart</span>
-                        </div>
-                      </button>
-                      <button type="button" class="tp-product-action-btn tp-product-quick-view-btn">
-                        <div class="icon-rectangle">
-                          <font-awesome-icon :icon="['fas', 'eye']" />
-                          <span class="tp-product-tooltip">Quick View</span>
-                        </div>
-                      </button>
-                      <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
-                        <div class="icon-rectangle">
-                          <font-awesome-icon :icon="['fas', 'heart']" />
-                          <span class="tp-product-tooltip">Add To Wishlist</span>
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="tp-product-content">
-                    <div class="tp-product-category">
-                      <a :href="product.link" class="">{{ product.category }}</a>
-                    </div>
-                    <h3 class="tp-product-title">
-                      <a :href="product.link" class="">{{ product.title }}</a>
-                    </h3>
-                    <div class="tp-product-rating d-flex align-items-center">
-                      <div class="tp-product-rating-icon">
-                        <span v-for="star in product.rating" :key="star">
-                          <font-awesome-icon :icon="star === 0.5 ? ['fas', 'star-half-stroke'] : ['fas', 'star']" />
-                        </span>
-                      </div>
-                      <div class="tp-product-rating-text">
-                        <span>({{ product.reviews }} Review)</span>
-                      </div>
-                    </div>
-                    <div class="tp-product-price-wrapper">
-                      <div v-if="product.oldPrice">
-                        <span class="tp-product-price old-price">${{ product.oldPrice }}</span>
-                        <span class="tp-product-price new-price">${{ product.newPrice }}</span>
-                      </div>
-                      <span v-else class="tp-product-price new-price">${{ product.newPrice }}</span>
-                    </div>
-                  </div>
-                </div>
+              <div class="col-xl-3 col-lg-3 col-sm-6" v-for="product in filteredProducts" :key="product.id">
+                <ProductItem :product="product" />
               </div>
             </div>
           </div>
@@ -102,11 +62,17 @@
   </section>
 </template>
 <script>
+import ProductItem from '@/components/Product/ProductItem.vue';
+
 export default {
   name: 'TrendingSection',
+  components: {
+    ProductItem,
+  },
   data() {
     return {
-      products: [
+      activeTab: 'new', // Pestaña activa por defecto
+      newProducts: [
         {
           id: 1,
           link: "/product-details/641e887d05f9ee1717e1348a",
@@ -154,10 +120,70 @@ export default {
           reviews: 3,
           oldPrice: 120,
           newPrice: 103.20
+        },
+      ],
+      topSellersProducts: [
+        {
+          id: 1,
+          link: "/product-details/641e887d05f9ee1717e1348a",
+          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
+          alt: "product-electronic",
+          category: "Headphones",
+          title: "Headphones Wireless.",
+          rating: [1, 1, 1, 1, 0.5],
+          reviews: 3,
+          oldPrice: 150,
+          newPrice: 125.20
+        },
+        {
+          id: 1,
+          link: "/product-details/641e887d05f9ee1717e1348a",
+          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
+          alt: "product-electronic",
+          category: "Headphones",
+          title: "Headphones Wireless.",
+          rating: [1, 1, 1, 1, 0.5],
+          reviews: 3,
+          oldPrice: 150,
+          newPrice: 125.20
+        },
+        {
+          id: 1,
+          link: "/product-details/641e887d05f9ee1717e1348a",
+          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
+          alt: "product-electronic",
+          category: "Headphones",
+          title: "Headphones Wireless.",
+          rating: [1, 1, 1, 1, 0.5],
+          reviews: 3,
+          oldPrice: 150,
+          newPrice: 125.20
+        },
+        {
+          id: 1,
+          link: "/product-details/641e887d05f9ee1717e1348a",
+          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
+          alt: "product-electronic",
+          category: "Headphones",
+          title: "Headphones Wireless.",
+          rating: [1, 1, 1, 1, 0.5],
+          reviews: 3,
+          oldPrice: 150,
+          newPrice: 125.20
         },
       ]
     };
-  }
+  },
+  computed: {
+    filteredProducts() {
+      return this.activeTab === 'new' ? this.newProducts : this.topSellersProducts;
+    },
+  },
+  methods: {
+    setActiveTab(tab) {
+      this.activeTab = tab;
+    },
+  },
 };
 </script>
 
