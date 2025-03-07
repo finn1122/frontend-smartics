@@ -7,7 +7,7 @@
             <h3 class="tp-section-title">
               Trending Products
               <svg width="114" height="35" viewBox="0 0 114 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M112 23.275C1.84952 -10.6834 -7.36586 1.48086 7.50443 32.9053" stroke="currentColor" stroke-width="4" stroke-miterlimit="3.8637" stroke-linecap="round"></path>
+                <path d="M1 30 C10 20, 30 10, 60 15 C90 20, 100 10, 113 5" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
             </h3>
           </div>
@@ -169,6 +169,7 @@ export default {
 </script>
 
 <style scoped>
+/* Estilos generales para los productos */
 .tp-product-area {
   margin-bottom: 3rem;
 }
@@ -179,27 +180,27 @@ export default {
   border: 1px solid #eaebed;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  padding: 10px; /* Espacio interno para la imagen */
+  padding: 10px;
 }
 
 .tp-product-thumb img {
   width: 100%;
-  height: auto; /* Asegura que la imagen mantenga su proporción */
-  display: block; /* Elimina el espacio adicional debajo de la imagen */
-  border-top-left-radius: 8px; /* Esquinas superiores redondeadas */
-  border-top-right-radius: 8px; /* Esquinas superiores redondeadas */
+  height: auto;
+  display: block;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .tp-product-item {
-  transition: all 0.3s ease; /* Transición suave */
-  border-radius: 8px; /* Esquinas redondeadas */
-  overflow: hidden; /* Asegura que el contenido no se desborde */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tp-product-item:hover {
-  transform: translateY(-5px); /* Efecto de levantar el contenedor */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra más intensa al pasar el mouse */
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
 .tp-product-item:hover .tp-product-thumb img {
@@ -208,8 +209,8 @@ export default {
 
 .tp-product-action {
   position: absolute;
-  bottom: 40px; /* Altura desde el borde inferior */
-  right: -100px; /* Inicialmente fuera de la vista */
+  bottom: 40px;
+  right: -100px;
   opacity: 0;
   transition: all 0.3s ease;
   display: flex;
@@ -217,14 +218,14 @@ export default {
 }
 
 .tp-product-item:hover .tp-product-action {
-  right: 10px; /* Aparece de derecha a izquierda */
+  right: 10px;
   opacity: 1;
 }
 
 .tp-product-action-btn {
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 0px; /* Sin bordes redondeados por defecto */
+  border-radius: 0px;
   color: black;
   display: flex;
   align-items: center;
@@ -237,12 +238,10 @@ export default {
   padding: 0;
 }
 
-/* Bordes redondeados en el primer botón (esquinas superiores) */
 .tp-product-action-btn:first-child {
   border-radius: 5px 5px 0 0;
 }
 
-/* Bordes redondeados en el último botón (esquinas inferiores) */
 .tp-product-action-btn:last-child {
   border-radius: 0 0 5px 5px;
 }
@@ -268,7 +267,7 @@ export default {
   padding: 5px;
   position: absolute;
   z-index: 1;
-  left: -100px; /* Posición inicial fuera de la vista */
+  left: -100px;
   top: 50%;
   transform: translateY(-50%);
   opacity: 0;
@@ -279,7 +278,7 @@ export default {
 .tp-product-action-btn:hover .tp-product-tooltip {
   visibility: visible;
   opacity: 1;
-  left: -110px; /* Posición final a la izquierda */
+  left: -110px;
 }
 
 .tp-product-badge {
@@ -298,7 +297,7 @@ export default {
   font-weight: 500;
   color: #55585b;
   text-decoration: none;
-  display: block; /* Asegura que la categoría esté en una línea separada */
+  display: block;
   margin-bottom: -10px;
 }
 
@@ -316,7 +315,7 @@ export default {
 
 .tp-product-rating-text span {
   color: #55585b;
-  font-family: "Jost",sans-serif;
+  font-family: "Jost", sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 26px;
@@ -345,5 +344,36 @@ export default {
 
 .tp-product-tab-content {
   margin-top: 3rem;
+}
+
+.tp-section-title {
+  position: relative;
+  display: inline-block;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.tp-section-title svg {
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: -1;
+}
+
+@media (min-width: 576px) {
+  .col-sm-6 {
+    flex: 0 0 auto;
+    width: 50%;
+    margin-bottom: 20px; /* Ajusta este valor según sea necesario */
+  }
+}
+@media (min-width: 992px) {
+  .col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
 }
 </style>
