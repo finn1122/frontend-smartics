@@ -169,9 +169,10 @@ export default {
 </script>
 
 <style scoped>
-.tp-product-area{
+.tp-product-area {
   margin-bottom: 3rem;
 }
+
 .tp-product-thumb {
   position: relative;
   overflow: hidden;
@@ -187,6 +188,18 @@ export default {
   display: block; /* Elimina el espacio adicional debajo de la imagen */
   border-top-left-radius: 8px; /* Esquinas superiores redondeadas */
   border-top-right-radius: 8px; /* Esquinas superiores redondeadas */
+}
+
+.tp-product-item {
+  transition: all 0.3s ease; /* Transición suave */
+  border-radius: 8px; /* Esquinas redondeadas */
+  overflow: hidden; /* Asegura que el contenido no se desborde */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+}
+
+.tp-product-item:hover {
+  transform: translateY(-5px); /* Efecto de levantar el contenedor */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra más intensa al pasar el mouse */
 }
 
 .tp-product-item:hover .tp-product-thumb img {
@@ -283,22 +296,28 @@ export default {
 .tp-product-category > a {
   font-size: 12px;
   font-weight: 500;
-  color: #666;
+  color: #55585b;
+  text-decoration: none;
 }
 
-.tp-product-title {
-  font-size: 16px;
+.tp-product-title > a {
+  font-size: 14px;
   font-weight: 600;
-  margin: 10px 0;
+  color: #000000;
+  text-decoration: none;
 }
 
-.tp-product-rating-icon {
+.tp-product-rating-icon span {
   color: #ffc107;
+  font-size: 12px;
 }
 
-.tp-product-rating-text {
+.tp-product-rating-text span {
+  color: #55585b;
+  font-family: "Jost",sans-serif;
   font-size: 12px;
-  color: #666;
+  font-weight: 500;
+  line-height: 26px;
   margin-left: 5px;
 }
 
@@ -316,6 +335,7 @@ export default {
   color: #333;
   font-weight: 600;
 }
+
 .tp-product-content {
   padding: 10px 30px 20px;
   border-left: 1px solid #eaebed;
@@ -324,7 +344,8 @@ export default {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-.tp-product-tab-content{
+
+.tp-product-tab-content {
   margin-top: 3rem;
 }
 </style>
