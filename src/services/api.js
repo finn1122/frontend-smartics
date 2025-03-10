@@ -119,4 +119,14 @@ export default {
             throw new Error(error.response?.data?.message || "Error al obtener el usuario");
         }
     },
+    async getTopCategories() {
+        try {
+            const response = await api.get(`/top-categories`);
+            return  response.data;
+        } catch (error) {
+            console.error("❌ Error al obtener el categorias top:", error);
+            throw new Error(error.response?.data?.message || "Error al obtener categorias top");
+        }
+    },
+
 };

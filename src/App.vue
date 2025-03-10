@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <AppLoader :isLoading="isLoading" />
     <AppHeader />
     <AppNotifications />
     <SliderApp v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
     <ProductCategory
         v-if="!isLoginPage && !isRegisterPage && !isProfilePage"
-        :categories="categories"
+        :categories="categories ?? null"
     />
     <FeatureSection v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
     <TrendingSection v-if="!isLoginPage && !isRegisterPage && !isProfilePage"/>
@@ -20,6 +21,7 @@ import SliderApp from "@/components/slider/SliderApp.vue";
 import ProductCategory from "@/components/ProductCategory/ProductCategory.vue";
 import FeatureSection from "@/components/Feature/FeatureSection.vue";
 import TrendingSection from "@/components/Trending/TrendingSection.vue";
+import api from '@/services/api';
 
 export default {
   name: 'App',
@@ -32,33 +34,8 @@ export default {
   },
   data() {
     return {
-      categories: [
-        {
-          name: 'Headphones',
-          image: 'https://i.ibb.co/sVxYFDY/product-cat-1.png',
-          productCount: 3
-        },
-        {
-          name: 'Mobile Tablets',
-          image: 'https://i.ibb.co/xHFpQTV/product-cat-2.png',
-          productCount: 3
-        },
-        {
-          name: 'CPU Heat Pipes',
-          image: 'https://i.ibb.co/S0GjZdp/product-cat-3.png',
-          productCount: 2
-        },
-        {
-          name: 'Smart Watch',
-          image: 'https://i.ibb.co/g3YK8H2/product-cat-4.png',
-          productCount: 3
-        },
-        {
-          name: 'Bluetooth',
-          image: 'https://i.ibb.co/D9qfYWX/product-cat-5.png',
-          productCount: 2
-        }
-      ]
+      categories: [],
+      isLoading: false,
     };
   },
   computed: {
@@ -73,6 +50,27 @@ export default {
       return this.$route.path === "/profile";
     },
   },
+  async created() {
+    await this.handleCategories();
+  },
+  methods: {
+    async handleCategories() {
+      this.isLoading = true; // Activa el loader
+
+      try {
+        const response = await api.getTopCategories(); // Llama a la función login
+        if(response.length > 0) {
+          this.categories = response;
+        }
+      } catch (error) {
+        // Error inesperado
+        this.notificationStore.showNotification(error.message || "Error inesperado", "error");
+      } finally {
+        this.isLoading = false; // Desactiva el loader
+      }
+    },
+
+  }
 }
 </script>
 

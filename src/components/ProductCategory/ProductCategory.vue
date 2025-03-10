@@ -2,11 +2,11 @@
   <section class="tp-product-category d-flex align-items-center justify-content-center pt-60 pb-15">
     <div class="container">
       <div class="row row-cols-xl-5 row-cols-lg-5 row-cols-md-4">
-        <div class="col" v-for="(category, index) in categories" :key="index">
+        <div class="col" v-for="(category, index) in displayedCategories" :key="index">
           <div class="tp-product-category-item text-center mb-40">
             <div class="tp-product-category-thumb fix">
               <a class="cursor-pointer">
-                <img :src="category.image" :alt="category.name">
+                <img :src="category.imageUrl" :alt="category.name">
               </a>
             </div>
             <div class="tp-product-category-content">
@@ -31,7 +31,45 @@ export default {
       required: false,
       default: () => [], // Define un valor por defecto
     }
-  }
+  },
+  data() {
+    return {
+      // Categorías por defecto
+      defaultCategories: [
+        {
+          name: 'Headphones',
+          imageUrl: 'https://i.ibb.co/sVxYFDY/product-cat-1.png',
+          productCount: 3
+        },
+        {
+          name: 'Mobile Tablets',
+          imageUrl: 'https://i.ibb.co/xHFpQTV/product-cat-2.png',
+          productCount: 3
+        },
+        {
+          name: 'CPU Heat Pipes',
+          imageUrl: 'https://i.ibb.co/S0GjZdp/product-cat-3.png',
+          productCount: 2
+        },
+        {
+          name: 'Smart Watch',
+          imageUrl: 'https://i.ibb.co/g3YK8H2/product-cat-4.png',
+          productCount: 3
+        },
+        {
+          name: 'Bluetooth',
+          imageUrl: 'https://i.ibb.co/D9qfYWX/product-cat-5.png',
+          productCount: 2
+        }
+      ],
+    };
+  },
+  computed: {
+    // Usar categorías proporcionadas o las categorías por defecto
+    displayedCategories() {
+      return this.categories.length > 0 ? this.categories : this.defaultCategories;
+    }
+  },
 }
 </script>
 
