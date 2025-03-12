@@ -5,13 +5,13 @@
         <div class="col" v-for="(category, index) in displayedCategories" :key="index">
           <div class="tp-product-category-item text-center mb-40">
             <div class="tp-product-category-thumb fix">
-              <a class="cursor-pointer">
+                <router-link :to="`/category/${category.path}`">
                 <img :src="category.imageUrl" :alt="category.name">
-              </a>
+                </router-link>
             </div>
             <div class="tp-product-category-content">
               <h3 class="tp-product-category-title">
-                <router-link :to="`/categoria/${category.path}`">{{ category.name }}</router-link>
+                <router-link :to="`/category/${category.path}`">{{ category.name }}</router-link>
               </h3>
               <p>{{ category.productsCount }} Productos</p>
             </div>
