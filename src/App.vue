@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <AppLoader :isLoading="isLoading" />
     <AppHeader />
     <AppNotifications />
     <router-view />
@@ -9,14 +10,17 @@
 <script>
 import AppHeader from './components/header/HeaderApp.vue';
 import AppNotifications from '@/components/AppNotifications.vue';
+import AppLoader from "@/components/AppLoader.vue";
+
 export default {
   name: 'App',
   components: {
-    AppHeader,AppNotifications
+    AppLoader,AppHeader,AppNotifications
   },
   data() {
     return {
       categories: [],
+      isLoading: false,
     };
   },
 }

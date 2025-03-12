@@ -1,6 +1,5 @@
 <template>
   <div>
-    <AppLoader :isLoading="isLoading" />
     <!-- Sección de Breadcrumb -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
       <div class="container">
@@ -61,7 +60,6 @@
 
 <script>
 import LoginForm from '@/components/auth/LoginForm.vue';
-import AppLoader from '@/components/AppLoader.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useAuthStore } from "@/stores/authStore";
@@ -69,7 +67,7 @@ import { useAuthStore } from "@/stores/authStore";
 export default {
   name: 'LoginView',
   components: {
-    AppLoader, LoginForm
+    LoginForm
   },
   setup() {
     const notificationStore = useNotificationStore();
@@ -92,7 +90,7 @@ export default {
   },
   methods: {
     async handleLogin(formData) {
-      this.isLoading = true; // Activa el loader
+      this.$root.isLoading = true; // Activa el loader
 
       try {
         const response = await api.login(formData); // Llama a la función login
@@ -122,7 +120,7 @@ export default {
         // Error inesperado
         this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
-        this.isLoading = false; // Desactiva el loader
+        this.$root.isLoading = false; // Desactiva el loader
       }
     },
   }

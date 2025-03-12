@@ -1,6 +1,5 @@
 <template>
   <section class="profile__area pt-120 pb-120">
-    <AppLoader :isLoading="isLoading" />
     <div class="container">
       <div class="profile__inner p-relative">
         <div class="profile__shape">
@@ -20,25 +19,22 @@
 
 <script>
 import ProfileTabs from '@/components/profile/ProfileTabs.vue';
-import AppLoader from "@/components/AppLoader.vue";
 import {useAuthStore} from "@/stores/authStore";
 import api from "@/services/api";
 
 export default {
   name: 'ProfileView',
   components: {
-    AppLoader,
     ProfileTabs,
   },
   data() {
     return {
-      isLoading: false,
       user: null,
     };
   },
   methods: {
     async fetchUser() {
-      this.isLoading = true;
+      this.$root.isLoading = true;
       const authStore = useAuthStore(); // Obtener el store
       const userId = authStore.user?.id; // Obtener el userId desde el store
 
@@ -47,7 +43,7 @@ export default {
         return;
       }
 
-      this.isLoading = true; // Activar el indicador de carga
+      this.$root.isLoading = true; // Activar el indicador de carga
       this.error = false; // Reiniciar el estado de error
 
       try {
@@ -64,12 +60,12 @@ export default {
         this.error = true;
         this.errorMessage = "Error inesperado al obtener el usuario"; // Manejar errores inesperados
       } finally {
-        this.isLoading = false; // Desactivar el indicador de carga
+        this.$root.isLoading = false; // Desactivar el indicador de carga
       }
     },
     async handleLogout() {
       console.log('handleLogout')
-      this.isLoading = true; // Activar el indicador de carga
+      this.$root.isLoading = true; // Activar el indicador de carga
       this.error = false; // Reiniciar el estado de error
 
       try {
@@ -85,7 +81,7 @@ export default {
         this.error = true;
         this.errorMessage = "Error inesperado al obtener el usuario"; // Manejar errores inesperados
       } finally {
-        this.isLoading = false; // Desactivar el indicador de carga
+        this.$root.isLoading = false; // Desactivar el indicador de carga
       }
     },
   },

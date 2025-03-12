@@ -1,6 +1,5 @@
 <template>
   <div>
-    <AppLoader :isLoading="isLoading" />
     <!-- Sección de Breadcrumb -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
       <div class="container">
@@ -61,13 +60,11 @@
 import RegisterForm from '@/components/auth/RegisterForm.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
-import AppLoader from "@/components/AppLoader.vue";
 import {useAuthStore} from "@/stores/authStore";
 
 export default {
   name: 'RegisterApp',
   components: {
-    AppLoader,
     RegisterForm
   },
   setup() {
@@ -88,7 +85,7 @@ export default {
   },
   methods: {
     async handleRegister(formData) {
-      this.isLoading = true;
+      this.$root.isLoading = true;
       try {
         const response = await api.register(formData);
         console.log("Respuesta del servidor:", response); // Depuración
@@ -114,7 +111,7 @@ export default {
             "error" // <-- Usa "error" para errores inesperados
         );
       } finally {
-        this.isLoading = false;
+        this.$root.isLoading = false;
       }
     },
   },

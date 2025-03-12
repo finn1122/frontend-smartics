@@ -1,6 +1,5 @@
 <template>
   <div class="confirm-email-page">
-    <AppLoader :isLoading="isLoading" />
     <!-- Sección de Breadcrumb -->
     <section class="breadcrumb__area include-bg text-center pt-95 pb-50">
       <div class="container">
@@ -50,10 +49,9 @@
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useAuthStore } from "@/stores/authStore";
-import AppLoader from "@/components/AppLoader.vue";
 export default {
   name: 'ConfirmEmail',
-  components: {AppLoader},
+  components: {},
   data() {
     return {
       email: '', // Obtén el email de la URL
@@ -79,7 +77,7 @@ export default {
   },
   methods: {
     async resendConfirmationEmail() {
-      this.isLoading = true; // Activa el loader
+      this.$root.isLoading = true; // Activa el loader
 
       try {
         // Realiza la solicitud para reenviar el correo de confirmación
@@ -101,7 +99,7 @@ export default {
           this.notificationStore.showNotification("Error de conexión. Inténtalo de nuevo más tarde.", 'error');
         }
       } finally {
-        this.isLoading = false; // Desactiva el loader
+        this.$root.isLoading = false; // Desactiva el loader
       }
     },
   },
