@@ -1,7 +1,7 @@
 <template>
   <header>
     <HeaderMain />
-    <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage" />
+    <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage && !isCategoryPage" />
   </header>
 </template>
 
@@ -26,6 +26,9 @@ export default {
     },
     isProfilePage() {
       return this.$route.path === "/profile";
+    },
+    isCategoryPage() {
+      return this.$route.path.startsWith("/categoria/"); // Verifica si la ruta comienza con "/categoria/"
     },
   },
 };
