@@ -50,11 +50,16 @@
           <div class="tp-shop-widget mb-50">
             <h3 class="tp-shop-widget-title">Categories</h3>
             <div class="tp-shop-widget-content">
-              <ul class="list-unstyled">
-                <li v-for="category in categories" :key="category.name">
-                  <a href="#" class="cursor-pointer">{{ category.name }} <span>{{ category.count }}</span></a>
-                </li>
-              </ul>
+              <div class="tp-shop-widget-categories">
+                <ul class="list-unstyled">
+                  <li v-for="category in categories" :key="category.name">
+                    <a href="#" class="cursor-pointer" :class="{ active: category.isActive }" @click="toggleCategory(category)">
+                      {{ category.name }} <span>{{ category.count }}</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
             </div>
           </div>
 
@@ -137,6 +142,18 @@ export default {
     return {
       priceRange: [0, 1200], // Rango inicial de precios
       categories: [
+        { name: 'Headphones', count: 3 },
+        { name: 'Mobile Tablets', count: 3 },
+        { name: 'CPU Heat Pipes', count: 2 },
+        { name: 'Headphones', count: 3 },
+        { name: 'Mobile Tablets', count: 3 },
+        { name: 'CPU Heat Pipes', count: 2 },
+        { name: 'Headphones', count: 3 },
+        { name: 'Mobile Tablets', count: 3 },
+        { name: 'CPU Heat Pipes', count: 2 },
+        { name: 'Headphones', count: 3 },
+        { name: 'Mobile Tablets', count: 3 },
+        { name: 'CPU Heat Pipes', count: 2 },
         { name: 'Headphones', count: 3 },
         { name: 'Mobile Tablets', count: 3 },
         { name: 'CPU Heat Pipes', count: 2 },
@@ -234,10 +251,86 @@ h3 {
     font-size: 1.75rem;
   }
 }
+.tp-shop-widget-categories {
+  height: 288px;
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
+  padding-right: 10px;
+  scrollbar-width: thin;
+}
 
+.tp-shop-widget-categories ul li {
+  margin-bottom: 12px; /* Espaciado entre categorías */
+}
 
+.tp-shop-widget-categories ul li a {
+  align-items: center;
+  color: var(--tp-text-body);
+  display: flex;
+  font-size: 15px;
+  font-weight: 400;
+  justify-content: space-between;
+  padding-left: 16px;
+  position: relative;
+  width: 100%;
+  text-decoration: none; /* Elimina el subrayado */
+  transition: color 0.3s ease, background-color 0.3s ease; /* Transición suave */
+}
 
+.tp-shop-widget-categories ul li a:hover,
+.tp-shop-widget-categories ul li a.active {
+  color: var(--tp-theme-primary); /* Color azul al pasar el mouse o seleccionar */
+}
 
+.tp-shop-widget-categories ul li a:hover span,
+.tp-shop-widget-categories ul li a.active span {
+  background-color: var(--tp-theme-primary); /* Fondo azul para el contador */
+  color: #fff; /* Texto blanco para el contador */
+  border-color: var(--tp-theme-primary); /* Borde azul para el contador */
+}
+
+.tp-shop-widget-categories ul li a:after {
+  background-color: #e7e7e7;
+  border-radius: 50%;
+  content: "";
+  height: 6px;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  width: 6px;
+}
+
+.tp-shop-widget-categories ul li a span {
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 5px 6px 3px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+}
+
+.cursor-pointer, button:hover {
+  cursor: pointer;
+}
+
+a, button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
+}
 /* Estilos personalizados para el slider */
 .vue-slider {
   margin: 20px 0;
