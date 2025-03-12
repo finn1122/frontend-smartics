@@ -11,9 +11,9 @@
             </div>
             <div class="tp-product-category-content">
               <h3 class="tp-product-category-title">
-                <a :href="category.link" class="cursor-pointer">{{ category.name }}</a>
+                <router-link :to="`/categoria/${category.path}`">{{ category.name }}</router-link>
               </h3>
-              <p>{{ category.productCount }} Product</p>
+              <p>{{ category.productsCount }} Productos</p>
             </div>
           </div>
         </div>
@@ -39,27 +39,32 @@ export default {
         {
           name: 'Headphones',
           imageUrl: 'https://i.ibb.co/sVxYFDY/product-cat-1.png',
-          productCount: 3
+          productsCount: 3,
+          path: 'headphones',
         },
         {
           name: 'Mobile Tablets',
           imageUrl: 'https://i.ibb.co/xHFpQTV/product-cat-2.png',
-          productCount: 3
+          productsCount: 3,
+          path: 'mobile-tablets'
         },
         {
           name: 'CPU Heat Pipes',
           imageUrl: 'https://i.ibb.co/S0GjZdp/product-cat-3.png',
-          productCount: 2
+          productsCount: 2,
+          path: 'cpu-heat-pipes'
         },
         {
           name: 'Smart Watch',
           imageUrl: 'https://i.ibb.co/g3YK8H2/product-cat-4.png',
-          productCount: 3
+          productsCount: 3,
+          path: 'smart-watch'
         },
         {
           name: 'Bluetooth',
           imageUrl: 'https://i.ibb.co/D9qfYWX/product-cat-5.png',
-          productCount: 2
+          productsCount: 2,
+          path: 'bluetooth'
         }
       ],
     };
