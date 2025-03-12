@@ -1,8 +1,36 @@
 <template>
+  <section class="breadcrumb__area include-bg pt-100 pb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-12">
+          <div class="breadcrumb__content p-relative z-index-1">
+            <h3 class="breadcrumb__title">{{ categoryName }}</h3>
+            <div class="breadcrumb__list">
+              <span><a href="/" class="">Home</a></span>
+              <span>{{ categoryName }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div>
     <h1>{{ categoryName }}</h1>
     <p>{{ categoryDescription }}</p>
-    <!-- Aquí puedes mostrar los productos de la categoría -->
+    <!-- Mostrar los productos -->
+    <div v-if="products.length > 0">
+      <div v-for="product in products" :key="product.id">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <p>Precio: ${{ product.price }}</p>
+        <p v-if="product.isAvailable">Disponible</p>
+        <p v-else>Agotado</p>
+      </div>
+    </div>
+    <div v-else>
+      <p>No hay productos disponibles.</p>
+    </div>
   </div>
 </template>
 
@@ -10,31 +38,22 @@
 export default {
   name: "CategoryPage",
   props: {
-    slug: {
+    categoryName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
+    categoryDescription: {
+      type: String,
+      required: true,
+    },
+    products: {
+      type: Array,
+      required: true,
+    },
   },
-  data() {
-    return {
-      categoryName: '',
-      categoryDescription: '',
-      products: []
-    };
-  },
-  created() {
-    this.fetchCategoryData();
-  },
-  methods: {
-    async fetchCategoryData() {
-      // Simula una llamada a la API para obtener los datos de la categoría
-      const response = await fetch(`/api/categories/${this.slug}`);
-      const data = await response.json();
-
-      this.categoryName = data.name;
-      this.categoryDescription = data.description;
-      this.products = data.products;
-    }
-  }
-}
+};
 </script>
+
+<style scoped>
+/* Tus estilos aquí */
+</style>

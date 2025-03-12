@@ -5,13 +5,15 @@
         <div class="col" v-for="(category, index) in displayedCategories" :key="index">
           <div class="tp-product-category-item text-center mb-40">
             <div class="tp-product-category-thumb fix">
-                <router-link :to="`/categoria/${category.path}`">
+              <!-- Usar @click en lugar de :to -->
+              <a @click="goToCategory(category)">
                 <img :src="category.imageUrl" :alt="category.name">
-                </router-link>
+              </a>
             </div>
             <div class="tp-product-category-content">
               <h3 class="tp-product-category-title">
-                <router-link :to="`/categoria/${category.path}`">{{ category.name }}</router-link>
+                <!-- Usar @click en lugar de :to -->
+                <a @click="goToCategory(category)">{{ category.name }}</a>
               </h3>
               <p>{{ category.productsCount }} Productos</p>
             </div>
@@ -74,6 +76,15 @@ export default {
     displayedCategories() {
       return this.categories.length > 0 ? this.categories : this.defaultCategories;
     }
+  },
+  methods: {
+    goToCategory(category) {
+      this.$router.push({
+        name: "CategoryPage", // Nombre de la ruta
+        params: { path: 'sillas-gamer' }, // Parámetro dinámico (path)
+        state: { id: category.id }, // Estado de la ruta (id)
+      });
+    },
   },
 }
 </script>
