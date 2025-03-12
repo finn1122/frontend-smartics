@@ -11,7 +11,7 @@ const routes = [
     { path: '/login', component: LoginView },
     { path: '/register', component: RegisterView},
     { path: '/confirm-email', component: ConfirmEmail},
-    { path: '/category/:slug', component: CategoryView, props: true }, // Ruta dinámica
+    { path: '/categoria/:slug', component: CategoryView, props: true }, // Ruta dinámica
 
 ];
 
