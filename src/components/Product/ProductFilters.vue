@@ -23,7 +23,7 @@
                 </div>
                 <div class="tp-shop-widget-filter-info d-flex align-items-center justify-content-between">
                   <span class="input-range">${{ priceRange[0] }} - ${{ priceRange[1] }}</span>
-                  <button class="btn btn-primary" @click="applyFilter">Filter</button>
+                  <button class="tp-shop-widget-filter-btn" @click="applyFilter">Filter</button>
                 </div>
               </div>
             </div>
@@ -169,6 +169,11 @@ export default {
 </script>
 
 <style scoped>
+.tp-shop-widget-content {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem;
+}
 .tp-shop-widget-title.no-border {
   border: 0;
   margin-bottom: 14px;
@@ -184,12 +189,53 @@ export default {
 h3 {
   font-size: 28px;
 }
+.align-items-center {
+  align-items: center !important;
+}
+.justify-content-between {
+  justify-content: space-between !important;
+}
+.d-flex {
+  display: flex !important
+;
+}
 
+.tp-shop-widget-filter-info {
+  padding: 0px; /* Espaciado interno */
+}
+
+.input-range {
+  color: #6c757d; /* Color gris similar al del input del chat */
+  transition: color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.input-range:hover {
+  color: #000; /* Color negro al pasar el mouse */
+}
+
+.tp-shop-widget-filter-btn {
+  background-color: #f5f5f5; /* Fondo gris claro */
+  color: #010f1c; /* Texto oscuro */
+  font-size: 14px;
+  font-weight: 400;
+  padding: 2px 21px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+.tp-shop-widget-filter-btn:hover {
+  background-color: #010f1c; /* Fondo negro al pasar el mouse */
+  color: #fff; /* Texto blanco al pasar el mouse */
+}
 @media (min-width: 1200px) {
   .h3, h3 {
     font-size: 1.75rem;
   }
 }
+
+
 
 
 /* Estilos personalizados para el slider */
