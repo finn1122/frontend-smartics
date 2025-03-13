@@ -251,13 +251,6 @@ h3 {
     font-size: 1.75rem;
   }
 }
-.tp-shop-widget-categories {
-  height: 288px;
-  overflow-y: scroll;
-  overscroll-behavior-y: contain;
-  padding-right: 10px;
-  scrollbar-width: thin;
-}
 
 .tp-shop-widget-categories ul li {
   margin-bottom: 12px; /* Espaciado entre categorías */
@@ -309,16 +302,6 @@ h3 {
   line-height: 1;
   padding: 5px 6px 3px;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Transición suave */
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-*, :after, :before {
-  box-sizing: border-box;
 }
 
 .cursor-pointer, button:hover {
