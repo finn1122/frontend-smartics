@@ -251,6 +251,13 @@ h3 {
     font-size: 1.75rem;
   }
 }
+.tp-shop-widget-categories {
+  height: 288px;
+  overflow-y: scroll; /* Habilita el scroll vertical */
+  overscroll-behavior-y: contain;
+  padding-right: 10px;
+  scrollbar-width: thin;
+}
 
 .tp-shop-widget-categories ul li {
   margin-bottom: 12px; /* Espaciado entre categorías */
@@ -266,20 +273,20 @@ h3 {
   padding-left: 16px;
   position: relative;
   width: 100%;
-  text-decoration: none; /* Elimina el subrayado */
-  transition: color 0.3s ease, background-color 0.3s ease; /* Transición suave */
+  text-decoration: none;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .tp-shop-widget-categories ul li a:hover,
 .tp-shop-widget-categories ul li a.active {
-  color: var(--tp-theme-primary); /* Color azul al pasar el mouse o seleccionar */
+  color: var(--tp-theme-primary);
 }
 
 .tp-shop-widget-categories ul li a:hover span,
 .tp-shop-widget-categories ul li a.active span {
-  background-color: var(--tp-theme-primary); /* Fondo azul para el contador */
-  color: #fff; /* Texto blanco para el contador */
-  border-color: var(--tp-theme-primary); /* Borde azul para el contador */
+  background-color: var(--tp-theme-primary);
+  color: #fff;
+  border-color: var(--tp-theme-primary);
 }
 
 .tp-shop-widget-categories ul li a:after {
@@ -301,9 +308,8 @@ h3 {
   font-weight: 500;
   line-height: 1;
   padding: 5px 6px 3px;
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; /* Transición suave */
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
-
 .cursor-pointer, button:hover {
   cursor: pointer;
 }
