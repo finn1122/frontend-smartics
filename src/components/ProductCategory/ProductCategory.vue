@@ -169,13 +169,4 @@ a {
   color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
 
-.row {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
-  display: flex;
-  flex-wrap: wrap;
-  margin-left: calc(var(--bs-gutter-x) * -.5);
-  margin-right: calc(var(--bs-gutter-x) * -.5);
-  margin-top: calc(var(--bs-gutter-y) * -1);
-}
 </style>
