@@ -47,7 +47,7 @@ export default {
           id: categoryId,
           name: "Sillas Gamer",
           description: "Las mejores sillas gamer para tu setup.",
-          imageUrl: "https://via.placeholder.com/150",
+          imageUrl: "https://i.ibb.co/n1YRvWJ/headphone-5.png",
           path: "sillas-gamer",
           top: true,
           active: true,
@@ -58,30 +58,42 @@ export default {
         const productsData = [
           {
             id: 1,
-            name: "Silla Gamer Pro",
-            description: "Silla ergonómica con soporte lumbar.",
-            price: 299.99,
-            imageUrl: "https://via.placeholder.com/150",
-            stock: 10,
-            isAvailable: true,
+            link: "/product-details/1",
+            image: "https://i.ibb.co/n1YRvWJ/headphone-5.png",
+            alt: "Product 1",
+            badge: "New",
+            category: "Electronics",
+            title: "Smartphone X",
+            rating: [1, 1, 1, 1, 0.5], // 4.5 estrellas
+            reviews: 10,
+            oldPrice: 499,
+            newPrice: 399
           },
           {
             id: 2,
-            name: "Silla Gamer Elite",
-            description: "Silla premium con reposapiés integrado.",
-            price: 499.99,
-            imageUrl: "https://via.placeholder.com/150",
-            stock: 5,
-            isAvailable: true,
+            link: "/product-details/1",
+            image: "https://i.ibb.co/n1YRvWJ/headphone-5.png",
+            alt: "Product 1",
+            badge: "New",
+            category: "Electronics",
+            title: "Smartphone X",
+            rating: [1, 1, 1, 1, 0.5], // 4.5 estrellas
+            reviews: 10,
+            oldPrice: 499,
+            newPrice: 399
           },
           {
             id: 3,
-            name: "Silla Gamer Basic",
-            description: "Silla económica para gamers casuales.",
-            price: 199.99,
-            imageUrl: "https://via.placeholder.com/150",
-            stock: 0,
-            isAvailable: false,
+            link: "/product-details/1",
+            image: "https://i.ibb.co/n1YRvWJ/headphone-5.png",
+            alt: "Product 1",
+            badge: "New",
+            category: "Electronics",
+            title: "Smartphone X",
+            rating: [1, 1, 1, 1, 0.5], // 4.5 estrellas
+            reviews: 10,
+            oldPrice: 499,
+            newPrice: 399
           },
         ];
 

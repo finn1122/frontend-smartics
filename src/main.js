@@ -20,6 +20,9 @@ import {
     faEye,
     faHeart,
     faStarHalfStroke,
+    faThLarge,
+    faBars,
+    faCodeCompare
     } from '@fortawesome/free-solid-svg-icons';
 
 // Añade los iconos a la librería
@@ -35,7 +38,10 @@ library.add(
     faCartShopping,
     faEye,
     faHeart,
-    faStarHalfStroke
+    faStarHalfStroke,
+    faThLarge,
+    faBars,
+    faCodeCompare
 );
 
 // Importa estilos globales
