@@ -121,12 +121,20 @@ export default {
     },
     async getTopCategories() {
         try {
-            const response = await api.get(`/top-categories`);
+            const response = await api.get(`/shop-categories/top`);
             return  response.data;
         } catch (error) {
             console.error("❌ Error al obtener el categorias top:", error);
             throw new Error(error.response?.data?.message || "Error al obtener categorias top");
         }
     },
-
+    async getCategoryByPath(path) {
+        try {
+            const response = await api.get(`/shop-categories/${path}`);
+            return  response.data;
+        } catch (error) {
+            console.error("❌ Error al obtener la categoría por path:", error);
+            throw new Error(error.response?.data?.message || "Error al obtener la categoría por path");
+        }
+    },
 };

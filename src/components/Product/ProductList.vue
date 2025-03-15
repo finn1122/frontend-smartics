@@ -57,15 +57,20 @@ export default {
     ProductItem, // Registrar el componente
   },
   props: {
-    products: {
-      type: Array,
-      required: true,
-    },
-    categoryName: {
-      type: String,
+    category: {
+      type: Object,
       required: true,
     },
   },
+  data() {
+    return {
+      products: {
+        type: Object
+      },
+    }
+  },
+  async created() {},
+  methods: {}
 };
 </script>
 

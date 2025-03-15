@@ -25,17 +25,17 @@
 </template>
 
 <script>
+import api from "@/services/api";
+
 export default {
   name: "ProductCategory",
-  props: {
-    categories: {
-      type: Array,
-      required: false,
-      default: () => [], // Define un valor por defecto
-    }
-  },
   data() {
     return {
+      categories: {
+        type: Array,
+        required: false,
+        default: () => [], // Define un valor por defecto
+      },
       // Categorías por defecto
       defaultCategories: [
         {
@@ -77,12 +77,29 @@ export default {
       return this.categories.length > 0 ? this.categories : this.defaultCategories;
     }
   },
+  async created() {
+    await this.handleCategories();
+  },
   methods: {
+    async handleCategories() {
+      this.$root.isLoading = true; // Accede al loader global en App.vue
+
+      try {
+        const response = await api.getTopCategories();
+        if (response.length > 0) {
+          this.categories = response;
+          console.log(this.categories)
+        }
+      } catch (error) {
+        this.$root.notificationStore.showNotification(error.message || "Error inesperado", "error");
+      } finally {
+        this.$root.isLoading = false; // Desactiva el loader global
+      }
+    },
     goToCategory(category) {
       this.$router.push({
         name: "CategoryPage", // Nombre de la ruta
-        params: { path: 'sillas-gamer' }, // Parámetro dinámico (path)
-        state: { id: category.id }, // Estado de la ruta (id)
+        params: { path: category.path }, // Parámetro dinámico (path)
       });
     },
   },
