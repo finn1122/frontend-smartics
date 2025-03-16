@@ -38,36 +38,43 @@
     </div>
 
     <!-- Lista de Productos -->
-    <div class="tp-shop-items-wrapper tp-shop-item-primary">
+    <div v-if="products" class="tp-shop-items-wrapper tp-shop-item-primary">
       <div class="row">
         <div v-for="product in products" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
           <!-- Usar el componente ProductItem -->
-          <ProductItem :product="product" />
+          <ProductItem
+              v-if="product && product.bestPrice && category"
+              :product="product"
+              :category="category"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import ProductItem from './ProductItem.vue'; // Asegúrate de que la ruta sea correcta
+import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'ProductList',
   components: {
-    ProductItem, // Registrar el componente
+    // Cargar el componente de forma diferida
+    ProductItem: defineAsyncComponent(() =>
+        import('./ProductItem.vue')
+    ),
   },
   props: {
     category: {
       type: Object,
       required: true,
     },
+    products: {
+      type: Object,
+      required: true,
+    }
   },
   data() {
-    return {
-      products: {
-        type: Object
-      },
-    }
+    return {}
   },
   async created() {},
   methods: {}

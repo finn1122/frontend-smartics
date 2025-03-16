@@ -21,8 +21,8 @@
           <ProductFilters />
         </div>
         <!-- Lista de Productos (9 columnas) -->
-        <div class="col-xl-9 col-lg-8">
-          <ProductList :category="category" />
+        <div v-if="category && products" class="col-xl-9 col-lg-8">
+          <ProductList :category="category" :products="products" />
         </div>
       </div>
     </div>
@@ -39,8 +39,8 @@ export default {
   components: { ProductList, ProductFilters },
   data() {
     return {
-      category: null, // Objeto de la categoría
-      products: [], // Lista de productos
+      category: {}, // Objeto de la categoría
+      products: {}, // Lista de productos
     };
   },
   computed: {
@@ -52,7 +52,7 @@ export default {
   async created() {
     await this.loadCategoryData();
     // Obtener los productos de la categoría (si es necesario)
-    //await this.fetchProductsForCategory(this.category.id);
+    await this.fetchProductsForCategory(this.category.id);
   },
   methods: {
     async loadCategoryData() {
@@ -61,7 +61,6 @@ export default {
       try {
         // Obtener los detalles de la categoría por su path
         this.category = await api.getCategoryByPath(this.categoryPath);
-        console.log(this.category)
       } catch (error) {
         console.error("❌ Error al cargar la categoría:", error);
         this.$root.notificationStore.showNotification(
@@ -74,10 +73,14 @@ export default {
     },
     async fetchProductsForCategory(categoryId) {
       try {
-        this.products = await api.getProductsByCategoryId(categoryId);
+        this.$root.isLoading = true; // Desactivar el loader
+        this.products = await api.getProductsByCategory(categoryId);
       } catch (error) {
         console.error("❌ Error al cargar los productos:", error);
         throw new Error(error.response?.data?.message || "Error al cargar los productos");
+      }
+      finally {
+        this.$root.isLoading = false; // Desactivar el loader
       }
     },
   },

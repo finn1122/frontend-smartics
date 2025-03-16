@@ -137,4 +137,14 @@ export default {
             throw new Error(error.response?.data?.message || "Error al obtener la categoría por path");
         }
     },
+    async getProductsByCategory(categoryId) {
+        try {
+            const response = await api.get(`/shop-categories/${categoryId}/products`);
+            return  response.data;
+        } catch (error) {
+            console.error("❌ Error al obtener los products de la categoria:", error);
+            throw new Error(error.response?.data?.message || "Error al obtener los products de la categoria");
+        }
+    },
+
 };
