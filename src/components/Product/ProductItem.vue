@@ -35,7 +35,7 @@
     </div>
     <div class="tp-product-content">
       <div class="tp-product-category">
-        <a :href="`/category/${category.path}`">{{ category.name }}</a>
+        <a :href="`/category/${category}`">{{ category?.name }}</a>
       </div>
       <h3 class="tp-product-title">
         <a :href="`/product/${product.id}`">{{ product.name }}</a>

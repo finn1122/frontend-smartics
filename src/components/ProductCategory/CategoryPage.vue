@@ -21,7 +21,7 @@
           <ProductFilters />
         </div>
         <!-- Lista de Productos (9 columnas) -->
-        <div v-if="category && products" class="col-xl-9 col-lg-8">
+        <div  v-if="products && category" class="col-xl-9 col-lg-8">
           <ProductList :category="category" :products="products" />
         </div>
       </div>
