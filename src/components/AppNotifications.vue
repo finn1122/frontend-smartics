@@ -18,7 +18,6 @@ export default {
     const { visible, message, type } = storeToRefs(notificationStore); // <-- ¡Aquí está el cambio!
 
     const testNotification = () => {
-      console.log('holi'); // Verifica que el botón funciona
       notificationStore.showNotification('Esta es una notificación de prueba', 'success');
     };
 

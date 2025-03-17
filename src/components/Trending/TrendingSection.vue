@@ -5,7 +5,7 @@
         <div class="col-xl-5 col-lg-6 col-md-5">
           <div class="tp-section-title-wrapper mb-40">
             <h3 class="tp-section-title">
-              {{ activeTab === 'new' ? 'New Products' : 'Top Sellers' }}
+              {{ categoryLabels[activeTab] || 'Productos' }}
               <svg width="114" height="35" viewBox="0 0 114 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 30 C10 20, 30 10, 60 15 C90 20, 100 10, 113 5" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg>
@@ -15,28 +15,15 @@
         <div class="col-xl-7 col-lg-6 col-md-7">
           <div class="tp-product-tab tp-product-tab-border mb-45 tp-tab d-flex justify-content-md-end">
             <ul class="nav nav-tabs justify-content-sm-end" id="productTab">
-              <li class="nav-item">
+              <!-- Botones dinámicos del menú -->
+              <li class="nav-item" v-for="path in categoryPaths" :key="path">
                 <button
                     class="nav-link"
-                    :class="{ active: activeTab === 'new' }"
-                    @click="setActiveTab('new')"
+                    :class="{ active: activeTab === path }"
+                    @click="setActiveTab(path)"
                 >
-                  New
-                  <span class="tp-product-tab-line" v-if="activeTab === 'new'">
-                    <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                  </span>
-                </button>
-              </li>
-              <li class="nav-item">
-                <button
-                    class="nav-link"
-                    :class="{ active: activeTab === 'top-sellers' }"
-                    @click="setActiveTab('top-sellers')"
-                >
-                  Top Sellers
-                  <span class="tp-product-tab-line" v-if="activeTab === 'top-sellers'">
+                  {{ categoryLabels[path] || path }}
+                  <span class="tp-product-tab-line" v-if="activeTab === path">
                     <svg width="52" height="13" viewBox="0 0 52 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M1 8.97127C11.6061 -5.48521 33 3.99996 51 11.4635" stroke="#B2DFDB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
@@ -52,7 +39,7 @@
           <div class="tp-product-tab-content">
             <div class="row">
               <div class="col-xl-3 col-lg-3 col-sm-6" v-for="product in filteredProducts" :key="product.id">
-                <ProductItem :product="product" />
+                <ProductItem :category="categories[activeTab]" :product="product" />
               </div>
             </div>
           </div>
@@ -61,8 +48,11 @@
     </div>
   </section>
 </template>
+
 <script>
 import ProductItem from '@/components/Product/ProductItem.vue';
+import api from "@/services/api";
+import { useNotificationStore } from '@/stores/notificationStore'; // Importar el store de notificaciones
 
 export default {
   name: 'TrendingSection',
@@ -71,122 +61,56 @@ export default {
   },
   data() {
     return {
-      activeTab: 'new', // Pestaña activa por defecto
-      newProducts: [
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 120,
-          newPrice: 103.20
-        },
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 120,
-          newPrice: 103.20
-        },
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 120,
-          newPrice: 103.20
-        },
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 120,
-          newPrice: 103.20
-        },
-      ],
-      topSellersProducts: [
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 150,
-          newPrice: 125.20
-        },
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 150,
-          newPrice: 125.20
-        },
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 150,
-          newPrice: 125.20
-        },
-        {
-          id: 1,
-          link: "/product-details/641e887d05f9ee1717e1348a",
-          image: "https://i.ibb.co/WVdTgR8/headphone-1.png",
-          alt: "product-electronic",
-          category: "Headphones",
-          title: "Headphones Wireless.",
-          rating: [1, 1, 1, 1, 0.5],
-          reviews: 3,
-          oldPrice: 150,
-          newPrice: 125.20
-        },
-      ]
+      activeTab: 'nuevos', // Pestaña activa por defecto (debe coincidir con un valor en categoryPaths)
+      categoryPaths: ['tendencias','nuevos'], // Lista de categorías
+      categories: {}, // Almacenar categorías dinámicamente
+      products: {}, // Almacenar productos dinámicamente
+      categoryLabels: { // Mapeo de nombres amigables para las categorías
+        tendencias: 'Tendencias',
+        nuevos: 'Productos recien llegados',
+      },
     };
   },
   computed: {
     filteredProducts() {
-      return this.activeTab === 'new' ? this.newProducts : this.topSellersProducts;
+      // Acceder dinámicamente a los productos basados en activeTab
+      return this.products[this.activeTab] || [];
     },
+  },
+  async created() {
+    await this.loadCategoriesAndProducts();
   },
   methods: {
     setActiveTab(tab) {
-      this.activeTab = tab;
+      this.activeTab = tab; // Cambiar la pestaña activa
+    },
+    async loadCategoriesAndProducts() {
+      this.$root.isLoading = true; // Activar el loader
+      const notificationStore = useNotificationStore(); // Usar el store de notificaciones
+
+      try {
+        for (const path of this.categoryPaths) {
+          // Obtener la categoría por su path
+          const category = await api.getCategoryByPath(path);
+          this.categories[path] = category;
+
+          // Obtener los productos de la categoría
+          const products = await api.getProductsByCategory(category.id);
+          this.products[path] = products; // Almacenar los productos dinámicamente
+        }
+      } catch (error) {
+        console.error("❌ Error al cargar categorías y productos:", error);
+        notificationStore.showNotification( // Usar notificationStore
+            error.message || "Error al cargar la categoría",
+            "error"
+        );
+      } finally {
+        this.$root.isLoading = false; // Desactivar el loader
+      }
     },
   },
 };
 </script>
-
 <style scoped>
 /* Estilos generales para los productos */
 .tp-product-area {
