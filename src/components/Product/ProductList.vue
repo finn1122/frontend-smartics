@@ -8,12 +8,12 @@
             <div class="tp-shop-top-tab tp-tab">
               <ul class="nav nav-tabs" id="productTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active">
+                  <button class="nav-link" :class="{ active: view === 'grid' }" @click="view = 'grid'">
                     <font-awesome-icon :icon="['fas', 'th-large']" />
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link">
+                  <button class="nav-link" :class="{ active: view === 'list' }" @click="view = 'list'">
                     <font-awesome-icon :icon="['fas', 'bars']" />
                   </button>
                 </li>
@@ -39,7 +39,7 @@
 
     <!-- Lista de Productos -->
     <div v-if="products" class="tp-shop-items-wrapper tp-shop-item-primary">
-      <div class="row">
+      <div v-if="view === 'grid'" class="row">
         <div v-for="product in products" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
           <!-- Usar el componente ProductItem -->
           <ProductItem
@@ -49,18 +49,35 @@
           />
         </div>
       </div>
+
+      <!-- Vista de lista -->
+      <div v-if="view === 'list'" class="tp-shop-items-wrapper tp-shop-item-primary">
+        <div class="row">
+          <div class="col-xl-12">
+            <ProductListItem
+                v-for="product in products"
+                :key="product.id"
+                :product="product"
+                :category="category"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
+
 <script>
 import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'ProductList',
   components: {
-    // Cargar el componente de forma diferida
     ProductItem: defineAsyncComponent(() =>
         import('./ProductItem.vue')
+    ),
+    ProductListItem: defineAsyncComponent(() =>
+        import('./ProductLIstItem.vue')
     ),
   },
   props: {
@@ -69,12 +86,14 @@ export default {
       required: true,
     },
     products: {
-      type: Object,
+      type: Array,
       required: true,
     }
   },
   data() {
-    return {}
+    return {
+      view: 'grid', // Estado para controlar la vista actual (grid o list)
+    };
   },
   async created() {},
   methods: {}
