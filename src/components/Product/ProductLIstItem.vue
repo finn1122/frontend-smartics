@@ -326,6 +326,13 @@ a {
   text-decoration: none;
 }
 
+.tp-product-list-thumb img {
+  width: 100%; /* La imagen ocupa el 100% del ancho del contenedor */
+  height: 100%; /* La imagen ocupa el 100% del alto del contenedor */
+  object-fit: cover; /* Ajusta la imagen sin distorsionarla */
+  border-top-left-radius: 8px; /* Esquinas redondeadas */
+  border-bottom-left-radius: 8px;
+}
 @media (min-width: 768px) {
   .d-md-flex {
     display: flex !important;
