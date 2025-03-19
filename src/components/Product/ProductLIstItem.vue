@@ -110,9 +110,8 @@ export default {
 
 <style scoped>
 /* Estilos compartidos entre ProductItem y ProductListItem */
-.tp-product-title,
 .tp-product-title-2 {
-  margin: 0;
+  margin: 0px;
   line-height: 1.2;
   margin-top: 8px;
 }
@@ -147,6 +146,7 @@ export default {
   position: absolute;
   top: 10px;
   right: 10px;
+  z-index: 1; /* Asegúrate de que no esté superponiendo el borde */
 }
 
 .tp-product-badge .product-no-stock {
@@ -245,11 +245,13 @@ export default {
 /* Estilos específicos para la vista de lista */
 .tp-product-list-item {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   margin-bottom: 24px;
   transition: all 0.3s ease;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 1px solid #e0e2e3;
 }
 
 .tp-product-list-item:not(:last-child) {
@@ -263,11 +265,10 @@ export default {
 
 .tp-product-list-thumb {
   flex: 0 0 30%;
-  margin-right: 20px;
   position: relative;
   overflow: hidden;
   border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .tp-product-list-thumb a img {
@@ -275,21 +276,18 @@ export default {
   width: 100%;
   object-fit: cover;
   border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-top: 1px;
+  border-bottom-left-radius: 8px;
 }
 
 .tp-product-list-content {
-  border: 1px solid #e0e2e3;
-  border-left: 0;
-  padding-left: 60px;
-  padding-right: 70px;
+  padding-left: 20px;
+  padding-right: 20px;
   width: 100%;
+  border: none;
 }
 
 .tp-product-list-content .tp-product-content-2 {
-  padding-bottom: 33px;
-  padding-top: 33px;
+  padding: 20px;
 }
 
 .tp-product-list-add-to-cart-btn {
