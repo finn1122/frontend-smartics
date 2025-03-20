@@ -1,6 +1,6 @@
 <template>
   <div class="tp-product-list">
-    <div class="tp-product-item transition-3" :class="{ disabled: !hasInventory }">
+    <div class="tp-product-item transition-3">
     <div class="tp-product-thumb p-relative fix m-img">
       <a v-if="product.gallery && product.gallery.length > 0" :href="product.gallery[0].imageUrl">
         <img :src="product.gallery[0].imageUrl" :alt="product.name">
@@ -13,7 +13,7 @@
       <div class="tp-product-badge" v-else-if="product.badge">
         <span class="product-hot">{{ product.badge }}</span>
       </div>
-      <div class="tp-product-action">
+      <div v-if="hasInventory" class="tp-product-action">
         <button type="button" class="tp-product-action-btn tp-product-add-cart-btn" :disabled="!hasInventory">
           <div class="icon-rectangle">
             <font-awesome-icon :icon="['fas', 'cart-shopping']" />

@@ -22,7 +22,8 @@ import {
     faStarHalfStroke,
     faThLarge,
     faBars,
-    faCodeCompare
+    faCodeCompare,
+    faChartSimple,
     } from '@fortawesome/free-solid-svg-icons';
 
 // Añade los iconos a la librería
@@ -41,7 +42,8 @@ library.add(
     faStarHalfStroke,
     faThLarge,
     faBars,
-    faCodeCompare
+    faCodeCompare,
+    faChartSimple,
 );
 
 // Importa estilos globales
