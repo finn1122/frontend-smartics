@@ -18,7 +18,7 @@
       <div class="row">
         <!-- Filtros (3 columnas) -->
         <div class="col-xl-3 col-lg-4">
-          <ProductFilters />
+          <ProductFilters :category="category" />
         </div>
         <!-- Lista de Productos (9 columnas) -->
         <div  v-if="products && category" class="col-xl-9 col-lg-8">

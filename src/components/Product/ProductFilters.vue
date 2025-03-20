@@ -48,8 +48,8 @@
         <div class="tp-shop-widget-categories">
           <ul class="list-unstyled">
             <li v-for="category in categories" :key="category.name">
-              <a href="#" class="cursor-pointer" :class="{ active: category.isActive }" @click="toggleCategory(category)">
-                {{ category.name }} <span>{{ category.count }}</span>
+              <a href="#" class="cursor-pointer" :class="{ active: category.isSelected }" @click="toggleCategory(category)">
+                {{ category.name }} <span>{{ category.productsCount }}</span>
               </a>
             </li>
           </ul>
@@ -80,33 +80,27 @@
 <script>
 import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
-
+import api from "@/services/api";
+import {useNotificationStore} from "@/stores/notificationStore";
 
 export default {
   components: {
     VueSlider,
   },
+  setup() {
+    const notificationStore = useNotificationStore();
+    return { notificationStore };
+  },
+  props: {
+    category: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       priceRange: [0, 1200], // Rango inicial de precios
-      categories: [
-        { name: 'Headphones', count: 3 },
-        { name: 'Mobile Tablets', count: 3 },
-        { name: 'CPU Heat Pipes', count: 2 },
-        { name: 'Headphones', count: 3 },
-        { name: 'Mobile Tablets', count: 3 },
-        { name: 'CPU Heat Pipes', count: 2 },
-        { name: 'Headphones', count: 3 },
-        { name: 'Mobile Tablets', count: 3 },
-        { name: 'CPU Heat Pipes', count: 2 },
-        { name: 'Headphones', count: 3 },
-        { name: 'Mobile Tablets', count: 3 },
-        { name: 'CPU Heat Pipes', count: 2 },
-        { name: 'Headphones', count: 3 },
-        { name: 'Mobile Tablets', count: 3 },
-        { name: 'CPU Heat Pipes', count: 2 },
-        // Agrega más categorías aquí
-      ],
+      categories: [],
       topRatedProducts: [
         { id: 1, name: 'Gaming Headphone', price: 130, image: 'https://i.ibb.co/n1YRvWJ/headphone-5.png' },
         { id: 2, name: 'Apple iPad Air', price: 999, image: 'https://i.ibb.co/kxGMcrw/ipad-1.png' },
@@ -119,6 +113,10 @@ export default {
       ],
     };
   },
+  async created() {
+    await this.loadAllCategoriesData();
+    this.markMatchedCategory();
+  },
   methods: {
     // Método para actualizar el rango de precios
     updatePriceRange(value) {
@@ -128,6 +126,51 @@ export default {
     applyFilter() {
       console.log('Filtrando por rango de precios:', this.priceRange);
       // Aquí puedes agregar la lógica para filtrar los productos
+    },
+    async loadAllCategoriesData() {
+      this.$root.isLoading = true; // Activar el loader
+
+      try {
+        // Obtener los detalles de la categoría por su path
+        const categories = await api.getAllCategories();
+        // Agregar el campo `isSelected` a cada categoría
+        this.categories = categories.map((cat) => ({
+          ...cat,
+          isSelected: false, // Inicialmente, ninguna categoría está activa
+        }));
+      } catch (error) {
+        console.error("❌ Error al cargar la categoría:", error);
+        this.notificationStore.showNotification(
+            error.message || "Error al cargar la categoría",
+            "error"
+        );
+      } finally {
+        this.$root.isLoading = false; // Desactivar el loader
+      }
+    },
+    // Método para marcar la categoría que coincide con this.category
+    markMatchedCategory() {
+      this.categories = this.categories.map((cat) => ({
+        ...cat,
+        isSelected: cat.id === this.category.id, // Marcar la categoría que coincide
+      }));
+    },
+    findMatchedCategory() {
+      // Buscar la categoría que coincide por id (o cualquier otro campo único)
+      this.matchedCategory = this.categories.find(
+          (cat) => cat.id === this.category.id
+      );
+
+      // Si no se encuentra la categoría, mostrar un mensaje de error
+      if (!this.matchedCategory) {
+        console.error("❌ No se encontró la categoría:", this.category);
+        this.notificationStore.showNotification(
+            "No se encontró la categoría seleccionada",
+            "error"
+        );
+      } else {
+        console.log("✅ Categoría encontrada:", this.matchedCategory);
+      }
     },
   },
 };
