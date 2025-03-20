@@ -1,5 +1,6 @@
 <template>
-  <div class="mb-25 tp-product-item transition-3" :class="{ disabled: !hasInventory }">
+  <div class="tp-product-list">
+    <div class="tp-product-item transition-3" :class="{ disabled: !hasInventory }">
     <div class="tp-product-thumb p-relative fix m-img">
       <a v-if="product.gallery && product.gallery.length > 0" :href="product.gallery[0].imageUrl">
         <img :src="product.gallery[0].imageUrl" :alt="product.name">
@@ -59,6 +60,7 @@
         <span v-else class="tp-product-price new-price">${{ product.bestPrice?.newSalePrice || '0.00' }}</span>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -174,7 +176,7 @@ export default {
 
 /* Efecto hover en la imagen del producto */
 .tp-product-item:hover .tp-product-thumb img {
-  transform: scale(1.1);
+  transform: none;
 }
 
 /* Contenedor de acciones (botones) */
@@ -325,7 +327,6 @@ export default {
   height: auto;
   z-index: -1;
 }
-
 /* Media queries para responsividad */
 @media (min-width: 576px) {
   .col-sm-6 {
