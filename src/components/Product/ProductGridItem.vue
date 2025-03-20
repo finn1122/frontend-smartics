@@ -147,11 +147,13 @@ export default {
 .tp-product-thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ajusta la imagen al contenedor sin deformarla */
+  object-fit: contain; /* Ajusta la imagen dentro del contenedor sin recortar */
   display: block;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  background-color: #f5f5f5; /* Color de fondo para rellenar los espacios vacíos */
 }
+
 
 /* Estilos para el contenedor del producto */
 .tp-product-item {
