@@ -22,7 +22,7 @@
         </div>
         <!-- Lista de Productos (9 columnas) -->
         <div  v-if="products && category" class="col-xl-9 col-lg-8">
-          <ProductList :category="category" :products="products" />
+          <ProductViewSelector :category="category" :products="products" />
         </div>
       </div>
     </div>
@@ -31,16 +31,16 @@
 
 <script>
 import ProductFilters from "@/components/Product/ProductFilters.vue";
-import ProductList from "@/components/Product/ProductViewSelector.vue";
+import ProductViewSelector from "@/components/Product/ProductViewSelector.vue";
 import api from "@/services/api"; // Importar la instancia de API
 
 export default {
   name: "CategoryPage",
-  components: { ProductList, ProductFilters },
+  components: { ProductViewSelector, ProductFilters },
   data() {
     return {
-      category: {}, // Objeto de la categoría
-      products: {}, // Lista de productos
+      category: [],
+      products: [],
     };
   },
   computed: {

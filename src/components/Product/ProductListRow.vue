@@ -18,7 +18,7 @@
         <span class="product-hot">{{ product.badge }}</span>
       </div>
       <div class="tp-product-action-2 tp-product-action-blackStyle">
-        <div class="tp-product-action-item-2 d-flex flex-column">
+        <div class="tp-product-action-item-2 d-flex flex-column" v-if="hasInventory">
           <button
               type="button"
               class="tp-product-action-btn-2 tp-product-quick-view-btn"
