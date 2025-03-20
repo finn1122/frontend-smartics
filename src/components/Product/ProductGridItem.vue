@@ -64,7 +64,7 @@
 
 <script>
 export default {
-  name: 'ProductItem',
+  name: 'ProductGridItem',
   props: {
     category: {
       type: Object,
@@ -83,7 +83,6 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 /* Estilos para el título del producto */
 .tp-product-title {
@@ -133,6 +132,7 @@ export default {
   margin-bottom: 3rem;
 }
 
+/* Contenedor de la imagen del producto */
 .tp-product-thumb {
   position: relative;
   overflow: hidden;
@@ -140,32 +140,42 @@ export default {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   padding: 10px;
+  aspect-ratio: 1 / 1; /* Proporción 1:1 (cuadrado) */
 }
 
+/* Estilos para la imagen del producto */
 .tp-product-thumb img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover; /* Ajusta la imagen al contenedor sin deformarla */
   display: block;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
 
+/* Estilos para el contenedor del producto */
 .tp-product-item {
   transition: all 0.3s ease;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Asegura que todos los productos tengan la misma altura */
 }
 
+/* Efecto hover en el producto */
 .tp-product-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Efecto hover en la imagen del producto */
 .tp-product-item:hover .tp-product-thumb img {
   transform: scale(1.1);
 }
 
+/* Contenedor de acciones (botones) */
 .tp-product-action {
   position: absolute;
   bottom: 40px;
@@ -176,11 +186,13 @@ export default {
   flex-direction: column;
 }
 
+/* Mostrar acciones al hacer hover */
 .tp-product-item:hover .tp-product-action {
   right: 10px;
   opacity: 1;
 }
 
+/* Estilos para los botones de acción */
 .tp-product-action-btn {
   background-color: white;
   border: 1px solid #ddd;
@@ -197,6 +209,7 @@ export default {
   padding: 0;
 }
 
+/* Bordes redondeados para el primer y último botón */
 .tp-product-action-btn:first-child {
   border-radius: 5px 5px 0 0;
 }
@@ -205,10 +218,12 @@ export default {
   border-radius: 0 0 5px 5px;
 }
 
+/* Efecto hover en los botones de acción */
 .tp-product-action-btn:hover {
   background-color: #f0f0f0;
 }
 
+/* Contenedor del ícono dentro del botón */
 .icon-rectangle {
   display: flex;
   align-items: center;
@@ -217,6 +232,7 @@ export default {
   height: 100%;
 }
 
+/* Estilos para el tooltip de los botones */
 .tp-product-tooltip {
   visibility: hidden;
   background-color: black;
@@ -234,18 +250,21 @@ export default {
   font-size: 12px;
 }
 
+/* Mostrar tooltip al hacer hover en el botón */
 .tp-product-action-btn:hover .tp-product-tooltip {
   visibility: visible;
   opacity: 1;
   left: -110px;
 }
 
+/* Estilos para el badge (etiqueta) del producto */
 .tp-product-badge {
   position: absolute;
   top: 10px;
   right: 10px;
 }
 
+/* Estilos para la categoría del producto */
 .tp-product-category > a {
   font-size: 12px;
   font-weight: 500;
@@ -255,11 +274,13 @@ export default {
   margin-bottom: 8px; /* Añade un margen inferior para separar del product.name */
 }
 
+/* Estilos para el ícono de rating */
 .tp-product-rating-icon span {
   color: #ffc107;
   font-size: 12px;
 }
 
+/* Estilos para el texto de rating */
 .tp-product-rating-text span {
   color: #55585b;
   font-family: "Jost", sans-serif;
@@ -269,18 +290,22 @@ export default {
   margin-left: 5px;
 }
 
+/* Estilos para el precio antiguo */
 .tp-product-price.old-price {
   text-decoration: line-through;
   color: #999;
   margin-right: 5px;
 }
 
+/* Estilos para el precio nuevo */
 .tp-product-price.new-price {
   color: #007bff;
   font-weight: 600;
 }
 
+/* Contenedor del contenido del producto */
 .tp-product-content {
+  flex-grow: 1; /* Hace que el contenido ocupe el espacio restante */
   padding: 10px 30px 20px;
   border-left: 1px solid #eaebed;
   border-right: 1px solid #eaebed;
@@ -289,6 +314,7 @@ export default {
   border-bottom-right-radius: 8px;
 }
 
+/* Estilos para el título de la sección */
 .tp-section-title svg {
   position: absolute;
   bottom: -10px;
@@ -298,19 +324,21 @@ export default {
   z-index: -1;
 }
 
+/* Media queries para responsividad */
 @media (min-width: 576px) {
   .col-sm-6 {
     flex: 0 0 auto;
     width: 50%;
+
   }
 }
+
 @media (min-width: 992px) {
   .col-lg-3 {
     flex: 0 0 auto;
     width: 25%;
   }
 }
-.mb-25 {
-  margin-bottom: 25px;
-}
+
+
 </style>

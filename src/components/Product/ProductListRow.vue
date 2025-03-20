@@ -88,7 +88,7 @@
 
 <script>
 export default {
-  name: 'ProductListItem',
+  name: 'ProductListRow',
   props: {
     product: {
       type: Object,

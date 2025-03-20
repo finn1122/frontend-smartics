@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import ProductItem from '@/components/Product/ProductItem.vue';
+import ProductItem from '@/components/Product/ProductGridItem.vue';
 import api from "@/services/api";
 import { useNotificationStore } from '@/stores/notificationStore'; // Importar el store de notificaciones
 

@@ -49,6 +49,7 @@ import './styles/global.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { useNotificationStore } from '@/stores/notificationStore';
 
 const app = createApp(App);
 const pinia = createPinia(); // Crea una instancia de Pinia
@@ -62,6 +63,9 @@ app.component('font-awesome-icon', FontAwesomeIcon);
 
 // Registra el componente AppLoader
 app.component('AppLoader', AppLoader);
+
+// Inyectar el store en la instancia de Vue
+app.config.globalProperties.$notificationStore = useNotificationStore();
 
 app.mount('#app'); // Monta la app antes de acceder al store
 

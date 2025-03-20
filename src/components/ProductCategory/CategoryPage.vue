@@ -31,7 +31,7 @@
 
 <script>
 import ProductFilters from "@/components/Product/ProductFilters.vue";
-import ProductList from "@/components/Product/ProductList.vue";
+import ProductList from "@/components/Product/ProductViewSelector.vue";
 import api from "@/services/api"; // Importar la instancia de API
 
 export default {

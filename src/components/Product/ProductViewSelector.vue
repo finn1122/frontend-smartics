@@ -71,13 +71,13 @@
 import { defineAsyncComponent } from 'vue';
 
 export default {
-  name: 'ProductList',
+  name: 'ProductViewSelector',
   components: {
     ProductItem: defineAsyncComponent(() =>
-        import('./ProductItem.vue')
+        import('./ProductGridItem.vue')
     ),
     ProductListItem: defineAsyncComponent(() =>
-        import('./ProductLIstItem.vue')
+        import('./ProductListRow.vue')
     ),
   },
   props: {
