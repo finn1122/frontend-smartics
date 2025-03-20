@@ -269,6 +269,11 @@ export default {
   overflow: hidden;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
+  min-height: 310px; /* Asegurar altura consistente */
+  background-color: rgb(242, 243, 245); /* Fondo gris */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tp-product-list-thumb a img {
