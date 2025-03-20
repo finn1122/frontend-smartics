@@ -21,7 +21,7 @@
             </div>
             <!-- Contador de resultados -->
             <div class="tp-shop-top-result">
-              <p>Showing 1–3 of {{ products.length }} results</p>
+              <p>Showing 1–{{ filteredProducts.length }} of {{ filteredProducts.length }} results</p>
             </div>
           </div>
         </div>
@@ -38,12 +38,12 @@
     </div>
 
     <!-- Lista de Productos -->
-    <div v-if="products" class="tp-shop-items-wrapper tp-shop-item-primary">
+    <div v-if="filteredProducts.length > 0" class="tp-shop-items-wrapper tp-shop-item-primary">
+      <!-- Vista de cuadrícula (grid) -->
       <div v-if="view === 'grid'" class="row">
-        <div v-for="product in products" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
+        <div v-for="product in filteredProducts" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
           <!-- Usar el componente ProductItem -->
-          <ProductItem
-              v-if="product && product.bestPrice && category"
+          <ProductGridItem
               :product="product"
               :category="category"
           />
@@ -54,8 +54,8 @@
       <div v-if="view === 'list'" class="tp-shop-items-wrapper tp-shop-item-primary">
         <div class="row">
           <div class="col-xl-12">
-            <ProductListItem
-                v-for="product in products"
+            <ProductListRow
+                v-for="product in filteredProducts"
                 :key="product.id"
                 :product="product"
                 :category="category"
@@ -63,6 +63,11 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Mensaje si no hay productos -->
+    <div v-else class="tp-shop-items-wrapper tp-shop-item-primary">
+      <p>No hay productos disponibles.</p>
     </div>
   </div>
 </template>
@@ -73,10 +78,10 @@ import { defineAsyncComponent } from 'vue';
 export default {
   name: 'ProductViewSelector',
   components: {
-    ProductItem: defineAsyncComponent(() =>
+    ProductGridItem: defineAsyncComponent(() =>
         import('./ProductGridItem.vue')
     ),
-    ProductListItem: defineAsyncComponent(() =>
+    ProductListRow: defineAsyncComponent(() =>
         import('./ProductListRow.vue')
     ),
   },
@@ -94,6 +99,14 @@ export default {
     return {
       view: 'grid', // Estado para controlar la vista actual (grid o list)
     };
+  },
+  computed: {
+    // Filtrar los productos que tienen bestPrice y category
+    filteredProducts() {
+      return this.products.filter(
+          (product) => product && product.bestPrice && this.category
+      );
+    },
   },
   async created() {},
   methods: {}

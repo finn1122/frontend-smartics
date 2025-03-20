@@ -33,10 +33,15 @@
 import ProductFilters from "@/components/Product/ProductFilters.vue";
 import ProductViewSelector from "@/components/Product/ProductViewSelector.vue";
 import api from "@/services/api"; // Importar la instancia de API
+import {useNotificationStore} from "@/stores/notificationStore";
 
 export default {
   name: "CategoryPage",
   components: { ProductViewSelector, ProductFilters },
+  setup() {
+    const notificationStore = useNotificationStore();
+    return { notificationStore };
+  },
   data() {
     return {
       category: [],
@@ -49,10 +54,15 @@ export default {
       return this.$route.params.path;
     },
   },
+  watch: {
+    // Observar cambios en el path de la categoría
+    categoryPath: {
+      immediate: true, // Ejecutar el watcher inmediatamente al montar el componente
+      handler: "loadCategoryData", // Llamar a loadCategoryData cuando cambie el path
+    },
+  },
   async created() {
     await this.loadCategoryData();
-    // Obtener los productos de la categoría (si es necesario)
-    await this.fetchProductsForCategory(this.category.id);
   },
   methods: {
     async loadCategoryData() {
@@ -61,9 +71,12 @@ export default {
       try {
         // Obtener los detalles de la categoría por su path
         this.category = await api.getCategoryByPath(this.categoryPath);
+        // Obtener los productos de la categoría
+        await this.fetchProductsForCategory(this.category.id);
+
       } catch (error) {
         console.error("❌ Error al cargar la categoría:", error);
-        this.$root.notificationStore.showNotification(
+        this.notificationStore.showNotification(
             error.message || "Error al cargar la categoría",
             "error"
         );

@@ -113,6 +113,13 @@ export default {
       ],
     };
   },
+  watch: {
+    // Observar cambios en la categoría seleccionada
+    category: {
+      immediate: true, // Ejecutar el watcher inmediatamente al montar el componente
+      handler: "updateSelectedCategory", // Llamar a updateSelectedCategory cuando cambie la categoría
+    },
+  },
   async created() {
     await this.loadAllCategoriesData();
     this.markMatchedCategory();
@@ -155,21 +162,40 @@ export default {
         isSelected: cat.id === this.category.id, // Marcar la categoría que coincide
       }));
     },
-    findMatchedCategory() {
-      // Buscar la categoría que coincide por id (o cualquier otro campo único)
-      this.matchedCategory = this.categories.find(
-          (cat) => cat.id === this.category.id
-      );
+    // Método para actualizar la categoría seleccionada
+    updateSelectedCategory() {
+      this.categories = this.categories.map((cat) => ({
+        ...cat,
+        isSelected: cat.id === this.category.id, // Marcar la categoría que coincide
+      }));
+    },
+    // Método para cambiar la categoría seleccionada
+    async toggleCategory(category) {
+      this.$root.isLoading = true; // Activar el loader
 
-      // Si no se encuentra la categoría, mostrar un mensaje de error
-      if (!this.matchedCategory) {
-        console.error("❌ No se encontró la categoría:", this.category);
+      try {
+        // Desmarcar todas las categorías
+        this.categories = this.categories.map((cat) => ({
+          ...cat,
+          isSelected: false,
+        }));
+
+        // Marcar la categoría seleccionada
+        category.isSelected = true;
+
+        // Navegar a la ruta de la nueva categoría
+        this.$router.push({
+          name: "CategoryPage", // Nombre de la ruta
+          params: { path: category.path }, // Parámetro dinámico (path)
+        });
+      } catch (error) {
+        console.error("❌ Error al cambiar de categoría:", error);
         this.notificationStore.showNotification(
-            "No se encontró la categoría seleccionada",
+            error.message || "Error al cambiar de categoría",
             "error"
         );
-      } else {
-        console.log("✅ Categoría encontrada:", this.matchedCategory);
+      } finally {
+        this.$root.isLoading = false; // Desactivar el loader
       }
     },
   },
