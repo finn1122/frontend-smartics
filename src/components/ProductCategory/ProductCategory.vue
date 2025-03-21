@@ -185,5 +185,4 @@ a, button {
 a {
   color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
 }
-
 </style>
