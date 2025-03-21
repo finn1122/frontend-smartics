@@ -1,6 +1,6 @@
 <template>
   <div class="tp-shop-main-wrapper">
-    <div class="tp-shop-top mb-45">
+    <div class="tp-shop-top mb-5">
       <div class="row">
         <div class="col-xl-6">
           <div class="tp-shop-top-left d-flex align-items-center">
@@ -26,15 +26,27 @@
           </div>
         </div>
         <div class="col-xl-6">
-          <div class="tp-shop-top-select text-end">
-            <!-- Select para ordenar productos -->
-            <select class="form-select" v-model="sortOption" @change="sortProducts">
-              <option value="default">Default Sorting</option>
-              <option value="low-to-high">Low to High</option>
-              <option value="high-to-low">High to Low</option>
-            </select>
+          <div class="tp-shop-top-select text-md-end">
+            <!-- Contenedor del select personalizado -->
+            <div class="nice-select undefined" tabindex="0" role="button" @click="toggleDropdown">
+              <span class="current">{{ selectedLabel }}</span>
+              <span class="dropdown-icon"></span> <!-- Ícono de flecha -->
+              <ul class="list" role="menubar" v-if="isDropdownOpen">
+                <li
+                    class="option"
+                    role="menuitem"
+                    v-for="option in options"
+                    :key="option.value"
+                    :class="{ selected: option.value === sortOption, focus: option.value === sortOption }"
+                    @click="selectOption(option.value)"
+                >
+                  {{ option.label }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
@@ -72,12 +84,12 @@
     </div>
   </div>
 </template>
-
 <script>
 import { defineAsyncComponent } from 'vue';
 
 export default {
   name: 'ProductViewSelector',
+
   components: {
     ProductGridItem: defineAsyncComponent(() =>
         import('./ProductGridItem.vue')
@@ -99,8 +111,14 @@ export default {
   data() {
     return {
       view: 'grid', // Estado para controlar la vista actual (grid o list)
-      sortOption: 'default', // Opción de ordenación seleccionada
       sortedProducts: [], // Lista de productos ordenados
+      isDropdownOpen: false, // Controla si el menú desplegable está abierto
+      sortOption: "high-to-low", // Valor seleccionado (v-model)
+      options: [
+        { value: "default", label: "Default Sorting" },
+        { value: "low-to-high", label: "Low to High" },
+        { value: "high-to-low", label: "High to Low" },
+      ],
     };
   },
   computed: {
@@ -109,6 +127,11 @@ export default {
       return this.products.filter(
           (product) => product && product.bestPrice && this.category
       );
+    },
+    // Obtiene la etiqueta de la opción seleccionada
+    selectedLabel() {
+      const selected = this.options.find((option) => option.value === this.sortOption);
+      return selected ? selected.label : "Select an option";
     },
   },
   watch: {
@@ -121,6 +144,16 @@ export default {
     },
   },
   methods: {
+    // Método para abrir/cerrar el menú desplegable
+    toggleDropdown() {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    },
+    // Método para seleccionar una opción del menú desplegable
+    selectOption(value) {
+      this.sortOption = value;
+      this.isDropdownOpen = false; // Cierra el menú desplegable
+      this.sortProducts(); // Ordena los productos
+    },
     // Método para ordenar los productos según la opción seleccionada
     sortProducts() {
       if (this.sortOption === 'low-to-high') {
@@ -145,3 +178,127 @@ export default {
   },
 };
 </script>
+<style>.tp-shop-top {
+  margin-bottom: 20px; /* Prueba con 0 o ajusta */
+}
+
+.tp-shop-top-result p {
+  color: #818487;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+p {
+  color: var(--tp-text-body);
+  font-family: var(--tp-ff-p), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 26px;
+  margin-bottom: 15px;
+}
+
+.tp-shop-top-tab .nav-tabs .nav-item .nav-link {
+  border: 1px solid rgba(1, 15, 28, 0.1);
+  border-radius: 0;
+  color: #818487;
+  display: inline-block;
+  font-size: 18px;
+  height: 40px;
+  line-height: 38px;
+  margin-right: 6px;
+  text-align: center;
+  width: 40px;
+}
+
+.tp-shop-top-tab .nav-tabs .nav-item .nav-link.active {
+  border-color: var(--tp-common-black);
+  color: var(--tp-common-black);
+}
+
+.tp-tab .nav-tabs,
+.tp-tab .nav-tabs .nav-link {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+  background-color: var(--bs-nav-tabs-link-active-bg);
+  border-color: var(--bs-nav-tabs-link-active-border-color);
+  color: var(--bs-nav-tabs-link-active-color);
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.nice-select {
+  -webkit-tap-highlight-color: transparent;
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  height: 42px;
+  line-height: 40px;
+  outline: none;
+  padding: 0 30px 0 18px;
+  position: relative;
+  text-align: left !important;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  white-space: nowrap;
+  width: auto;
+}
+
+[role="button"] {
+  cursor: pointer;
+}
+
+.tp-shop-top .row,
+.tp-shop-top-left,
+.tp-shop-top-select {
+  display: flex;
+  align-items: center;
+}
+
+.tp-shop-top-select {
+  justify-content: flex-end;
+  min-height: 40px;
+}
+
+.tp-shop-top-select .nice-select {
+  min-width: 200px;
+  max-width: 250px;
+  display: inline-block;
+}
+
+.tp-shop-top-select .nice-select:after {
+  color: #767a7d;
+  right: 20px;
+}
+.dropdown-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #767a7d; /* Color de la flecha */
+  pointer-events: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.nice-select.open .dropdown-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+</style>

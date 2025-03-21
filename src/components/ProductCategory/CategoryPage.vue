@@ -25,7 +25,7 @@
               @filter-products="filterProductsByPrice" />
         </div>
         <!-- Lista de Productos (9 columnas) -->
-        <div  v-if="products && category" class="col-xl-9 col-lg-8">
+        <div  v-if="products && category" class="col-xl-9 col-lg-8 mb-4">
           <ProductViewSelector :category="category" :products="filteredProducts" />
         </div>
       </div>

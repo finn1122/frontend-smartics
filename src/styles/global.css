@@ -10,8 +10,7 @@
 
     --tp-heading-primary: #333; /* Color para títulos */
     --tp-common-white: #ffffff; /* Color de fondo blanco */
-    --tp-text-body: #666; /* Color para texto del cuerpo */
+    --tp-text-body: #55585b; /* Color para texto del cuerpo */
     --tp-theme-primary: #0989ff;
     --tp-common-black: #000000;
-
 }
