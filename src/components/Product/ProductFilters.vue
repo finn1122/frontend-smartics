@@ -96,6 +96,10 @@ export default {
       type: Object,
       required: true,
     },
+    products: {
+      type: Array,
+      required: true,
+    },
     priceRange: {
       type: Array,
       required: true,
@@ -109,12 +113,7 @@ export default {
         { id: 2, name: 'Apple iPad Air', price: 999, image: 'https://i.ibb.co/kxGMcrw/ipad-1.png' },
         // Agrega más productos aquí
       ],
-      products: [
-        { id: 1, name: 'Headphones Wireless', price: 103.2, image: 'https://i.ibb.co/WVdTgR8/headphone-1.png' },
-        { id: 2, name: 'Gaming Headphone', price: 123.5, image: 'https://i.ibb.co/n1YRvWJ/headphone-5.png' },
-        // Agrega más productos aquí
-      ],
-      selectedPriceRange: this.priceRange, // Rango de precios seleccionado
+      selectedPriceRange: [this.priceRange[0], this.priceRange[1]], // Inicializar con el rango de precios recibido
     };
   },
   watch: {
@@ -126,7 +125,10 @@ export default {
     // Observar cambios en el rango de precios
     priceRange: {
       immediate: true,
-      handler: "updatePriceRange", // Actualizar el rango de precios seleccionado
+      handler(newRange) {
+        // Actualizar el rango de precios seleccionado cuando cambie
+        this.selectedPriceRange = [newRange[0], newRange[1]];
+      },
     },
   },
   async created() {

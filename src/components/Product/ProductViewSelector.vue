@@ -27,10 +27,11 @@
         </div>
         <div class="col-xl-6">
           <div class="tp-shop-top-select text-end">
-            <select class="form-select">
-              <option>Default Sorting</option>
-              <option>Low to High</option>
-              <option>High to Low</option>
+            <!-- Select para ordenar productos -->
+            <select class="form-select" v-model="sortOption" @change="sortProducts">
+              <option value="default">Default Sorting</option>
+              <option value="low-to-high">Low to High</option>
+              <option value="high-to-low">High to Low</option>
             </select>
           </div>
         </div>
@@ -41,7 +42,7 @@
     <div v-if="filteredProducts.length > 0" class="tp-shop-items-wrapper tp-shop-item-primary">
       <!-- Vista de cuadrícula (grid) -->
       <div v-if="view === 'grid'" class="row">
-        <div v-for="product in filteredProducts" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
+        <div v-for="product in sortedProducts" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
           <!-- Usar el componente ProductItem -->
           <ProductGridItem
               :product="product"
@@ -55,7 +56,7 @@
         <div class="row">
           <div class="col-xl-12">
             <ProductListRow
-                v-for="product in filteredProducts"
+                v-for="product in sortedProducts"
                 :key="product.id"
                 :product="product"
                 :category="category"
@@ -98,6 +99,8 @@ export default {
   data() {
     return {
       view: 'grid', // Estado para controlar la vista actual (grid o list)
+      sortOption: 'default', // Opción de ordenación seleccionada
+      sortedProducts: [], // Lista de productos ordenados
     };
   },
   computed: {
@@ -108,61 +111,37 @@ export default {
       );
     },
   },
-  async created() {},
-  methods: {}
+  watch: {
+    // Observar cambios en los productos filtrados para ordenarlos
+    filteredProducts: {
+      immediate: true,
+      handler() {
+        this.sortProducts();
+      },
+    },
+  },
+  methods: {
+    // Método para ordenar los productos según la opción seleccionada
+    sortProducts() {
+      if (this.sortOption === 'low-to-high') {
+        // Ordenar de menor a mayor precio
+        this.sortedProducts = [...this.filteredProducts].sort((a, b) => {
+          const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
+          const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
+          return priceA - priceB;
+        });
+      } else if (this.sortOption === 'high-to-low') {
+        // Ordenar de mayor a menor precio
+        this.sortedProducts = [...this.filteredProducts].sort((a, b) => {
+          const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
+          const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
+          return priceB - priceA;
+        });
+      } else {
+        // Orden por defecto (sin ordenar)
+        this.sortedProducts = [...this.filteredProducts];
+      }
+    },
+  },
 };
 </script>
-
-<style scoped>
-/* Estilos personalizados para tp-shop-top-left */
-.tp-shop-top-left {
-  display: flex !important;
-  align-items: center !important;
-  gap: 20px;
-
-}
-
-.tp-shop-top-result p {
-  color: #818487;
-  font-size: 16px;
-  font-weight: 400;
-  margin-bottom: 0;
-}
-
-p {
-  color: var(--tp-text-body);
-  font-family: "Jost", sans-serif, serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 26px;
-  margin-bottom: 15px;
-}
-
-.tp-shop-top-select .nice-select {
-  background-color: #f9f9f9;
-  border: 1px solid rgba(1, 15, 28, 0.1) !important;
-  border-radius: 0 !important;
-  color: var(--tp-common-black) !important;
-  display: inline-block !important;
-  float: none !important;
-  font-size: 14px !important;
-  height: 40px !important;
-  line-height: 38px !important;
-  min-width: 204px !important;
-  padding: 0 25px !important;
-}
-.tp-shop-items-wrapper {
-  position: relative;
-  margin-top: 1.5rem;
-}
-.row {
-  --bs-gutter-x: 1.5rem;
-  --bs-gutter-y: 0;
-  display: flex
-;
-  flex-wrap: wrap;
-  margin-left: calc(var(--bs-gutter-x)* -.5);
-  margin-right: calc(var(--bs-gutter-x)* -.5);
-  margin-top: calc(var(--bs-gutter-y)* -1);
-}
-</style>
