@@ -6,7 +6,10 @@
       <div class="tp-shop-widget-content">
         <div class="tp-shop-widget-filter price__slider">
           <div id="slider-range" class="mb-10">
+            <!-- Renderizar el slider solo si priceRange tiene valores válidos -->
             <vue-slider
+                v-if="isPriceRangeValid"
+                :key="sliderKey"
                 v-model="selectedPriceRange"
                 :min="priceRange[0]"
                 :max="priceRange[1]"
@@ -17,7 +20,7 @@
             />
           </div>
           <div class="tp-shop-widget-filter-info d-flex align-items-center justify-content-between">
-            <span class="input-range">${{ priceRange[0] }} - ${{ priceRange[1] }}</span>
+            <span class="input-range">${{ selectedPriceRange[0] }} - ${{ selectedPriceRange[1] }}</span>
             <button class="tp-shop-widget-filter-btn" @click="applyFilter">Filter</button>
           </div>
         </div>
@@ -113,8 +116,15 @@ export default {
         { id: 2, name: 'Apple iPad Air', price: 999, image: 'https://i.ibb.co/kxGMcrw/ipad-1.png' },
         // Agrega más productos aquí
       ],
-      selectedPriceRange: [this.priceRange[0], this.priceRange[1]], // Inicializar con el rango de precios recibido
+      selectedPriceRange: [0, 0], // Inicializar con valores por defecto
+      sliderKey: 0, // Clave para forzar la reinicialización del slider
     };
+  },
+  computed: {
+    // Verificar si priceRange tiene valores válidos
+    isPriceRangeValid() {
+      return this.priceRange.length === 2 && this.priceRange[0] <= this.priceRange[1];
+    },
   },
   watch: {
     // Observar cambios en la categoría seleccionada
@@ -123,11 +133,16 @@ export default {
       handler: "updateSelectedCategory", // Llamar a updateSelectedCategory cuando cambie la categoría
     },
     // Observar cambios en el rango de precios
+    // Observar cambios en el rango de precios
     priceRange: {
       immediate: true,
       handler(newRange) {
-        // Actualizar el rango de precios seleccionado cuando cambie
-        this.selectedPriceRange = [newRange[0], newRange[1]];
+        if (this.isPriceRangeValid) {
+          // Actualizar el rango de precios seleccionado
+          this.selectedPriceRange = [newRange[0], newRange[1]];
+          // Forzar la reinicialización del slider
+          this.sliderKey += 1;
+        }
       },
     },
   },
