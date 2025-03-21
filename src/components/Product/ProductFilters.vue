@@ -7,9 +7,9 @@
         <div class="tp-shop-widget-filter price__slider">
           <div id="slider-range" class="mb-10">
             <vue-slider
-                v-model="priceRange"
-                :min="0"
-                :max="1200"
+                v-model="selectedPriceRange"
+                :min="priceRange[0]"
+                :max="priceRange[1]"
                 :tooltip="'always'"
                 :enable-cross="false"
                 :lazy="true"
@@ -96,10 +96,13 @@ export default {
       type: Object,
       required: true,
     },
+    priceRange: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      priceRange: [0, 1200], // Rango inicial de precios
       categories: [],
       topRatedProducts: [
         { id: 1, name: 'Gaming Headphone', price: 130, image: 'https://i.ibb.co/n1YRvWJ/headphone-5.png' },
@@ -111,6 +114,7 @@ export default {
         { id: 2, name: 'Gaming Headphone', price: 123.5, image: 'https://i.ibb.co/n1YRvWJ/headphone-5.png' },
         // Agrega más productos aquí
       ],
+      selectedPriceRange: this.priceRange, // Rango de precios seleccionado
     };
   },
   watch: {
@@ -119,20 +123,29 @@ export default {
       immediate: true, // Ejecutar el watcher inmediatamente al montar el componente
       handler: "updateSelectedCategory", // Llamar a updateSelectedCategory cuando cambie la categoría
     },
+    // Observar cambios en el rango de precios
+    priceRange: {
+      immediate: true,
+      handler: "updatePriceRange", // Actualizar el rango de precios seleccionado
+    },
   },
   async created() {
     await this.loadAllCategoriesData();
     this.markMatchedCategory();
   },
   methods: {
-    // Método para actualizar el rango de precios
-    updatePriceRange(value) {
-      this.priceRange = value;
+    // Método para actualizar el rango de precios seleccionado
+    updatePriceRange() {
+      // Asegurarnos de que selectedPriceRange esté dentro del rango permitido
+      this.selectedPriceRange = [
+        Math.max(this.priceRange[0], this.selectedPriceRange[0]),
+        Math.min(this.priceRange[1], this.selectedPriceRange[1]),
+      ];
     },
     // Método para aplicar el filtro
     applyFilter() {
-      console.log('Filtrando por rango de precios:', this.priceRange);
-      // Aquí puedes agregar la lógica para filtrar los productos
+      // Emitir el evento con el rango de precios seleccionado
+      this.$emit('filter-products', this.selectedPriceRange);
     },
     async loadAllCategoriesData() {
       this.$root.isLoading = true; // Activar el loader

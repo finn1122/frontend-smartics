@@ -18,11 +18,15 @@
       <div class="row">
         <!-- Filtros (3 columnas) -->
         <div class="col-xl-3 col-lg-4">
-          <ProductFilters :category="category" />
+          <ProductFilters
+              :category="category"
+              :products="products"
+              :priceRange="priceRange"
+              @filter-products="filterProductsByPrice" />
         </div>
         <!-- Lista de Productos (9 columnas) -->
         <div  v-if="products && category" class="col-xl-9 col-lg-8">
-          <ProductViewSelector :category="category" :products="products" />
+          <ProductViewSelector :category="category" :products="filteredProducts" />
         </div>
       </div>
     </div>
@@ -45,7 +49,9 @@ export default {
   data() {
     return {
       category: [],
-      products: [],
+      products: [], // Lista completa de productos
+      filteredProducts: [], // Lista de productos filtrados
+      priceRange: [0, 0], // Rango de precios dinámico
     };
   },
   computed: {
@@ -88,6 +94,9 @@ export default {
       try {
         this.$root.isLoading = true; // Desactivar el loader
         this.products = await api.getProductsByCategory(categoryId);
+        this.filteredProducts = this.products; // Inicializar los productos filtrados
+        // Calcular el rango de precios
+        this.calculatePriceRange();
       } catch (error) {
         console.error("❌ Error al cargar los productos:", error);
         throw new Error(error.response?.data?.message || "Error al cargar los productos");
@@ -95,6 +104,32 @@ export default {
       finally {
         this.$root.isLoading = false; // Desactivar el loader
       }
+    },
+    // Método para calcular el rango de precios
+    calculatePriceRange() {
+      if (this.products.length === 0) {
+        this.priceRange = [0, 0]; // Si no hay productos, el rango es [0, 0]
+        return;
+      }
+
+      // Obtener los precios de los productos
+      const prices = this.products.map((product) => {
+        return product.bestPrice?.newSalePrice || product.bestPrice?.salePrice || 0;
+      });
+
+      // Calcular el mínimo y máximo
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+
+      // Establecer el rango de precios
+      this.priceRange = [minPrice, maxPrice];
+    },
+    // Método para filtrar los productos por precio
+    filterProductsByPrice(priceRange) {
+      this.filteredProducts = this.products.filter((product) => {
+        const price = product.bestPrice?.newSalePrice || product.bestPrice?.salePrice || 0;
+        return price >= priceRange[0] && price <= priceRange[1];
+      });
     },
   },
 };
