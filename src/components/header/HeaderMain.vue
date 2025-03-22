@@ -1,9 +1,9 @@
 <template>
   <div class="tp-header-main tp-header-sticky">
     <div class="container">
-      <div class="row">
-        <!-- Logo (2 columnas) -->
-        <div class="col-3 pl-0"> <!-- Elimina el padding izquierdo -->
+      <div class="row align-items-center">
+        <!-- Logo (2 columnas en pantallas grandes, 6 en pequeñas) -->
+        <div class="col-6 col-md-3 pl-3 pl-md-0"> <!-- Añade padding izquierdo en pantallas pequeñas -->
           <div class="logo">
             <a href="/">
               <img src="@/assets/logo.png" alt="logo" class="logo-img img-fluid" />
@@ -11,13 +11,13 @@
           </div>
         </div>
 
-        <!-- Barra de Búsqueda (7 columnas) -->
-        <div class="col-6 pl-0"> <!-- Elimina el padding izquierdo -->
+        <!-- Barra de Búsqueda (7 columnas en pantallas grandes, oculto en pequeñas) -->
+        <div class="col-12 col-md-6 pl-0 d-none d-md-block">
           <HeaderSearch />
         </div>
 
-        <!-- Acciones del Usuario (3 columnas) -->
-        <div class="col-3">
+        <!-- Acciones del Usuario (3 columnas en pantallas grandes, 6 en pequeñas) -->
+        <div class="col-6 col-md-3 pr-3"> <!-- Añade padding derecho en pantallas pequeñas -->
           <HeaderActions />
         </div>
       </div>
@@ -52,7 +52,7 @@ img, svg {
 .row {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Alinea todo a la izquierda */
+  justify-content: space-between; /* Distribuye el espacio entre los elementos */
   margin-left: 0; /* Elimina el margen izquierdo del row */
   margin-right: 0; /* Elimina el margen derecho del row */
 }
@@ -64,8 +64,6 @@ img, svg {
   justify-content: flex-start; /* Alinea el logo a la izquierda */
   width: 100%; /* Ocupa todo el espacio disponible */
   height: 100%; /* Ocupa toda la altura de la columna */
-  margin-left: 0; /* Elimina el margen izquierdo del logo */
-  padding-left: 0; /* Elimina el padding izquierdo del logo */
 }
 
 .logo-img {
@@ -74,13 +72,13 @@ img, svg {
 }
 
 /* Estilos para la barra de búsqueda */
-.col-6 {
+.col-md-6 {
   padding-left: 0; /* Elimina el padding izquierdo para pegar el HeaderSearch al logo */
   margin-left: 0; /* Elimina el margen izquierdo */
 }
 
 /* Estilos para las acciones del usuario */
-.col-3 {
+.col-md-3 {
   padding-left: 0; /* Elimina el padding izquierdo */
   margin-left: 0; /* Elimina el margen izquierdo */
 }
