@@ -33,11 +33,7 @@
       <div class="tp-shop-widget-content">
         <ul class="list-unstyled">
           <li>
-            <input type="checkbox" id="on-sale" />
-            <label for="on-sale">On Sale</label>
-          </li>
-          <li>
-            <input type="checkbox" id="in-stock" />
+            <input type="checkbox" id="in-stock" v-model="filters.inStock" @change="applyStatusFilters" />
             <label for="in-stock">In Stock</label>
           </li>
         </ul>
@@ -118,6 +114,10 @@ export default {
       ],
       selectedPriceRange: [0, 0], // Inicializar con valores por defecto
       sliderKey: 0, // Clave para forzar la reinicialización del slider
+      filters: {
+        inStock: false, // Nuevo filtro para productos en stock
+        // Aquí puedes tener otros filtros como priceRange, categories, etc.
+      },
     };
   },
   computed: {
@@ -163,6 +163,10 @@ export default {
     applyFilter() {
       // Emitir el evento con el rango de precios seleccionado
       this.$emit('filter-products', this.selectedPriceRange);
+    },
+    applyStatusFilters() {
+      // Emitir un evento con los filtros actualizados
+      this.$emit("filter-products-status", this.filters);
     },
     async loadAllCategoriesData() {
       this.$root.isLoading = true; // Activar el loader

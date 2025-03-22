@@ -178,7 +178,8 @@ export default {
   },
 };
 </script>
-<style>.tp-shop-top {
+<style>
+.tp-shop-top {
   margin-bottom: 20px; /* Prueba con 0 o ajusta */
 }
 
@@ -283,6 +284,7 @@ p {
   color: #767a7d;
   right: 20px;
 }
+
 .dropdown-icon {
   position: absolute;
   right: 15px;
@@ -301,4 +303,46 @@ p {
   transform: translateY(-50%) rotate(180deg);
 }
 
+/* Estilos para el menú desplegable */
+.nice-select .list {
+  background-color: #fff; /* Fondo sólido */
+  border: 1px solid #e8e8e8; /* Borde */
+  border-radius: 5px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  list-style: none;
+  margin: 0;
+  max-height: 200px; /* Altura máxima */
+  overflow-y: auto; /* Scroll si hay muchas opciones */
+  padding: 0;
+  position: absolute;
+  top: 100%; /* Posición debajo del select */
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Estilos para las opciones del menú desplegable */
+.nice-select .list .option {
+  color: #333; /* Color del texto */
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 18px; /* Espaciado interno */
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Estilo al pasar el ratón sobre una opción */
+.nice-select .list .option:hover {
+  background-color: #f5f5f5; /* Fondo al hacer hover */
+}
+
+/* Estilo para la opción seleccionada */
+.nice-select .list .option.selected {
+  background-color: #e8e8e8; /* Fondo de la opción seleccionada */
+  font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilo para la opción con foco */
+.nice-select .list .option.focus {
+  background-color: #f0f0f0; /* Fondo de la opción con foco */
+}
 </style>

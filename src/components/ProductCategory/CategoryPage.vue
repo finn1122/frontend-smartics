@@ -22,7 +22,9 @@
               :category="category"
               :products="products"
               :priceRange="priceRange"
-              @filter-products="filterProductsByPrice" />
+              @filter-products="filterProductsByPrice"
+              @filter-products-status="filterProductsByStatus"
+          />
         </div>
         <!-- Lista de Productos (9 columnas) -->
         <div  v-if="products && category" class="col-xl-9 col-lg-8 mb-4">
@@ -37,7 +39,7 @@
 import ProductFilters from "@/components/Product/ProductFilters.vue";
 import ProductViewSelector from "@/components/Product/ProductViewSelector.vue";
 import api from "@/services/api"; // Importar la instancia de API
-import {useNotificationStore} from "@/stores/notificationStore";
+import { useNotificationStore } from "@/stores/notificationStore";
 
 export default {
   name: "CategoryPage",
@@ -51,7 +53,8 @@ export default {
       category: [],
       products: [], // Lista completa de productos
       filteredProducts: [], // Lista de productos filtrados
-      priceRange: [0, 0], // Rango de precios dinámico
+      priceRange: [0, 0], // Rango de precios dinámico (filtro independiente)
+      activeFilters: {}, // Filtros activos (se llena dinámicamente)
     };
   },
   computed: {
@@ -79,7 +82,6 @@ export default {
         this.category = await api.getCategoryByPath(this.categoryPath);
         // Obtener los productos de la categoría
         await this.fetchProductsForCategory(this.category.id);
-
       } catch (error) {
         console.error("❌ Error al cargar la categoría:", error);
         this.notificationStore.showNotification(
@@ -95,13 +97,11 @@ export default {
         this.$root.isLoading = true; // Desactivar el loader
         this.products = await api.getProductsByCategory(categoryId);
         this.filteredProducts = this.products; // Inicializar los productos filtrados
-        // Calcular el rango de precios
-        this.calculatePriceRange();
+        this.calculatePriceRange(); // Calcular el rango de precios
       } catch (error) {
         console.error("❌ Error al cargar los productos:", error);
         throw new Error(error.response?.data?.message || "Error al cargar los productos");
-      }
-      finally {
+      } finally {
         this.$root.isLoading = false; // Desactivar el loader
       }
     },
@@ -126,15 +126,39 @@ export default {
     },
     // Método para filtrar los productos por precio
     filterProductsByPrice(priceRange) {
+      this.priceRange = priceRange; // Actualizar el filtro de precio (independiente)
+      this.applyAllFilters(); // Aplicar todos los filtros
+    },
+    // Método para filtrar los productos por estado (In Stock)
+    filterProductsByStatus(status) {
+      this.activeFilters.inStock = status.inStock; // Agregar o actualizar el filtro "In Stock"
+      this.applyAllFilters(); // Aplicar todos los filtros
+    },
+    // Método para aplicar todos los filtros acumulativamente
+    applyAllFilters() {
       this.filteredProducts = this.products.filter((product) => {
-        const price = product.bestPrice?.newSalePrice || product.bestPrice?.salePrice || 0;
-        return price >= priceRange[0] && price <= priceRange[1];
+        // Aplicar el filtro "In Stock" (si existe)
+        if (this.activeFilters.inStock && product.bestPrice.quantity <= 0) {
+          return false; // Excluir productos que no están en stock
+        }
+
+        // Aplicar el filtro de rango de precios (si existe)
+        if (this.priceRange) {
+          const price = product.bestPrice?.newSalePrice || product.bestPrice?.salePrice || 0;
+          if (price < this.priceRange[0] || price > this.priceRange[1]) {
+            return false; // Excluir productos fuera del rango de precios
+          }
+        }
+
+        // Aquí puedes agregar más condiciones para otros filtros dinámicos
+        // Ejemplo: if (this.activeFilters.nuevoFiltro && !product.cumpleCondicion) { return false; }
+
+        return true; // Incluir productos que cumplen con todos los filtros
       });
     },
   },
 };
 </script>
-
 <style scoped>
 .breadcrumb__area {
   margin-top: 6rem;
