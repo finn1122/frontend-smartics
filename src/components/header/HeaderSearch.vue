@@ -1,5 +1,5 @@
 <template>
-  <div class="tp-header-search">
+  <div class="tp-header-search pl-70">
     <form @submit.prevent="handleSearch">
       <div class="tp-header-search-wrapper d-flex align-items-center">
         <!-- Campo de Búsqueda -->
@@ -13,12 +13,13 @@
         </div>
 
         <!-- Selector de Categoría -->
-        <div class="tp-header-search-category d-none d-lg-block">
-          <div class="nice-select" @click="toggleDropdown">
+        <div class="tp-header-search-category">
+          <div class="nice-select" tabindex="0" role="button" @click="toggleDropdown">
             <span class="current">{{ selectedCategory || "Select Category" }}</span>
-            <ul class="list" v-if="isDropdownOpen">
+            <ul class="list" role="menubar" v-if="isDropdownOpen">
               <li
                   class="option"
+                  role="menuitem"
                   v-for="category in categories"
                   :key="category"
                   @click="selectCategory(category)"
@@ -67,122 +68,125 @@ export default {
 </script>
 
 <style scoped>
-/* Estilos base para el HeaderSearch */
-.tp-header-search {
-  width: 100%; /* Ocupa todo el ancho disponible */
-  max-width: 800px; /* Ajusta este valor según el ancho deseado */
-  margin-left: 0; /* Asegura que no haya margen izquierdo */
-  padding-left: 0; /* Asegura que no haya padding izquierdo */
-  display: flex;
-  justify-content: flex-start; /* Alinea el contenido a la izquierda */
+.pl-70 {
+  padding-left: 70px;
 }
-
 .tp-header-search-wrapper {
-  border: 2px solid var(--tp-theme-primary); /* Rectángulo azul */
-  border-radius: 4px; /* Bordes redondeados */
-  display: flex; /* Activa Flexbox */
-  align-items: center; /* Centra verticalmente los elementos */
-  padding: 0; /* Elimina el padding interno */
-  height: 46px; /* Altura fija para el contenedor */
-  width: auto; /* Ancho ajustado al contenido */
-  margin-left: 0; /* Elimina el margen izquierdo */
+  border: 2px solid var(--tp-theme-primary);
+  margin-left: 10px;
+  position: relative;
 }
 
-.search-input {
-  flex: 1; /* Ocupa el espacio restante */
-  padding: 10px 25px; /* Padding interno */
-  border: none; /* Elimina el borde */
-  font-size: 14px;
-  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-  background-color: var(--tp-common-white); /* Fondo blanco */
-  color: var(--tp-common-black); /* Color del texto */
-  outline: none; /* Elimina el outline al hacer focus */
-  min-width: 200px; /* Ancho mínimo para el input */
-  margin-left: 0; /* Elimina el margen izquierdo */
+.align-items-center {
+  align-items: center !important;
 }
-
-.tp-header-search-category {
-  flex: 0 0 auto; /* No crece ni se reduce */
-  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-  position: relative; /* Para posicionar el ícono de desplegable */
+.d-flex {
+  display: flex !important;
 }
-
-.nice-select {
-  padding: 0 30px 0 20px; /* Padding interno (más a la derecha para el ícono) */
-  border: none; /* Elimina el borde */
-  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-  display: flex;
-  align-items: center; /* Centra el texto verticalmente */
-  background-color: var(--tp-common-white); /* Fondo blanco */
-  color: var(--tp-common-black); /* Color del texto */
-  font-size: 14px;
-  cursor: pointer;
-  position: relative; /* Para posicionar el ícono de desplegable */
+.tp-header-search-box {
+  width: 58%;
 }
-
-.nice-select::after {
-  content: "▼"; /* Ícono de flecha hacia abajo */
-  position: absolute;
-  right: 10px; /* Posición del ícono */
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--tp-common-black); /* Color del ícono */
-}
-
-.nice-select .current {
-  display: block;
-  margin: 0; /* Elimina cualquier margen */
-  padding: 0; /* Elimina cualquier padding */
-}
-
-.nice-select .list {
-  position: absolute;
-  top: 100%;
-  left: 0;
+.tp-header-search-box input {
+  background-color: var(--tp-common-white);
+  border: 0;
+  color: var(--tp-common-black);
+  height: 46px;
+  padding-left: 25px;
+  padding-right: 25px;
   width: 100%;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-top: 5px;
-  z-index: 10;
 }
-
-.nice-select .list .option {
-  padding: 10px;
-  cursor: pointer;
+.tp-header-search-category {
+  position: relative;
 }
-
-.nice-select .list .option:hover {
-  background-color: #f0f0f0;
-}
-
-.tp-header-search-btn {
-  flex: 0 0 auto; /* No crece ni se reduce */
-  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
-}
-
-.tp-header-search-btn .search-button {
-  padding: 0 20px; /* Padding interno */
-  background-color: var(--tp-theme-primary); /* Fondo azul */
-  color: #fff; /* Color del texto */
-  border: none; /* Elimina el borde */
-  border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
+.tp-header-search-category .nice-select {
+  border: 0;
+  color: var(--tp-common-black);
+  font-size: 14px;
+  height: 46px;
+  line-height: 46px;
+  padding-right: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+.nice-select {
+  background-color: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  display: block;
+  position: relative;
+  width: auto;
+}
+.dropdown-icon {
+  margin-left: 8px; /* Espacio entre el texto y el ícono */
+  font-size: 12px; /* Tamaño del ícono */
+}
+.nice-select .list {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(68, 68, 68, 0.1);
+  left: 0;
+  margin-top: 4px;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  top: 100%;
+  transform: scale(1) translateY(0);
+  transform-origin: 50% 0;
+  transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+  z-index: 9;
+}
+.nice-select .option {
+  cursor: pointer;
+  font-weight: 400;
+  line-height: 40px;
+  list-style: none;
+  min-height: 40px;
+  outline: none;
+  padding-left: 18px;
+  padding-right: 29px;
+  text-align: left;
+  transition: all 0.2s;
+}
+.tp-header-search-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.tp-header-search-btn button {
+  background-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+  height: 57px;
+  width: 60px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
+  border: none;
+  cursor: pointer;
 }
-
-.tp-header-search-btn .search-button i {
-  font-size: 16px; /* Tamaño del ícono de Font Awesome */
+.tp-header-search-btn button i {
+  font-size: 16px;
 }
-
-/* Estilos responsivos para pantallas menores a 992px */
-@media (max-width: 991.98px) {
-  .tp-header-search {
-    display: none; /* Oculta todo el HeaderSearch en pantallas pequeñas */
-  }
+.tp-header-search-category:after {
+  background-color: #010f1c4d;
+  content: "";
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 1px;
+}
+.tp-header-search-category:after {
+  background-color: #010f1c4d;
+  content: "";
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: 48%;
+  transform: translateY(-50%);
+  width: 1px;
 }
 </style>

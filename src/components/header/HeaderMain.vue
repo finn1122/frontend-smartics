@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row align-items-center">
         <!-- Logo (2 columnas en pantallas grandes, 6 en pequeñas) -->
-        <div class="col-6 col-md-3 pl-3 pl-md-0"> <!-- Añade padding izquierdo en pantallas pequeñas -->
+        <div class="col-xl-2 col-lg-2 col-md-4 col-6"> <!-- Añade padding izquierdo en pantallas pequeñas -->
           <div class="logo">
             <a href="/">
               <img src="@/assets/logo.png" alt="logo" class="logo-img img-fluid" />
@@ -12,7 +12,7 @@
         </div>
 
         <!-- Barra de Búsqueda (7 columnas en pantallas grandes, oculto en pequeñas) -->
-        <div class="col-12 col-md-6 pl-0 d-none d-md-block">
+        <div class="col-xl-6 col-lg-7 d-none d-lg-block">
           <HeaderSearch />
         </div>
 
@@ -93,4 +93,18 @@ a, button {
 a {
   text-decoration: none;
 }
+.align-items-center {
+  align-items: center !important;
+}
+.row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex
+;
+  flex-wrap: wrap;
+  margin-left: calc(var(--bs-gutter-x)* -.5);
+  margin-right: calc(var(--bs-gutter-x)* -.5);
+  margin-top: calc(var(--bs-gutter-y)* -1);
+}
+
 </style>
