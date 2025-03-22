@@ -1,9 +1,9 @@
 <template>
   <div class="tp-header-main tp-header-sticky">
     <div class="container">
-      <div class="row align-items-center g-0">
+      <div class="row">
         <!-- Logo (2 columnas) -->
-        <div class="col-2 p-0">
+        <div class="col-3 pl-0"> <!-- Elimina el padding izquierdo -->
           <div class="logo">
             <a href="/">
               <img src="@/assets/logo.png" alt="logo" class="logo-img img-fluid" />
@@ -12,12 +12,12 @@
         </div>
 
         <!-- Barra de Búsqueda (7 columnas) -->
-        <div class="col-7 p-0">
+        <div class="col-6 pl-0"> <!-- Elimina el padding izquierdo -->
           <HeaderSearch />
         </div>
 
         <!-- Acciones del Usuario (3 columnas) -->
-        <div class="col-3 p-0">
+        <div class="col-3">
           <HeaderActions />
         </div>
       </div>
@@ -38,34 +38,61 @@ export default {
 };
 </script>
 
-
 <style scoped>
 /* Estilos para el HeaderMain */
 .tp-header-main {
-  background-color: #ffffff;
-  padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 27px;
+  padding-top: 27px;
 }
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+
+img, svg {
+  vertical-align: middle;
 }
 
 .row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start; /* Alinea todo a la izquierda */
+  margin-left: 0; /* Elimina el margen izquierdo del row */
+  margin-right: 0; /* Elimina el margen derecho del row */
 }
 
 /* Estilos para el logo */
 .logo {
   display: flex;
-  align-items: center;
+  align-items: center; /* Centra verticalmente */
+  justify-content: flex-start; /* Alinea el logo a la izquierda */
+  width: 100%; /* Ocupa todo el espacio disponible */
+  height: 100%; /* Ocupa toda la altura de la columna */
+  margin-left: 0; /* Elimina el margen izquierdo del logo */
+  padding-left: 0; /* Elimina el padding izquierdo del logo */
 }
 
 .logo-img {
   height: 60px; /* Ajusta el tamaño del logo */
   width: auto; /* Mantiene la proporción */
+}
+
+/* Estilos para la barra de búsqueda */
+.col-6 {
+  padding-left: 0; /* Elimina el padding izquierdo para pegar el HeaderSearch al logo */
+  margin-left: 0; /* Elimina el margen izquierdo */
+}
+
+/* Estilos para las acciones del usuario */
+.col-3 {
+  padding-left: 0; /* Elimina el padding izquierdo */
+  margin-left: 0; /* Elimina el margen izquierdo */
+}
+
+a, button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
 }
 </style>

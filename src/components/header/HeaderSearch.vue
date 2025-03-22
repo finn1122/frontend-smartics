@@ -37,7 +37,6 @@
         </div>
       </div>
     </form>
-
   </div>
 </template>
 
@@ -74,50 +73,67 @@ export default {
   max-width: 800px; /* Ajusta este valor según el ancho deseado */
   margin-left: 0; /* Asegura que no haya margen izquierdo */
   padding-left: 0; /* Asegura que no haya padding izquierdo */
+  display: flex;
+  justify-content: flex-start; /* Alinea el contenido a la izquierda */
 }
-
 
 .tp-header-search-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0; /* Eliminamos el espacio entre los elementos */
+  border: 2px solid var(--tp-theme-primary); /* Rectángulo azul */
+  border-radius: 4px; /* Bordes redondeados */
+  display: flex; /* Activa Flexbox */
+  align-items: center; /* Centra verticalmente los elementos */
+  padding: 0; /* Elimina el padding interno */
+  height: 46px; /* Altura fija para el contenedor */
+  width: auto; /* Ancho ajustado al contenido */
+  margin-left: 0; /* Elimina el margen izquierdo */
 }
-.tp-header-search-box {
-  width: 50%; /* Ancho específico */
-  margin-right: 0px;
-}
+
 .search-input {
-  box-sizing: border-box; /* Incluye padding y border en el ancho total */
-  flex: 2; /* Aumenta el espacio que ocupa el input */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
+  flex: 1; /* Ocupa el espacio restante */
+  padding: 10px 25px; /* Padding interno */
+  border: none; /* Elimina el borde */
   font-size: 14px;
-  border-right: none; /* Elimina el borde derecho para unir con el selector */
+  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
+  background-color: var(--tp-common-white); /* Fondo blanco */
+  color: var(--tp-common-black); /* Color del texto */
+  outline: none; /* Elimina el outline al hacer focus */
+  min-width: 200px; /* Ancho mínimo para el input */
+  margin-left: 0; /* Elimina el margen izquierdo */
 }
 
 .tp-header-search-category {
-  position: relative;
-  flex: 0 0 auto; /* Ajusta el espacio que ocupa el selector */
+  flex: 0 0 auto; /* No crece ni se reduce */
+  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
+  position: relative; /* Para posicionar el ícono de desplegable */
 }
 
 .nice-select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 0; /* Sin bordes redondeados para unir con el input y el botón */
-  font-size: 14px;
-  cursor: pointer;
-  background-color: #fff;
-  border-right: none; /* Elimina el borde derecho para unir con el botón */
-  width: 100%; /* Asegura que el selector ocupe todo el espacio disponible */
-  height: 100%; /* Asegura que el selector tenga la misma altura que los demás elementos */
+  padding: 0 30px 0 20px; /* Padding interno (más a la derecha para el ícono) */
+  border: none; /* Elimina el borde */
+  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
   display: flex;
   align-items: center; /* Centra el texto verticalmente */
-  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+  background-color: var(--tp-common-white); /* Fondo blanco */
+  color: var(--tp-common-black); /* Color del texto */
+  font-size: 14px;
+  cursor: pointer;
+  position: relative; /* Para posicionar el ícono de desplegable */
+}
+
+.nice-select::after {
+  content: "▼"; /* Ícono de flecha hacia abajo */
+  position: absolute;
+  right: 10px; /* Posición del ícono */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--tp-common-black); /* Color del ícono */
 }
 
 .nice-select .current {
   display: block;
+  margin: 0; /* Elimina cualquier margen */
+  padding: 0; /* Elimina cualquier padding */
 }
 
 .nice-select .list {
@@ -140,51 +156,33 @@ export default {
 .nice-select .list .option:hover {
   background-color: #f0f0f0;
 }
-.tp-header-search input {
-  width: 100%; /* Hace que el input use todo el espacio disponible */
-  max-width: 500px; /* Puedes ajustar el tamaño según lo necesites */
-}
+
 .tp-header-search-btn {
-  display: flex; /* Asegura que el botón ocupe toda la altura */
+  flex: 0 0 auto; /* No crece ni se reduce */
+  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
 }
 
 .tp-header-search-btn .search-button {
-  padding: 14px 15px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
+  padding: 0 20px; /* Padding interno */
+  background-color: var(--tp-theme-primary); /* Fondo azul */
+  color: #fff; /* Color del texto */
+  border: none; /* Elimina el borde */
   border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%; /* Asegura que el botón tenga la misma altura que los demás elementos */
+  height: 100%; /* Asegura que ocupe toda la altura del contenedor */
 }
 
 .tp-header-search-btn .search-button i {
   font-size: 16px; /* Tamaño del ícono de Font Awesome */
 }
 
-
 /* Estilos responsivos para pantallas menores a 992px */
 @media (max-width: 991.98px) {
-  .tp-header-search-category {
-    display: none; /* Oculta el selector de categorías */
-  }
-  .tp-header-search-box {
-    display: none;
-  }
-  .tp-header-search-btn{
-    display: none;
-  }
-
-  .search-input {
-    border-radius: 4px 0 0 4px; /* Bordes redondeados solo a la izquierda */
-    border-right: 1px solid #ccc; /* Restaura el borde derecho */
-  }
-
-  .search-button {
-    border-radius: 0 4px 4px 0; /* Bordes redondeados solo a la derecha */
+  .tp-header-search {
+    display: none; /* Oculta todo el HeaderSearch en pantallas pequeñas */
   }
 }
 </style>
