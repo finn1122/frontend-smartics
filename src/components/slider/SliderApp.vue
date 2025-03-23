@@ -6,7 +6,7 @@
         :slides-per-view="1"
         :space-between="0"
         :loop="true"
-        :autoplay="{ delay: 3000, disableOnInteraction: false }"
+        :autoplay="{ delay: 3000, disableOnInteraction: true }"
         :pagination="{ clickable: true }"
         :navigation="{ nextEl: '.slider-button-next', prevEl: '.slider-button-prev' }"
         class="swiper-container"
@@ -51,9 +51,10 @@
               >
                 <img
                     :src="slide.image"
-                    :alt="slide.title"
+                    :alt="`Imagen de ${slide.title}`"
                     class="img-fluid"
                     style="width: 400px; height: auto;"
+                    loading="lazy"
                 />
               </div>
             </div>
@@ -63,10 +64,20 @@
 
       <!-- Navegación -->
       <div class="slider-navigation d-none d-lg-block">
-        <button type="button" class="slider-button-prev">
+        <button
+            type="button"
+            class="slider-button-prev"
+            tabindex="0"
+            aria-label="Slide anterior"
+        >
           <font-awesome-icon :icon="['fas', 'chevron-left']" />
         </button>
-        <button type="button" class="slider-button-next">
+        <button
+            type="button"
+            class="slider-button-next"
+            tabindex="0"
+            aria-label="Slide siguiente"
+        >
           <font-awesome-icon :icon="['fas', 'chevron-right']" />
         </button>
       </div>
@@ -76,6 +87,7 @@
     </swiper>
   </section>
 </template>
+
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
@@ -115,6 +127,11 @@ export default {
           textPosition: "right", // Posición del texto (left o right)
         },
       ],
+      validator: (value) => {
+        return value.every((slide) => {
+          return ['left', 'right'].includes(slide.textPosition);
+        });
+      },
     },
   },
   setup() {
@@ -192,33 +209,28 @@ export default {
 
 .slider-button-prev,
 .slider-button-next {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  transition: all 0.3s ease; /* Transición para el efecto de resaltado */
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
-/* Posicionar botón "anterior" a la izquierda */
 .slider-button-prev {
   left: 20px;
 }
 
-/* Posicionar botón "siguiente" a la derecha */
 .slider-button-next {
   right: 20px;
 }
 
-/* Resaltar los botones al hacer hover sobre ellos */
 .slider-button-prev:hover,
 .slider-button-next:hover {
-  color: #ffcc00; /* Cambiar el color al hacer hover */
-  transform: translateY(-50%) scale(1.2); /* Aumentar el tamaño */
+  background: rgba(255, 255, 255, 0.5); /* Fondo más visible al hacer hover */
+  transform: translateY(-50%) scale(1.1);
 }
 
 /* Paginación */
@@ -250,6 +262,25 @@ export default {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .slider-item {
+    min-height: 300px; /* Altura más pequeña para móviles */
+  }
+
+  .slider-title {
+    font-size: 1.5rem; /* Título más pequeño */
+  }
+
+  .slider-subtitle {
+    font-size: 1rem; /* Subtítulo más pequeño */
+  }
+
+  .slider-image img {
+    width: 100%; /* Imagen ocupa todo el ancho */
   }
 }
 </style>
