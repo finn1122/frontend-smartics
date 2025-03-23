@@ -8,11 +8,10 @@
             <div class="tp-header-category tp-category-menu tp-header-category-toggle">
               <button class="tp-category-menu-btn tp-category-menu-toggle">
                 <span>
-                  <svg width="18" height="25" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M0 1C0 0.447715 0.447715 0 1 0H15C15.5523 0 16 0.447715 16 1C16 1.55228 15.5523 2 15 2H1C0.447715 2 0 1.55228 0 1ZM0 7C0 6.44772 0.447715 6 1 6H17C17.5523 6 18 6.44772 18 7C18 7.55228 17.5523 8 17 8H1C0.447715 8 0 7.55228 0 7ZM1 12C0.447715 12 0 12.4477 0 13C0 13.5523 0.447715 14 1 14H11C11.5523 14 12 13.5523 12 13C12 12.4477 11.5523 12 11 12H1Z" fill="currentColor"></path>
-                  </svg>
+                  <i class="fas fa-bars me-2"></i>
+                  All Categories
                 </span>
-                All Categories
+                <i class="fas fa-angle-down ms-2"></i>
               </button>
             </div>
           </div>
@@ -74,11 +73,16 @@ export default {
 </script>
 
 <style scoped>
+/* ============================= */
+/* 🌟 ESTILOS GENERALES */
+/* ============================= */
 .tp-header-bottom-border {
   border-top: 1px solid rgba(1, 15, 28, 0.1);
 }
 
-/* Estilos para el contenedor */
+/* ============================= */
+/* 📏 RESPONSIVE CONTAINER */
+/* ============================= */
 .container {
   width: 100%;
   padding-right: 15px;
@@ -117,7 +121,9 @@ export default {
   }
 }
 
-/* Estilos para el botón de categorías */
+/* ============================= */
+/* 📌 BOTÓN DE CATEGORÍAS */
+/* ============================= */
 .tp-header-category {
   position: relative;
 }
@@ -131,16 +137,22 @@ export default {
   position: relative;
   text-align: left;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.tp-category-menu-btn span {
+  flex-grow: 1; /* Esto empuja el icono hacia la derecha */
+  text-align: left;
 }
 
-a,
-button {
-  background: transparent;
-  border: none;
-  color: inherit;
-  outline: none;
+.tp-category-menu-btn i {
+  font-size: 16px;
 }
 
+/* ============================= */
+/* 🏠 MENÚ DE NAVEGACIÓN */
+/* ============================= */
 .menu-list {
   display: flex;
   gap: 20px;
@@ -160,16 +172,18 @@ button {
   color: #007bff;
 }
 
-/* Estilos para el contacto */
+/* ============================= */
+/* 📞 CONTACTO */
+/* ============================= */
 .tp-header-contact {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.tp-header-contact-icon svg {
-  width: 21px;
-  height: 20px;
+.tp-header-contact-icon i {
+  font-size: 20px;
+  color: var(--tp-theme-primary);
 }
 
 .tp-header-contact-content h5 {
@@ -188,26 +202,19 @@ button {
   text-decoration: none;
   color: inherit;
 }
-.tp-category-menu-btn:after {
-  content: "";
-  font-family: var(--tp-ff-fontawesome),sans-serif;
-  position: absolute;
-  right: 30px;
-  top: 50%;
-  transform: translateY(-50%);
+
+/* ============================= */
+/* 🔧 RESET & UTILIDADES */
+/* ============================= */
+a,
+button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
 }
 
 *, :after, :before {
   box-sizing: border-box;
-}
-.tp-category-menu-btn {
-  background-color: var(--tp-theme-primary);
-  color: var(--tp-common-white);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 12px 30px;
-  position: relative;
-  text-align: left;
-  width: 100%;
 }
 </style>
