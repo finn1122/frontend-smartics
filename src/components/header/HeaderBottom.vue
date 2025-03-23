@@ -74,11 +74,49 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+.tp-header-bottom-border {
+  border-top: 1px solid rgba(1, 15, 28, 0.1);
 }
+
+/* Estilos para el contenedor */
+.container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
 /* Estilos para el botón de categorías */
 .tp-header-category {
   position: relative;
@@ -94,7 +132,9 @@ export default {
   text-align: left;
   width: 100%;
 }
-a, button {
+
+a,
+button {
   background: transparent;
   border: none;
   color: inherit;
@@ -108,6 +148,7 @@ a, button {
   margin: 0;
   padding: 0;
 }
+
 .menu-list li a {
   text-decoration: none;
   color: #333;
@@ -146,5 +187,27 @@ a, button {
 .tp-header-contact-content a {
   text-decoration: none;
   color: inherit;
+}
+.tp-category-menu-btn:after {
+  content: "";
+  font-family: var(--tp-ff-fontawesome),sans-serif;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+}
+.tp-category-menu-btn {
+  background-color: var(--tp-theme-primary);
+  color: var(--tp-common-white);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 30px;
+  position: relative;
+  text-align: left;
+  width: 100%;
 }
 </style>

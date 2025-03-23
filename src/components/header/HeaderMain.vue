@@ -75,13 +75,6 @@ img, svg {
 }
 
 
-
-/* Estilos para las acciones del usuario */
-.col-md-3 {
-  padding-left: 0; /* Elimina el padding izquierdo */
-  margin-left: 0; /* Elimina el margen izquierdo */
-}
-
 a, button {
   background: transparent;
   border: none;

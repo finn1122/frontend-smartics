@@ -1,20 +1,22 @@
 <template>
   <header>
-    <HeaderMain />
-    <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage && !isCategoryPage" />
+    <div class="tp-header-area p-relative z-index-11">
+      <HeaderMain />
+      <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage && !isCategoryPage" />
+    </div>
   </header>
 </template>
 
 <script>
 import HeaderMain from "./HeaderMain";
-import HeaderBottom from "./HeaderBottom";
+import HeaderBottom from "@/components/header/HeaderBottom.vue";
 
 export default {
   name: 'HeaderApp', // Nombre del componente con más de una palabra
 
   components: {
-    HeaderMain,
     HeaderBottom,
+    HeaderMain,
   },
   computed: {
     // Verifica si la ruta actual es '/login'
@@ -33,7 +35,12 @@ export default {
   },
 };
 </script>
+<style>
 
-<style scoped>
-/* Estilos específicos para el header */
+.p-relative {
+  position: relative;
+}
+.z-index-11 {
+  z-index: 11;
+}
 </style>

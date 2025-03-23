@@ -16,6 +16,7 @@
         <div class="tp-header-search-category">
           <div class="nice-select" tabindex="0" role="button" @click="toggleDropdown">
             <span class="current">{{ selectedCategory || "Select Category" }}</span>
+            <i class="dropdown-icon" :class="{'fa-chevron-up': isDropdownOpen, 'fa-chevron-down': !isDropdownOpen}"></i>
             <ul class="list" role="menubar" v-if="isDropdownOpen">
               <li
                   class="option"
@@ -119,9 +120,13 @@ export default {
   width: auto;
 }
 .dropdown-icon {
-  margin-left: 8px; /* Espacio entre el texto y el ícono */
   font-size: 12px; /* Tamaño del ícono */
+  transition: transform 0.3s ease;
 }
+.nice-select .current {
+  padding-right: 12px;
+}
+
 .nice-select .list {
   background-color: #fff;
   border-radius: 5px;
@@ -168,25 +173,5 @@ export default {
 }
 .tp-header-search-btn button i {
   font-size: 16px;
-}
-.tp-header-search-category:after {
-  background-color: #010f1c4d;
-  content: "";
-  height: 20px;
-  left: 0;
-  position: absolute;
-  top: 48%;
-  transform: translateY(-50%);
-  width: 1px;
-}
-.tp-header-search-category:after {
-  background-color: #010f1c4d;
-  content: "";
-  height: 20px;
-  left: 0;
-  position: absolute;
-  top: 48%;
-  transform: translateY(-50%);
-  width: 1px;
 }
 </style>
