@@ -20,8 +20,8 @@
           :style="isHexColor(slide.bgColor) ? { backgroundColor: slide.bgColor } : {}"
       >
         <!-- Contenido del slide -->
-        <div class="container">
-          <div class="row align-items-center">
+        <div class="container h-100">
+          <div class="row align-items-center h-100">
             <!-- Texto a la izquierda o derecha -->
             <div
                 class="col-lg-5 col-md-6"
@@ -46,14 +46,13 @@
                 :class="{ 'order-lg-2': slide.textPosition === 'left', 'order-lg-1': slide.textPosition === 'right' }"
             >
               <div
-                  class="slider-image"
+                  class="slider-image h-100"
                   :class="{ 'text-end': slide.textPosition === 'left', 'text-start': slide.textPosition === 'right' }"
               >
                 <img
                     :src="slide.image"
                     :alt="`Imagen de ${slide.title}`"
-                    class="img-fluid"
-                    style="width: 400px; height: auto;"
+                    class="img-fluid h-100"
                     loading="lazy"
                 />
               </div>
@@ -155,7 +154,7 @@ export default {
 }
 
 .slider-item {
-  min-height: 500px; /* Altura mínima del slider */
+  height: 500px; /* Altura fija para el slider */
   display: flex;
   align-items: center;
 }
@@ -182,12 +181,14 @@ export default {
 }
 
 .slider-image {
+  height: 100%; /* Ajustar la imagen al 100% del contenedor */
   padding: 0 2rem; /* Espaciado interno para la imagen */
 }
 
 .slider-image img {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajustar la imagen sin distorsionarla */
   animation: fadeInRight 1s ease-in-out;
 }
 
@@ -217,12 +218,18 @@ export default {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
 }
 
+/* Posicionar botón "anterior" a la izquierda */
 .slider-button-prev {
   left: 20px;
 }
 
+/* Posicionar botón "siguiente" a la derecha */
 .slider-button-next {
   right: 20px;
 }
@@ -268,7 +275,7 @@ export default {
 /* Responsividad */
 @media (max-width: 768px) {
   .slider-item {
-    min-height: 300px; /* Altura más pequeña para móviles */
+    height: 300px; /* Altura más pequeña para móviles */
   }
 
   .slider-title {
@@ -277,10 +284,6 @@ export default {
 
   .slider-subtitle {
     font-size: 1rem; /* Subtítulo más pequeño */
-  }
-
-  .slider-image img {
-    width: 100%; /* Imagen ocupa todo el ancho */
   }
 }
 </style>
