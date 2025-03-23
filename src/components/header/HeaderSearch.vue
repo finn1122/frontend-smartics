@@ -158,7 +158,7 @@ export default {
 .tp-header-search-btn button {
   background-color: var(--tp-theme-primary);
   color: var(--tp-common-white);
-  height: 57px;
+  height: 47px;
   width: 60px;
   display: flex;
   align-items: center;

@@ -50,11 +50,14 @@ img, svg {
 }
 
 .row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Distribuye el espacio entre los elementos */
-  margin-left: 0; /* Elimina el margen izquierdo del row */
-  margin-right: 0; /* Elimina el margen derecho del row */
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex
+;
+  flex-wrap: wrap;
+  margin-left: calc(var(--bs-gutter-x)* -.5);
+  margin-right: calc(var(--bs-gutter-x)* -.5);
+  margin-top: calc(var(--bs-gutter-y)* -1);
 }
 
 /* Estilos para el logo */
@@ -71,11 +74,7 @@ img, svg {
   width: auto; /* Mantiene la proporción */
 }
 
-/* Estilos para la barra de búsqueda */
-.col-md-6 {
-  padding-left: 0; /* Elimina el padding izquierdo para pegar el HeaderSearch al logo */
-  margin-left: 0; /* Elimina el margen izquierdo */
-}
+
 
 /* Estilos para las acciones del usuario */
 .col-md-3 {
