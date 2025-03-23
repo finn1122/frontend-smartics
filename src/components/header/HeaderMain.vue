@@ -17,7 +17,7 @@
         </div>
 
         <!-- Acciones del Usuario (3 columnas en pantallas grandes, 6 en pequeñas) -->
-        <div class="col-6 col-md-3 pr-3"> <!-- Añade padding derecho en pantallas pequeñas -->
+        <div class="col-xl-4 col-lg-3 col-md-8 col-6"> <!-- Añade padding derecho en pantallas pequeñas -->
           <HeaderActions />
         </div>
       </div>

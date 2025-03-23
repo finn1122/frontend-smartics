@@ -2,10 +2,11 @@
   <div class="tp-header-main-right d-flex align-items-center justify-content-end">
     <!-- Perfil de Usuario (Oculto en móviles, visible en desktop) -->
     <div class="tp-header-login d-none d-lg-block">
+      <!-- Cuando el usuario ha iniciado sesión -->
       <a v-if="authStore.isAuthenticated" href="/profile" class="d-flex align-items-center user-profile">
         <div class="tp-header-login-icon">
           <div class="icon-circle">
-            <i class="fas fa-user icon"></i>
+            <i class="fas fa-user icon"></i> <!-- Ícono de Font Awesome -->
           </div>
         </div>
         <div class="tp-header-login-content d-none d-xl-block">
@@ -14,14 +15,22 @@
         </div>
       </a>
 
-      <router-link v-else to="/login" class="login-link">
-        <span>Hola, Inicia Sesión</span>
-        <h5 class="tp-header-login-title">Tu Cuenta</h5>
+      <!-- Cuando el usuario no ha iniciado sesión -->
+      <router-link v-else to="/login" class="d-flex align-items-center login-link">
+        <div class="tp-header-login-icon">
+          <div class="icon-circle">
+            <i class="fas fa-user icon"></i> <!-- Ícono de Font Awesome -->
+          </div>
+        </div>
+        <div class="tp-header-login-content d-none d-xl-block">
+          <span>Hola, Inicia Sesión</span>
+          <h5 class="tp-header-login-title">Tu Cuenta</h5>
+        </div>
       </router-link>
     </div>
 
     <!-- Acciones del Usuario -->
-    <div class="tp-header-action d-flex align-items-center">
+    <div class="tp-header-action d-flex align-items-center ml-50">
       <!-- Comparar (Oculto en móviles) -->
       <div class="tp-header-action-item d-none d-lg-flex">
         <a href="/compare" class="tp-header-action-btn">
@@ -225,40 +234,7 @@ export default defineComponent({
   color: #007bff;
 }
 
-.tp-header-action-btn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: #333;
-  margin-left: 10px;
-  transition: color 0.2s;
-}
 
-.tp-header-action-btn:hover {
-  color: #007bff;
-}
-
-/* Iconos dentro del header */
-.tp-header-action .tp-header-action-item {
-  position: relative;
-}
-
-.tp-header-action-badge {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  background: red;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 /* Estilos para el círculo alrededor del ícono de usuario */
 .icon-circle {
   width: 40px; /* Tamaño del círculo */
@@ -309,5 +285,78 @@ export default defineComponent({
 .login-link {
   text-decoration: none; /* Elimina el subrayado del enlace */
   color: inherit; /* Hereda el color del texto */
+}
+.align-items-center {
+  align-items: center !important;
+}
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+.d-flex {
+  display: flex !important
+;
+}
+a, button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+.ml-50 {
+  margin-left: 50px;
+}
+.tp-header-action-item {
+  margin-right: 15px; /* Espaciado proporcional */
+  position: relative;
+}
+
+.tp-header-action-item:last-child {
+  margin-right: 0;
+}
+.tp-header-action-btn {
+  color: var(--tp-common-black); /* Negro por defecto */
+  display: inline-block;
+  font-size: 20px;
+  position: relative;
+  transition: color 0.3s ease-in-out; /* Efecto suave */
+}
+.tp-header-action-btn:hover {
+  color: #007bff; /* Azul */
+}
+.tp-header-action-badge {
+  background-color: var(--tp-pink-1);
+  border: 2px solid var(--tp-common-white);
+  border-radius: 50%;
+  color: var(--tp-common-white);
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  height: 23px;
+  line-height: 20px;
+  position: absolute;
+  right: -13px;
+  text-align: center;
+  top: -6px;
+  width: 23px;
+}
+@media (min-width: 992px) {
+  .col-lg-3 {
+    flex: 0 0 auto;
+    width: 25%;
+  }
+}
+@media (min-width: 768px) {
+  .col-md-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+  }
+}
+.col-6 {
+  flex: 0 0 auto;
+  width: 50%;
 }
 </style>
