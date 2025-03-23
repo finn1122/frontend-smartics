@@ -148,13 +148,14 @@ export default {
 </script>
 
 <style scoped>
+/* Estilos generales */
 .slider-area {
   position: relative;
   overflow: hidden;
 }
 
 .slider-item {
-  height: 500px; /* Altura fija para el slider */
+  height: 500px; /* Alto fijo para pantallas grandes */
   display: flex;
   align-items: center;
 }
@@ -273,9 +274,23 @@ export default {
 }
 
 /* Responsividad */
+@media (max-width: 992px) {
+  .slider-item {
+    height: 600px; /* Alto más grande para pantallas medianas */
+  }
+
+  .slider-title {
+    font-size: 2rem; /* Título más pequeño */
+  }
+
+  .slider-subtitle {
+    font-size: 1rem; /* Subtítulo más pequeño */
+  }
+}
+
 @media (max-width: 768px) {
   .slider-item {
-    height: 300px; /* Altura más pequeña para móviles */
+    height: 700px; /* Alto más grande para pantallas pequeñas */
   }
 
   .slider-title {
@@ -283,7 +298,7 @@ export default {
   }
 
   .slider-subtitle {
-    font-size: 1rem; /* Subtítulo más pequeño */
+    font-size: 0.875rem; /* Subtítulo más pequeño */
   }
 }
 </style>
