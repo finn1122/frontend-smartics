@@ -26,9 +26,14 @@
 
 <script>
 import api from "@/services/api";
+import {useNotificationStore} from "@/stores/notificationStore";
 
 export default {
   name: "ProductCategory",
+  setup() {
+    const notificationStore = useNotificationStore();
+    return { notificationStore };
+  },
   data() {
     return {
       categories: {
@@ -91,7 +96,7 @@ export default {
           console.log(this.categories)
         }
       } catch (error) {
-        this.$root.notificationStore.showNotification(error.message || "Error inesperado", "error");
+        this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
         this.$root.isLoading = false; // Desactiva el loader global
       }

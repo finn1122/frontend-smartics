@@ -16,17 +16,13 @@
         <!-- Selector de Categoría -->
         <div class="tp-header-search-category">
           <div class="nice-select" tabindex="0" role="button" @click="toggleDropdown">
-            <span class="current">{{ selectedCategory || "Select Category" }}</span>
-            <i class="dropdown-icon" :class="{'fa-chevron-up': isDropdownOpen, 'fa-chevron-down': !isDropdownOpen}"></i>
+            <span class="current">{{ selectedCategory ? selectedCategory.name : "Select Category" }}</span>
+            <span class="dropdown-container">
+              <i class="dropdown-icon" :class="{'fa-chevron-up': isDropdownOpen, 'fa-chevron-down': !isDropdownOpen}"></i>
+            </span>
             <ul class="list" role="menubar" v-if="isDropdownOpen">
-              <li
-                  class="option"
-                  role="menuitem"
-                  v-for="category in categories"
-                  :key="category"
-                  @click="selectCategory(category)"
-              >
-                {{ category }}
+              <li class="option" role="menuitem" v-for="category in allCategories" :key="category.id" @click="selectCategory(category)">
+                {{ category.name }}
               </li>
             </ul>
           </div>
@@ -44,15 +40,29 @@
 </template>
 
 <script>
+import api from "@/services/api";
+import {useNotificationStore} from "@/stores/notificationStore";
+
 export default {
   name: "HeaderSearch",
+  setup() {
+    const notificationStore = useNotificationStore();
+    return { notificationStore };
+  },
   data() {
     return {
       searchQuery: "",
       selectedCategory: "",
       isDropdownOpen: false,
-      categories: ["Electronics", "Fashion", "Beauty", "Jewelry"],
+      allCategories: {
+        type: Array,
+        required: false,
+        default: () => [], // Define un valor por defecto
+      },
     };
+  },
+  async created() {
+    await this.loadAllCategoriesData();
   },
   methods: {
     handleSearch() {
@@ -65,7 +75,25 @@ export default {
       this.selectedCategory = category;
       this.isDropdownOpen = false; // Cierra el dropdown después de seleccionar
     },
+    async loadAllCategoriesData() {
+      this.$root.isLoading = true; // Activar el loader
+
+      try {
+        // Obtener los detalles de la categoría por su path
+        this.allCategories = await api.getAllCategories();
+        console.log(this.allCategories)
+      } catch (error) {
+        console.error("❌ Error al cargar la categoría:", error);
+        this.notificationStore.showNotification(
+            error.message || "Error al cargar la categoría",
+            "error"
+        );
+      } finally {
+        this.$root.isLoading = false; // Desactivar el loader
+      }
+    },
   },
+
 };
 </script>
 
@@ -100,6 +128,12 @@ export default {
 .tp-header-search-category {
   position: relative;
 }
+.tp-header-search-category .current {
+  white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+  flex-grow: 1;
+}
 .tp-header-search-category .nice-select {
   border: 0;
   color: var(--tp-common-black);
@@ -108,6 +142,7 @@ export default {
   line-height: 46px;
   padding-right: 20px;
   cursor: pointer;
+  min-width: 150px; /* Ancho mínimo para evitar saltos */
   display: flex;
   align-items: center;
   justify-content: space-between;
