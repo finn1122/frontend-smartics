@@ -157,20 +157,24 @@ export default {
     },
     async searchProducts(params) {
         try {
-            // Validamos que tengamos el path de categoría
-            if (!params.path) {
-                throw new Error("Se requiere el path de la categoría");
+            // Validamos que tengamos al menos un criterio de búsqueda
+            if (!params.path && !params.term) {
+                throw new Error("Se requiere al menos el path de categoría o un término de búsqueda");
             }
 
             // Construimos los parámetros para la API
-            const requestParams = {
-                path: params.path,
-                search_term: params.term || null // Usamos el mismo nombre que en el backend
-            };
+            const requestParams = {};
+
+            if (params.path) {
+                requestParams.path = params.path;
+            }
+
+            if (params.term) {
+                requestParams.search_term = params.term;
+            }
 
             console.log('Enviando parámetros a API:', requestParams);
 
-            // Endpoint actualizado para buscar por path
             const response = await api.get('/shop-categories/products/search', {
                 params: requestParams
             });
@@ -180,7 +184,6 @@ export default {
         } catch (error) {
             console.error("❌ Error al buscar productos:", error);
 
-            // Mejor manejo de errores
             const errorMessage = error.response?.data?.message ||
                 error.message ||
                 "Error al buscar productos";

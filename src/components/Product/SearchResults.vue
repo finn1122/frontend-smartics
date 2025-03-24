@@ -78,7 +78,7 @@ export default {
         };
 
         const response = await api.searchProducts(params);
-        this.filteredProducts = response.data || [];
+        this.filteredProducts = response || [];
 
       } catch (error) {
         console.error("Error en búsqueda:", error);

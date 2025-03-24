@@ -71,20 +71,30 @@ export default {
         return;
       }
 
-      console.log('Enviando búsqueda:', {
-        query: this.searchQuery,
-        category: this.selectedCategory?.path
+      console.log('Datos de búsqueda:', {
+        searchQuery: this.searchQuery,
+        selectedCategory: this.selectedCategory
       });
 
-      this.$router.push({
+      const routeParams = {
         name: "SearchResults",
-        params: this.selectedCategory ? {
-          path: this.selectedCategory.path
-        } : {},
-        query: this.searchQuery ? {
-          search: this.searchQuery.trim() // Asegura eliminar espacios y usa el nombre correcto
-        } : {}
-      });
+        params: {},
+        query: {}
+      };
+
+      // Siempre enviar el path si hay categoría seleccionada
+      if (this.selectedCategory) {
+        routeParams.params.path = this.selectedCategory.path;
+        console.log('Enviando categoría:', this.selectedCategory.path);
+      }
+
+      // Siempre enviar el término si hay búsqueda
+      if (this.searchQuery) {
+        routeParams.query.search = this.searchQuery.trim();
+        console.log('Enviando término:', this.searchQuery.trim());
+      }
+
+      this.$router.push(routeParams);
     },
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
