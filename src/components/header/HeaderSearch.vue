@@ -11,6 +11,7 @@
               class="search-input"
           />
         </div>
+        <div class="tp-header-search-divider"></div>
 
         <!-- Selector de Categoría -->
         <div class="tp-header-search-category">
@@ -142,6 +143,25 @@ export default {
   transform-origin: 50% 0;
   transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
   z-index: 9;
+  max-height: 200px; /* Ajusta la altura máxima */
+  overflow-y: auto; /* Habilita el scroll vertical */
+  scrollbar-width: thin; /* Hace que el scroll sea delgado en Firefox */
+  scrollbar-color: #999 #f1f1f1; /* Color del scroll y del fondo */
+}
+.nice-select .list::-webkit-scrollbar {
+  width: 6px;
+}
+.nice-select .list::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color del fondo del scroll */
+}
+
+.nice-select .list::-webkit-scrollbar-thumb {
+  background: #999; /* Color de la barra del scroll */
+  border-radius: 3px;
+}
+
+.nice-select .list::-webkit-scrollbar-thumb:hover {
+  background: #666; /* Color cuando pasas el mouse */
 }
 .nice-select .option {
   cursor: pointer;
@@ -173,5 +193,11 @@ export default {
 }
 .tp-header-search-btn button i {
   font-size: 16px;
+}
+.tp-header-search-divider {
+  width: 2px;
+  height: 30px;
+  background-color: #ccc; /* Color gris claro */
+  margin: 0 7px; /* Espaciado entre los elementos */
 }
 </style>
