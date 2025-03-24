@@ -1,52 +1,30 @@
 <template>
   <div class="tp-shop-main-wrapper">
+    <!-- Controles de vista y ordenamiento -->
     <div class="tp-shop-top mb-5">
       <div class="row">
         <div class="col-xl-6">
           <div class="tp-shop-top-left d-flex align-items-center">
-            <!-- Pestañas -->
-            <div class="tp-shop-top-tab tp-tab">
-              <ul class="nav nav-tabs" id="productTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" :class="{ active: view === 'grid' }" @click="view = 'grid'">
-                    <font-awesome-icon :icon="['fas', 'th-large']" />
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" :class="{ active: view === 'list' }" @click="view = 'list'">
-                    <font-awesome-icon :icon="['fas', 'bars']" />
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <!-- Contador de resultados -->
-            <div class="tp-shop-top-result">
-              <p>Showing 1–{{ filteredProducts.length }} of {{ filteredProducts.length }} results</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-6">
-          <div class="tp-shop-top-select text-md-end">
-            <!-- Contenedor del select personalizado -->
-            <div class="nice-select undefined" tabindex="0" role="button" @click="toggleDropdown">
-              <span class="current">{{ selectedLabel }}</span>
-              <span class="dropdown-icon"></span> <!-- Ícono de flecha -->
-              <ul class="list" role="menubar" v-if="isDropdownOpen">
-                <li
-                    class="option"
-                    role="menuitem"
-                    v-for="option in options"
-                    :key="option.value"
-                    :class="{ selected: option.value === sortOption, focus: option.value === sortOption }"
-                    @click="selectOption(option.value)"
-                >
-                  {{ option.label }}
-                </li>
-              </ul>
-            </div>
+            <ViewToggle
+                :view="view"
+                @view-changed="handleViewChange"
+            />
+
+            <ResultsCounter
+                :total="filteredProducts.length"
+            />
           </div>
         </div>
 
+        <div class="col-xl-6">
+          <div class="tp-shop-top-select text-md-end">
+            <SortDropdown
+                :options="sortOptions"
+                :selected-option="sortOption"
+                @option-changed="handleSortChange"
+            />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -55,7 +33,6 @@
       <!-- Vista de cuadrícula (grid) -->
       <div v-if="view === 'grid'" class="row">
         <div v-for="product in sortedProducts" :key="product.id" class="col-xl-4 col-md-6 col-sm-6 mb-40">
-          <!-- Usar el componente ProductItem -->
           <ProductGridItem
               :product="product"
               :category="category"
@@ -64,7 +41,7 @@
       </div>
 
       <!-- Vista de lista -->
-      <div v-if="view === 'list'" class="tp-shop-items-wrapper tp-shop-item-primary">
+      <div v-else class="tp-shop-items-wrapper tp-shop-item-primary">
         <div class="row">
           <div class="col-xl-12">
             <ProductListRow
@@ -84,13 +61,20 @@
     </div>
   </div>
 </template>
+
 <script>
 import { defineAsyncComponent } from 'vue';
+import ViewToggle from "@/components/common/ViewToggle.vue";
+import ResultsCounter from "@/components/common/ResultsCounter.vue";
+import SortDropdown from "@/components/common/SortDropdown.vue";
 
 export default {
   name: 'ProductViewSelector',
 
   components: {
+    SortDropdown,
+    ResultsCounter,
+    ViewToggle,
     ProductGridItem: defineAsyncComponent(() =>
         import('./ProductGridItem.vue')
     ),
@@ -98,6 +82,7 @@ export default {
         import('./ProductListRow.vue')
     ),
   },
+
   props: {
     category: {
       type: Object,
@@ -108,32 +93,29 @@ export default {
       required: true,
     }
   },
+
   data() {
     return {
       view: 'grid', // Estado para controlar la vista actual (grid o list)
+      sortOption: "default", // Valor seleccionado para ordenamiento
       sortedProducts: [], // Lista de productos ordenados
-      isDropdownOpen: false, // Controla si el menú desplegable está abierto
-      sortOption: "high-to-low", // Valor seleccionado (v-model)
-      options: [
+      sortOptions: [
         { value: "default", label: "Default Sorting" },
-        { value: "low-to-high", label: "Low to High" },
-        { value: "high-to-low", label: "High to Low" },
+        { value: "low-to-high", label: "Price: Low to High" },
+        { value: "high-to-low", label: "Price: High to Low" },
       ],
     };
   },
+
   computed: {
     // Filtrar los productos que tienen bestPrice y category
     filteredProducts() {
       return this.products.filter(
           (product) => product && product.bestPrice && this.category
       );
-    },
-    // Obtiene la etiqueta de la opción seleccionada
-    selectedLabel() {
-      const selected = this.options.find((option) => option.value === this.sortOption);
-      return selected ? selected.label : "Select an option";
-    },
+    }
   },
+
   watch: {
     // Observar cambios en los productos filtrados para ordenarlos
     filteredProducts: {
@@ -142,40 +124,55 @@ export default {
         this.sortProducts();
       },
     },
+
+    // Observar cambios en la opción de ordenamiento
+    sortOption() {
+      this.sortProducts();
+    }
   },
+
   methods: {
-    // Método para abrir/cerrar el menú desplegable
-    toggleDropdown() {
-      this.isDropdownOpen = !this.isDropdownOpen;
+    // Manejar cambio de vista
+    handleViewChange(view) {
+      this.view = view;
     },
-    // Método para seleccionar una opción del menú desplegable
-    selectOption(value) {
-      this.sortOption = value;
-      this.isDropdownOpen = false; // Cierra el menú desplegable
-      this.sortProducts(); // Ordena los productos
+
+    // Manejar cambio de opción de ordenamiento
+    handleSortChange(option) {
+      this.sortOption = option;
     },
+
     // Método para ordenar los productos según la opción seleccionada
     sortProducts() {
-      if (this.sortOption === 'low-to-high') {
-        // Ordenar de menor a mayor precio
-        this.sortedProducts = [...this.filteredProducts].sort((a, b) => {
-          const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
-          const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
-          return priceA - priceB;
-        });
-      } else if (this.sortOption === 'high-to-low') {
-        // Ordenar de mayor a menor precio
-        this.sortedProducts = [...this.filteredProducts].sort((a, b) => {
-          const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
-          const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
-          return priceB - priceA;
-        });
-      } else {
-        // Orden por defecto (sin ordenar)
-        this.sortedProducts = [...this.filteredProducts];
+      if (!this.filteredProducts.length) {
+        this.sortedProducts = [];
+        return;
       }
-    },
-  },
+
+      const productsCopy = [...this.filteredProducts];
+
+      switch (this.sortOption) {
+        case 'low-to-high':
+          this.sortedProducts = productsCopy.sort((a, b) => {
+            const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
+            const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
+            return priceA - priceB;
+          });
+          break;
+
+        case 'high-to-low':
+          this.sortedProducts = productsCopy.sort((a, b) => {
+            const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
+            const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
+            return priceB - priceA;
+          });
+          break;
+
+        default:
+          this.sortedProducts = productsCopy;
+      }
+    }
+  }
 };
 </script>
 <style>

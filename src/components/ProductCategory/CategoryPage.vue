@@ -1,19 +1,12 @@
 <template>
-  <section class="breadcrumb__area include-bg pt-100 pb-50">
-    <div class="container">
-      <div class="row">
-        <div class="col-xxl-12">
-          <div class="breadcrumb__content p-relative z-index-1">
-            <!-- Mostrar el nombre de la categoría -->
-            <h3 class="breadcrumb__title">{{ category?.name }}</h3>
-            <div class="breadcrumb__list">
-              <span><a href="/" class="">Home</a></span>
-              <span>{{ category?.name }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CommonBreadcrumb
+        :title="category?.name"
+        home-text="Home"
+    >
+      <template #breadcrumb-items>
+        <span>{{ category?.name }}</span>
+      </template>
+    </CommonBreadcrumb>
     <div class="container mt-5">
       <div class="row">
         <!-- Filtros (3 columnas) -->
@@ -32,7 +25,6 @@
         </div>
       </div>
     </div>
-  </section>
 </template>
 
 <script>
@@ -40,10 +32,11 @@ import ProductFilters from "@/components/Product/ProductFilters.vue";
 import ProductViewSelector from "@/components/Product/ProductViewSelector.vue";
 import api from "@/services/api"; // Importar la instancia de API
 import { useNotificationStore } from "@/stores/notificationStore";
+import CommonBreadcrumb from "@/components/common/CommonBreadcrumb.vue";
 
 export default {
   name: "CategoryPage",
-  components: { ProductViewSelector, ProductFilters },
+  components: {CommonBreadcrumb, ProductViewSelector, ProductFilters },
   setup() {
     const notificationStore = useNotificationStore();
     return { notificationStore };
@@ -160,16 +153,6 @@ export default {
 };
 </script>
 <style scoped>
-.breadcrumb__area {
-  margin-top: 6rem;
-}
-.breadcrumb__title {
-  font-size: 44px;
-  font-weight: 500;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
 h3 {
   font-size: 28px;
 }
