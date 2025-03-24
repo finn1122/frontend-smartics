@@ -9,7 +9,7 @@
 
 <script>
 import HeaderMain from "./HeaderMain";
-import HeaderBottom from "@/components/header/HeaderBottom.vue";
+import HeaderBottom from "@/components/Header/HeaderBottom.vue";
 
 export default {
   name: 'HeaderApp', // Nombre del componente con más de una palabra
@@ -27,7 +27,7 @@ export default {
       return this.$route.path === "/register";
     },
     isProfilePage() {
-      return this.$route.path === "/profile";
+      return this.$route.path === "/Profile";
     },
     isCategoryPage() {
       return this.$route.path.startsWith("/categoria/"); // Verifica si la ruta comienza con "/categoria/"

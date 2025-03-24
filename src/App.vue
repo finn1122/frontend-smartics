@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import AppHeader from './components/header/HeaderApp.vue';
+import AppHeader from '@/components/Header/HeaderApp.vue';
 import AppNotifications from '@/components/AppNotifications.vue';
 import AppLoader from "@/components/AppLoader.vue";
 

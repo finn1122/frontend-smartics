@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import ProfileTabs from '@/components/profile/ProfileTabs.vue';
+import ProfileTabs from '@/components/Profile/ProfileTabs.vue';
 import {useAuthStore} from "@/stores/authStore";
 import api from "@/services/api";
 

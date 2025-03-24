@@ -126,7 +126,7 @@ export default defineComponent({
     const isAuthenticated = computed(() => authStore.isAuthenticated);
 
     onMounted(async () => {
-      console.log("📢 Cargando el header, ejecutando checkAuth()...");
+      console.log("📢 Cargando el Header, ejecutando checkAuth()...");
       await authStore.checkAuth(); // ✅ Esperamos la verificación
       isLoading.value = false; // ⏳ Deshabilitamos el loading
       console.log("✅ checkAuth() terminado, autenticado:", isAuthenticated.value);

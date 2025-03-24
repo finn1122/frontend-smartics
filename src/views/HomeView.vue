@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SliderApp from "@/components/slider/SliderApp.vue";
+import SliderApp from "@/components/Slider/SliderApp.vue";
 import ProductCategory from "@/components/ProductCategory/ProductCategory.vue";
 import FeatureSection from "@/components/Feature/FeatureSection.vue";
 import TrendingSection from "@/components/Trending/TrendingSection.vue";
@@ -35,7 +35,7 @@ export default {
       return this.$route.path === "/register";
     },
     isProfilePage() {
-      return this.$route.path === "/profile";
+      return this.$route.path === "/Profile";
     },
   },
   async created() {},

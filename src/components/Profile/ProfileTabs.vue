@@ -24,7 +24,7 @@
         <Suspense>
           <template #default>
             <!-- Contenido para la pestaña "Profile" -->
-            <ProfileContent v-if="activeTab === 'nav-profile-tab'" :user="user" @logout="emitLogout"/>
+            <ProfileContent v-if="activeTab === 'nav-Profile-tab'" :user="user" @logout="emitLogout"/>
           </template>
           <template #fallback>
             <AppLoader/>
@@ -49,12 +49,12 @@
 </template>
 
 <script>
-//import ProfileTabItem from '@/components/profile/ProfileTabItem.vue';
-//import ProfileContent from '@/components/profile/ProfileContent.vue';
-//import ProfileInfo from '@/components/profile/ProfileInfo.vue';
-//import ProfileAddress from '@/components/profile/ProfileAddress.vue';
-//import ProfileOrders from '@/components/profile/ProfileOrders.vue';
-//import ProfileNotifications from '@/components/profile/ProfileNotifications.vue';
+//import ProfileTabItem from '@/components/Profile/ProfileTabItem.vue';
+//import ProfileContent from '@/components/Profile/ProfileContent.vue';
+//import ProfileInfo from '@/components/Profile/ProfileInfo.vue';
+//import ProfileAddress from '@/components/Profile/ProfileAddress.vue';
+//import ProfileOrders from '@/components/Profile/ProfileOrders.vue';
+//import ProfileNotifications from '@/components/Profile/ProfileNotifications.vue';
 import { defineAsyncComponent } from 'vue';
 import AppLoader from "@/components/AppLoader.vue";
 
@@ -63,12 +63,12 @@ export default {
   name: 'ProfileTabs',
   components: {
     AppLoader,
-    ProfileTabItem: defineAsyncComponent(() => import('@/components/profile/ProfileTabItem.vue')),
-    ProfileContent: defineAsyncComponent(() => import('@/components/profile/ProfileContent.vue')),
-    // ProfileInfo: defineAsyncComponent(() => import('@/components/profile/ProfileInfo.vue')),
-    // ProfileAddress: defineAsyncComponent(() => import('@/components/profile/ProfileAddress.vue')),
-    // ProfileOrders: defineAsyncComponent(() => import('@/components/profile/ProfileOrders.vue')),
-    // ProfileNotifications: defineAsyncComponent(() => import('@/components/profile/ProfileNotifications.vue')),
+    ProfileTabItem: defineAsyncComponent(() => import('@/components/Profile/ProfileTabItem.vue')),
+    ProfileContent: defineAsyncComponent(() => import('@/components/Profile/ProfileContent.vue')),
+    // ProfileInfo: defineAsyncComponent(() => import('@/components/Profile/ProfileInfo.vue')),
+    // ProfileAddress: defineAsyncComponent(() => import('@/components/Profile/ProfileAddress.vue')),
+    // ProfileOrders: defineAsyncComponent(() => import('@/components/Profile/ProfileOrders.vue')),
+    // ProfileNotifications: defineAsyncComponent(() => import('@/components/Profile/ProfileNotifications.vue')),
 
   },
   props: {
@@ -76,9 +76,9 @@ export default {
   },
   data() {
     return {
-      activeTab: localStorage.getItem('activeTab') || 'nav-profile-tab',
+      activeTab: localStorage.getItem('activeTab') || 'nav-Profile-tab',
       tabs: [
-        { id: 'nav-profile-tab', target: 'nav-profile', iconClass: 'fas fa-user-edit', label: 'Profile' },
+        { id: 'nav-Profile-tab', target: 'nav-Profile', iconClass: 'fas fa-user-edit', label: 'Profile' },
         { id: 'nav-information-tab', target: 'nav-information', iconClass: 'fas fa-info-circle', label: 'Information' },
         { id: 'nav-address-tab', target: 'nav-address', iconClass: 'fas fa-map-marker-alt', label: 'Address' },
         { id: 'nav-order-tab', target: 'nav-order', iconClass: 'fas fa-clipboard-list', label: 'My Orders' },
