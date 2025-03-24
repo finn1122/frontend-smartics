@@ -66,7 +66,25 @@ export default {
   },
   methods: {
     handleSearch() {
-      console.log("Searching for:", this.searchQuery, "in category:", this.selectedCategory);
+      // Verifica que al menos haya un criterio de búsqueda
+      if (!this.searchQuery && !this.selectedCategory) {
+        return;
+      }
+
+      console.log('Enviando búsqueda:', {
+        query: this.searchQuery,
+        category: this.selectedCategory?.path
+      });
+
+      this.$router.push({
+        name: "SearchResults",
+        params: this.selectedCategory ? {
+          path: this.selectedCategory.path
+        } : {},
+        query: this.searchQuery ? {
+          search: this.searchQuery.trim() // Asegura eliminar espacios y usa el nombre correcto
+        } : {}
+      });
     },
     toggleDropdown() {
       this.isDropdownOpen = !this.isDropdownOpen;
@@ -81,7 +99,6 @@ export default {
       try {
         // Obtener los detalles de la categoría por su path
         this.allCategories = await api.getAllCategories();
-        console.log(this.allCategories)
       } catch (error) {
         console.error("❌ Error al cargar la categoría:", error);
         this.notificationStore.showNotification(

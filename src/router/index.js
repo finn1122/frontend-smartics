@@ -4,6 +4,7 @@ import RegisterView from "@/views/RegisterView.vue";        // Nombre actualizad
 import ConfirmEmail from '@/views/ConfirmEmail.vue'; // Ajusta la ruta según tu estructura
 import HomeView from "@/views/HomeView.vue";
 import CategoryPage from "@/components/ProductCategory/CategoryPage.vue";
+import SearchResults from "@/components/Product/SearchResults.vue";
 
 
 const routes = [
@@ -16,6 +17,15 @@ const routes = [
         name: 'CategoryPage', // Nombre de la ruta (debe coincidir con el que usas en this.$router.push)
         component: CategoryPage, // Componente que se renderizará
         props: true, // Pasar los parámetros como props
+    },
+    {
+        path: '/search/:path?',
+        name: 'SearchResults',
+        component: SearchResults,
+        props: (route) => ({
+            path: route.params.path,
+            search: route.query.search // Asegúrate que coincida
+        })
     },
 ];
 

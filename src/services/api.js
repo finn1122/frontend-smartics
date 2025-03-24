@@ -155,5 +155,37 @@ export default {
             throw new Error(error.response?.data?.message || "Error al obtener los products de la categoria");
         }
     },
+    async searchProducts(params) {
+        try {
+            // Validamos que tengamos el path de categoría
+            if (!params.path) {
+                throw new Error("Se requiere el path de la categoría");
+            }
 
+            // Construimos los parámetros para la API
+            const requestParams = {
+                path: params.path,
+                search_term: params.term || null // Usamos el mismo nombre que en el backend
+            };
+
+            console.log('Enviando parámetros a API:', requestParams);
+
+            // Endpoint actualizado para buscar por path
+            const response = await api.get('/shop-categories/products/search', {
+                params: requestParams
+            });
+
+            return response.data;
+
+        } catch (error) {
+            console.error("❌ Error al buscar productos:", error);
+
+            // Mejor manejo de errores
+            const errorMessage = error.response?.data?.message ||
+                error.message ||
+                "Error al buscar productos";
+
+            throw new Error(errorMessage);
+        }
+    }
 };
