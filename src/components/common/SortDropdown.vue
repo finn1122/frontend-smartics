@@ -17,7 +17,7 @@
         <li
             class="option"
             role="menuitem"
-            v-for="option in options"
+            v-for="option in sortOptions"
             :key="option.value"
             :class="{
             selected: option.value === currentOption,
@@ -33,20 +33,30 @@
 </template>
 
 <script>
+// Definición de opciones como constantes reutilizables
+const SORT_OPTIONS = {
+  DEFAULT: 'default',
+  PRICE_LOW_TO_HIGH: 'low-to-high',
+  PRICE_HIGH_TO_LOW: 'high-to-low'
+};
+
+const DEFAULT_SORT_OPTIONS = [
+  { value: SORT_OPTIONS.DEFAULT, label: "Default Sorting" },
+  { value: SORT_OPTIONS.PRICE_LOW_TO_HIGH, label: "Price: Low to High" },
+  { value: SORT_OPTIONS.PRICE_HIGH_TO_LOW, label: "Price: High to Low" }
+];
+
 export default {
   name: 'SortDropdown',
   props: {
-    options: {
+    // Permite sobrescribir las opciones por defecto si es necesario
+    customOptions: {
       type: Array,
-      default: () => [
-        { value: "default", label: "Default Sorting" },
-        { value: "low-to-high", label: "Low to High" },
-        { value: "high-to-low", label: "High to Low" },
-      ]
+      default: () => []
     },
     selectedOption: {
       type: String,
-      default: 'default'
+      default: SORT_OPTIONS.DEFAULT
     }
   },
   data() {
@@ -56,9 +66,13 @@ export default {
     }
   },
   computed: {
+    sortOptions() {
+      // Usa las opciones personalizadas si existen, sino las por defecto
+      return this.customOptions.length > 0 ? this.customOptions : DEFAULT_SORT_OPTIONS;
+    },
     selectedLabel() {
-      const option = this.options.find(opt => opt.value === this.currentOption);
-      return option ? option.label : this.options[0]?.label || 'Sort';
+      const option = this.sortOptions.find(opt => opt.value === this.currentOption);
+      return option ? option.label : this.sortOptions[0]?.label || 'Sort';
     }
   },
   watch: {

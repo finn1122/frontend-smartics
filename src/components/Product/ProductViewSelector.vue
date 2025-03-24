@@ -19,8 +19,7 @@
         <div class="col-xl-6">
           <div class="tp-shop-top-select text-md-end">
             <SortDropdown
-                :options="sortOptions"
-                :selected-option="sortOption"
+                :selected-option="currentSort"
                 @option-changed="handleSortChange"
             />
           </div>
@@ -97,13 +96,8 @@ export default {
   data() {
     return {
       view: 'grid', // Estado para controlar la vista actual (grid o list)
-      sortOption: "default", // Valor seleccionado para ordenamiento
+      currentSort: "default", // Valor seleccionado para ordenamiento
       sortedProducts: [], // Lista de productos ordenados
-      sortOptions: [
-        { value: "default", label: "Default Sorting" },
-        { value: "low-to-high", label: "Price: Low to High" },
-        { value: "high-to-low", label: "Price: High to Low" },
-      ],
     };
   },
 
@@ -125,8 +119,8 @@ export default {
       },
     },
 
-    // Observar cambios en la opción de ordenamiento
-    sortOption() {
+    // Observar cambios en la opción de ordenamiento (CORREGIDO: currentSort en lugar de sortOption)
+    currentSort() {
       this.sortProducts();
     }
   },
@@ -139,7 +133,7 @@ export default {
 
     // Manejar cambio de opción de ordenamiento
     handleSortChange(option) {
-      this.sortOption = option;
+      this.currentSort = option; // CORREGIDO: Actualizar currentSort en lugar de sortOption
     },
 
     // Método para ordenar los productos según la opción seleccionada
@@ -151,7 +145,7 @@ export default {
 
       const productsCopy = [...this.filteredProducts];
 
-      switch (this.sortOption) {
+      switch (this.currentSort) { // CORREGIDO: Usar currentSort en lugar de sortOption
         case 'low-to-high':
           this.sortedProducts = productsCopy.sort((a, b) => {
             const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;

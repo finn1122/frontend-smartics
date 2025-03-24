@@ -22,18 +22,17 @@
                   <div class="row">
                     <div class="col-xl-6">
                       <div class="tp-shop-top-left d-flex align-items-center">
-                        <ViewToggle
+                        <!--<ViewToggle
                             :view="currentView"
                             @view-changed="handleViewChange"
-                        />
+                        />-->
                         <ResultsCounter :total="filteredProducts.length" />
                       </div>
                     </div>
                     <div class="col-xl-6">
                       <div class="tp-shop-top-select text-md-end">
                         <SortDropdown
-                            :options="sortOptions"
-                            :selected-option="currentSortOption"
+                            :selected-option="currentSort"
                             @option-changed="handleSortChange"
                         />
                       </div>
@@ -87,13 +86,13 @@
   </div>
 </template>
 
+
 <script>
 import ProductGridItem from '@/components/Product/ProductGridItem.vue';
 import ProductListRow from '@/components/Product/ProductListRow.vue';
 import api from '@/services/api';
 import { useNotificationStore } from "@/stores/notificationStore";
 import CommonBreadcrumb from "@/components/common/CommonBreadcrumb.vue";
-import ViewToggle from "@/components/common/ViewToggle.vue";
 import ResultsCounter from "@/components/common/ResultsCounter.vue";
 import SortDropdown from "@/components/common/SortDropdown.vue";
 
@@ -103,7 +102,6 @@ export default {
     CommonBreadcrumb,
     ProductGridItem,
     ProductListRow,
-    ViewToggle,
     ResultsCounter,
     SortDropdown
   },
@@ -119,21 +117,13 @@ export default {
       isLoading: false,
       error: null,
       category: [],
-      currentView: 'grid', // 'grid' or 'list'
-      currentSortOption: 'default',
-      sortOptions: [
-        { value: "default", label: "Default Sorting" },
-        { value: "low-to-high", label: "Price: Low to High" },
-        { value: "high-to-low", label: "Price: High to Low" },
-      ]
+      currentView: 'grid',
+      currentSort: 'default', // Usamos currentSort consistentemente
     };
   },
   props: {
     path: String,
     search: String
-  },
-  computed: {
-    // Puedes agregar computadas para manejar la lógica de ordenamiento si es necesario
   },
   watch: {
     '$route': {
@@ -150,7 +140,7 @@ export default {
       },
       immediate: true
     },
-    currentSortOption() {
+    currentSort() { // Cambiado a currentSort para consistencia
       this.sortProducts();
     }
   },
@@ -204,24 +194,36 @@ export default {
     },
 
     handleSortChange(option) {
-      this.currentSortOption = option;
+      this.currentSort = option; // Actualizamos currentSort en lugar de currentSortOption
     },
 
     sortProducts() {
-      if (this.currentSortOption === 'low-to-high') {
-        this.sortedProducts = [...this.filteredProducts].sort((a, b) => {
-          const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
-          const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
-          return priceA - priceB;
-        });
-      } else if (this.currentSortOption === 'high-to-low') {
-        this.sortedProducts = [...this.filteredProducts].sort((a, b) => {
-          const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
-          const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
-          return priceB - priceA;
-        });
-      } else {
-        this.sortedProducts = [...this.filteredProducts];
+      if (!this.filteredProducts.length) {
+        this.sortedProducts = [];
+        return;
+      }
+
+      const productsCopy = [...this.filteredProducts];
+
+      switch (this.currentSort) { // Usamos currentSort aquí
+        case 'low-to-high':
+          this.sortedProducts = productsCopy.sort((a, b) => {
+            const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
+            const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
+            return priceA - priceB;
+          });
+          break;
+
+        case 'high-to-low':
+          this.sortedProducts = productsCopy.sort((a, b) => {
+            const priceA = a.bestPrice?.newSalePrice || a.bestPrice?.salePrice || 0;
+            const priceB = b.bestPrice?.newSalePrice || b.bestPrice?.salePrice || 0;
+            return priceB - priceA;
+          });
+          break;
+
+        default:
+          this.sortedProducts = productsCopy;
       }
     }
   }
