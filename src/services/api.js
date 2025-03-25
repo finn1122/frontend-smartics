@@ -190,5 +190,17 @@ export default {
 
             throw new Error(errorMessage);
         }
-    }
+    },
+    async getSliders() {
+        try {
+            const response = await api.get(`/sliders`);
+            if(response.data.success){
+                return  response.data.data;
+            }
+        } catch (error) {
+            console.error("❌ Error al obtener los sliders:", error);
+            throw new Error(error.response?.data?.message || "Error al obtener los sliders");
+        }
+    },
+
 };

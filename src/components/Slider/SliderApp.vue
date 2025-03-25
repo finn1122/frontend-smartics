@@ -2,6 +2,7 @@
   <section class="slider-area position-relative z-index-1">
     <!-- Swiper Container -->
     <swiper
+        v-if="apiSlides.length > 0"
         :modules="modules"
         :slides-per-view="1"
         :space-between="0"
@@ -13,8 +14,8 @@
     >
       <!-- Slides -->
       <swiper-slide
-          v-for="(slide, index) in slides"
-          :key="index"
+          v-for="slide in apiSlides"
+          :key="slide.id"
           class="slider-item d-flex align-items-center"
           :class="!isHexColor(slide.bgColor) ? slide.bgColor : ''"
           :style="isHexColor(slide.bgColor) ? { backgroundColor: slide.bgColor } : {}"
@@ -28,14 +29,14 @@
                 :class="{ 'order-lg-1': slide.textPosition === 'left', 'order-lg-2': slide.textPosition === 'right' }"
             >
               <div class="slider-content position-relative z-index-1">
-                <span class="d-block mb-2">Starting at <b>{{ slide.price }}</b></span>
+                <span v-if="slide.price" class="d-block mb-2">Starting at <b>{{ formatPrice(slide.price) }}</b></span>
                 <h3 class="slider-title mb-3">{{ slide.title }}</h3>
                 <p class="slider-subtitle mb-4">
                   {{ slide.subtitle }}
-                  <span class="discount">{{ slide.discount }}</span>
+                  <span v-if="slide.promoMessage" class="discount">{{ slide.promoMessage }}</span>
                 </p>
                 <a :href="slide.buttonLink" class="btn btn-primary">
-                  {{ slide.buttonText }}
+                  {{ slide.buttonText || 'Ver más' }}
                   <font-awesome-icon :icon="['fas', 'arrow-right']" class="ms-2" />
                 </a>
               </div>
@@ -50,11 +51,15 @@
                   :class="{ 'text-end': slide.textPosition === 'left', 'text-start': slide.textPosition === 'right' }"
               >
                 <img
-                    :src="slide.image"
+                    v-if="slide.imageUrl"
+                    :src="slide.imageUrl"
                     :alt="`Imagen de ${slide.title}`"
                     class="img-fluid h-100"
                     loading="lazy"
                 />
+                <div v-else class="placeholder-image">
+                  <font-awesome-icon :icon="['fas', 'image']" size="3x" />
+                </div>
               </div>
             </div>
           </div>
@@ -62,7 +67,7 @@
       </swiper-slide>
 
       <!-- Navegación -->
-      <div class="slider-navigation d-none d-lg-block">
+      <div v-if="apiSlides.length > 1" class="slider-navigation d-none d-lg-block">
         <button
             type="button"
             class="slider-button-prev"
@@ -82,8 +87,22 @@
       </div>
 
       <!-- Paginación -->
-      <div class="slider-pagination swiper-pagination"></div>
+      <div v-if="apiSlides.length > 1" class="slider-pagination swiper-pagination"></div>
     </swiper>
+
+    <!-- Loading State -->
+    <div v-if="loading" class="slider-loading text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div v-if="error" class="slider-error text-center py-5">
+      <div class="alert alert-danger">
+        {{ error }}
+      </div>
+    </div>
   </section>
 </template>
 
@@ -91,6 +110,7 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
+import api from "@/services/api";
 
 export default {
   name: "SliderApp",
@@ -98,52 +118,53 @@ export default {
     Swiper,
     SwiperSlide,
   },
-  props: {
-    slides: {
-      type: Array,
-      required: false,
-      default: () => [
-        {
-          bgColor: "bg-dark", // Clase de fondo
-          price: "$274.00",
-          title: "The best tablet Collection 2023",
-          subtitle: "Exclusive offer",
-          discount: "-35% off this week",
-          buttonText: "Shop Now",
-          buttonLink: "/shop",
-          image: "https://webapi3.adata.com/storage/product/hd330_f.png", // Ruta de la imagen
-          textPosition: "left", // Posición del texto (left o right)
-        },
-        {
-          bgColor: "#115061", // Color hexadecimal
-          price: "$999.00",
-          title: "The best notebook collection 2023",
-          subtitle: "Exclusive offer",
-          discount: "-10% off this week",
-          buttonText: "Shop Now",
-          buttonLink: "/shop",
-          image: "https://invictuspc.com.mx/cdn/shop/files/1024.png?v=1732727791",
-          textPosition: "right", // Posición del texto (left o right)
-        },
-      ],
-      validator: (value) => {
-        return value.every((slide) => {
-          return ['left', 'right'].includes(slide.textPosition);
-        });
-      },
+  data() {
+    return {
+      apiSlides: [],
+      loading: false,
+      error: null
+    };
+  },
+  async created() {
+    await this.fetchSliders();
+  },
+  methods: {
+    async fetchSliders() {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const response = await api.getSliders();
+        this.apiSlides = response.map(slide => ({
+          ...slide,
+          // Mantener compatibilidad con nombres de campos anteriores si es necesario
+          discount: slide.promoMessage,
+          image: slide.imageUrl,
+          promoMessage: slide.promoMessage || slide.promo_message
+        }));
+      } catch (error) {
+        console.error("❌ Error al obtener los sliders:", error);
+        this.error = error.message || "Error al cargar los sliders";
+      } finally {
+        this.loading = false;
+      }
     },
+    isHexColor(color) {
+      return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
+    },
+    formatPrice(price) {
+      if (!price) return '';
+      return new Intl.NumberFormat('es-MX', {
+        style: 'currency',
+        currency: 'MXN'
+      }).format(price);
+    }
   },
   setup() {
-    // Función para verificar si el valor es un color hexadecimal
-    const isHexColor = (color) => {
-      return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
-    };
-
     return {
-      modules: [Autoplay, Pagination, Navigation],
-      isHexColor,
+      modules: [Autoplay, Pagination, Navigation]
     };
-  },
+  }
 };
 </script>
 
