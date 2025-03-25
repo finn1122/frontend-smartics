@@ -14,7 +14,7 @@
         <div class="tp-header-search-divider"></div>
 
         <!-- Selector de Categoría -->
-        <div class="tp-header-search-category">
+        <div class="tp-header-search-category" ref="dropdown">
           <div class="nice-select" tabindex="0" role="button" @click="toggleDropdown">
             <span class="current">{{ selectedCategory ? selectedCategory.name : "Select Category" }}</span>
             <span class="dropdown-container">
@@ -28,10 +28,10 @@
           </div>
         </div>
 
-        <!-- Botón de Búsqueda (Ícono de Font Awesome) -->
+        <!-- Botón de Búsqueda -->
         <div class="tp-header-search-btn">
           <button type="submit" class="search-button">
-            <i class="fas fa-search"></i> <!-- Ícono de Font Awesome -->
+            <i class="fas fa-search"></i>
           </button>
         </div>
       </div>
@@ -41,7 +41,7 @@
 
 <script>
 import api from "@/services/api";
-import {useNotificationStore} from "@/stores/notificationStore";
+import { useNotificationStore } from "@/stores/notificationStore";
 
 export default {
   name: "HeaderSearch",
@@ -54,75 +54,64 @@ export default {
       searchQuery: "",
       selectedCategory: "",
       isDropdownOpen: false,
-      allCategories: {
-        type: Array,
-        required: false,
-        default: () => [], // Define un valor por defecto
-      },
+      allCategories: [],
     };
   },
   async created() {
     await this.loadAllCategoriesData();
+    document.addEventListener("click", this.closeDropdownOnClickOutside);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.closeDropdownOnClickOutside);
   },
   methods: {
     handleSearch() {
-      // Verifica que al menos haya un criterio de búsqueda
-      if (!this.searchQuery && !this.selectedCategory) {
-        return;
-      }
-
-      console.log('Datos de búsqueda:', {
-        searchQuery: this.searchQuery,
-        selectedCategory: this.selectedCategory
-      });
+      if (!this.searchQuery && !this.selectedCategory) return;
 
       const routeParams = {
         name: "SearchResults",
         params: {},
-        query: {}
+        query: {},
       };
 
-      // Siempre enviar el path si hay categoría seleccionada
       if (this.selectedCategory) {
         routeParams.params.path = this.selectedCategory.path;
-        console.log('Enviando categoría:', this.selectedCategory.path);
       }
 
-      // Siempre enviar el término si hay búsqueda
       if (this.searchQuery) {
         routeParams.query.search = this.searchQuery.trim();
-        console.log('Enviando término:', this.searchQuery.trim());
       }
 
       this.$router.push(routeParams);
     },
-    toggleDropdown() {
+    toggleDropdown(event) {
+      event.stopPropagation(); // Evita que el clic cierre el dropdown inmediatamente
       this.isDropdownOpen = !this.isDropdownOpen;
     },
     selectCategory(category) {
       this.selectedCategory = category;
-      this.isDropdownOpen = false; // Cierra el dropdown después de seleccionar
+      this.isDropdownOpen = false;
     },
     async loadAllCategoriesData() {
-      this.$root.isLoading = true; // Activar el loader
-
+      this.$root.isLoading = true;
       try {
-        // Obtener los detalles de la categoría por su path
         this.allCategories = await api.getAllCategories();
       } catch (error) {
         console.error("❌ Error al cargar la categoría:", error);
-        this.notificationStore.showNotification(
-            error.message || "Error al cargar la categoría",
-            "error"
-        );
+        this.notificationStore.showNotification(error.message || "Error al cargar la categoría", "error");
       } finally {
-        this.$root.isLoading = false; // Desactivar el loader
+        this.$root.isLoading = false;
+      }
+    },
+    closeDropdownOnClickOutside(event) {
+      if (this.$refs.dropdown && !this.$refs.dropdown.contains(event.target)) {
+        this.isDropdownOpen = false;
       }
     },
   },
-
 };
 </script>
+
 
 <style scoped>
 .pl-70 {
@@ -260,6 +249,6 @@ export default {
   width: 2px;
   height: 30px;
   background-color: #ccc; /* Color gris claro */
-  margin: 0 7px; /* Espaciado entre los elementos */
+  margin-left: -10px;
 }
 </style>
