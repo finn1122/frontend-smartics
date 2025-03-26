@@ -130,23 +130,19 @@ export default {
   },
   methods: {
     async fetchSliders() {
-      this.loading = true;
+      this.$root.isLoading = true; // Activar el loader
       this.error = null;
 
       try {
-        const response = await api.getSliders();
-        this.apiSlides = response.map(slide => ({
-          ...slide,
-          // Mantener compatibilidad con nombres de campos anteriores si es necesario
-          discount: slide.promoMessage,
-          image: slide.imageUrl,
-          promoMessage: slide.promoMessage || slide.promo_message
-        }));
+        this.apiSlides = await api.getSliders();
       } catch (error) {
         console.error("❌ Error al obtener los sliders:", error);
-        this.error = error.message || "Error al cargar los sliders";
+        this.notificationStore.showNotification(
+            error.message || "Error al obtener los sliders",
+            "error"
+        );
       } finally {
-        this.loading = false;
+        this.$root.isLoading = false; // Activar el loader
       }
     },
     isHexColor(color) {
