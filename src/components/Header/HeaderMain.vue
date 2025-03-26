@@ -3,12 +3,12 @@
     <div class="container">
       <div class="row align-items-center">
         <!-- Logo (2 columnas en pantallas grandes, 6 en pequeñas) -->
-        <div class="col-xl-2 col-lg-2 col-md-4 col-6"> <!-- Añade padding izquierdo en pantallas pequeñas -->
-          <div class="logo">
-            <a href="/">
-              <img src="@/assets/logo.png" alt="logo" class="logo-img img-fluid" />
-            </a>
-          </div>
+        <div class="col-xl-2 col-lg-2 col-md-4 col-6">
+          <HeaderLogo
+            alt-text="Mi Tienda Online"
+            :logo-height="70"
+            home-route="/inicio"
+        />
         </div>
 
         <!-- Barra de Búsqueda (7 columnas en pantallas grandes, oculto en pequeñas) -->
@@ -17,8 +17,47 @@
         </div>
 
         <!-- Acciones del Usuario (3 columnas en pantallas grandes, 6 en pequeñas) -->
-        <div class="col-xl-4 col-lg-3 col-md-8 col-6"> <!-- Añade padding derecho en pantallas pequeñas -->
-          <HeaderActions />
+        <div class="col-xl-4 col-lg-3 col-md-8 col-6">
+          <div class="tp-header-main-right d-flex align-items-center justify-content-end">
+            <!-- Login con margen derecho grande -->
+            <HeaderLogin class="login-spacer" />
+
+            <!-- Comparar -->
+              <HeaderActions
+                  v-if="showCompare"
+                  icon="exchange-alt"
+                  :badge-count="0"
+                  href="/compare"
+                  class="d-none d-lg-flex"
+              />
+
+              <!-- Wishlist -->
+              <HeaderActions
+                  v-if="showWishlist"
+                  icon="heart"
+                  :badge-count="0"
+                  href="/wishlist"
+                  class="d-none d-lg-flex"
+              />
+
+              <!-- Carrito -->
+              <HeaderActions
+                  v-if="showCart"
+                  icon="shopping-cart"
+                  :badge-count="0"
+                  :is-button="true"
+                  @click="handleCartClick"
+              />
+
+              <!-- Menú móvil -->
+              <HeaderActions
+                  v-if="showMobileMenu"
+                  icon="bars"
+                  class="d-lg-none"
+                  :is-button="true"
+                  @click="$emit('toggle-mobile-menu')"
+              />
+          </div>
         </div>
       </div>
     </div>
@@ -27,14 +66,50 @@
 
 <script>
 import HeaderSearch from "./HeaderSearch.vue";
-import HeaderActions from "./HeaderActions.vue";
+import HeaderLogin from "@/components/Header/HeaderLogin.vue";
+import HeaderActions from "@/components/Header/HeaderActions.vue";
+import HeaderLogo from "@/components/Header/HeaderLogo.vue";
 
 export default {
   name: "HeaderMain",
   components: {
-    HeaderSearch,
+    HeaderLogo,
     HeaderActions,
+    HeaderLogin,
+    HeaderSearch,
   },
+  props: {
+    showCompare: {
+      type: Boolean,
+      default: true
+    },
+    showWishlist: {
+      type: Boolean,
+      default: true
+    },
+    showCart: {
+      type: Boolean,
+      default: true
+    },
+    showMobileMenu: {
+      type: Boolean,
+      default: true
+    },
+    cartItemsCount: {
+      type: Number,
+      default: 0
+    },
+    wishlistItemsCount: {
+      type: Number,
+      default: 0
+    }
+  },
+  emits: ['toggle-mobile-menu', 'cart-click'],
+  methods: {
+    handleCartClick() {
+      this.$emit('cart-click');
+    }
+  }
 };
 </script>
 
@@ -98,9 +173,18 @@ a {
   margin-right: calc(var(--bs-gutter-x)* -.5);
   margin-top: calc(var(--bs-gutter-y)* -1);
 }
-.tp-header-style-primary {
-  box-shadow: 0 2px 6px #010f1c29;
-  position: relative;
-  z-index: 11;
+.align-items-center {
+  align-items: center !important;
+}
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+.d-flex {
+  display: flex !important
+;
+}
+/* Espaciado después del login */
+.login-spacer {
+  margin-right: 30px; /* Margen grande entre login y acciones */
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
   <header>
     <div class="tp-header-area p-relative z-index-11">
-      <HeaderMain />
+      <HeaderMain v-if="!isSearchPage" />
       <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage && !isCategoryPage && !isSearchPage" />
+      <HeaderBottom2 v-if="isSearchPage"/>
     </div>
   </header>
 </template>
@@ -10,6 +11,7 @@
 <script>
 import HeaderMain from "./HeaderMain";
 import HeaderBottom from "@/components/Header/HeaderBottom.vue";
+import HeaderBottom2 from "@/components/Header/HeaderBottom2.vue";
 
 export default {
   name: 'HeaderApp', // Nombre del componente con más de una palabra
@@ -17,6 +19,7 @@ export default {
   components: {
     HeaderBottom,
     HeaderMain,
+    HeaderBottom2
   },
   computed: {
     // Verifica si la ruta actual es '/login'
@@ -38,12 +41,3 @@ export default {
   },
 };
 </script>
-<style>
-
-.p-relative {
-  position: relative;
-}
-.z-index-11 {
-  z-index: 11;
-}
-</style>
