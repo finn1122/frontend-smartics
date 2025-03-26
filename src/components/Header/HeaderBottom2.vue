@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import HeaderSearch2 from "@/components/Header/HeaderSearch2.vue";
+import HeaderSearch2 from "@/components/Header/partials/HeaderSearch2.vue";
 
 export default {
   name: 'HeaderBottom2',

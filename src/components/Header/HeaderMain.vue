@@ -21,8 +21,7 @@
           <div class="tp-header-main-right d-flex align-items-center justify-content-end">
             <!-- Login con margen derecho grande -->
             <HeaderLogin class="login-spacer" />
-
-            <!-- Comparar -->
+              <!-- Comparar -->
               <HeaderActions
                   v-if="showCompare"
                   icon="exchange-alt"
@@ -30,7 +29,6 @@
                   href="/compare"
                   class="d-none d-lg-flex"
               />
-
               <!-- Wishlist -->
               <HeaderActions
                   v-if="showWishlist"
@@ -39,7 +37,6 @@
                   href="/wishlist"
                   class="d-none d-lg-flex"
               />
-
               <!-- Carrito -->
               <HeaderActions
                   v-if="showCart"
@@ -48,14 +45,13 @@
                   :is-button="true"
                   @click="handleCartClick"
               />
-
               <!-- Menú móvil -->
               <HeaderActions
                   v-if="showMobileMenu"
                   icon="bars"
                   class="d-lg-none"
                   :is-button="true"
-                  @click="$emit('toggle-mobile-menu')"
+                  @click="handleMobileMenuToggle"
               />
           </div>
         </div>
@@ -65,10 +61,10 @@
 </template>
 
 <script>
-import HeaderSearch from "./HeaderSearch.vue";
-import HeaderLogin from "@/components/Header/HeaderLogin.vue";
-import HeaderActions from "@/components/Header/HeaderActions.vue";
-import HeaderLogo from "@/components/Header/HeaderLogo.vue";
+import HeaderSearch from "./partials/HeaderSearch.vue";
+import HeaderLogin from "@/components/Header/partials/HeaderLogin.vue";
+import HeaderActions from "@/components/Header/partials/HeaderActions.vue";
+import HeaderLogo from "@/components/Header/partials/HeaderLogo.vue";
 
 export default {
   name: "HeaderMain",
@@ -106,8 +102,11 @@ export default {
   },
   emits: ['toggle-mobile-menu', 'cart-click'],
   methods: {
-    handleCartClick() {
-      this.$emit('cart-click');
+    handleMobileMenuToggle() {
+      this.$emit('toggle-mobile-menu');
+    },
+    handleCartClick(){
+      console.log('handleCartClick')
     }
   }
 };
