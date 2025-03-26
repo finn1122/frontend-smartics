@@ -114,7 +114,6 @@ export default {
       filteredProducts: [],
       sortedProducts: [],
       allCategories: [],
-      isLoading: false,
       error: null,
       category: [],
       currentView: 'grid',
