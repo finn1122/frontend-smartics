@@ -1,5 +1,5 @@
 <template>
-  <div class="tp-header-bottom tp-header-bottom-border d-none d-lg-block">
+    <div class="tp-header-bottom tp-header-bottom-border d-none d-lg-block">
     <div class="container">
       <div class="tp-mega-menu-wrapper p-relative">
         <div class="row align-items-center">
@@ -341,4 +341,5 @@ button {
   max-height: 400px;
   overflow-y: auto;
 }
+
 </style>

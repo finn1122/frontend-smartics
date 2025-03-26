@@ -2,7 +2,7 @@
   <header>
     <div class="tp-header-area p-relative z-index-11">
       <HeaderMain />
-      <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage && !isCategoryPage" />
+      <HeaderBottom v-if="!isLoginPage && !isRegisterPage && !isProfilePage && !isCategoryPage && !isSearchPage" />
     </div>
   </header>
 </template>
@@ -30,7 +30,10 @@ export default {
       return this.$route.path === "/Profile";
     },
     isCategoryPage() {
-      return this.$route.path.startsWith("/categoria/"); // Verifica si la ruta comienza con "/categoria/"
+      return this.$route.path.startsWith("/categoria"); // Verifica si la ruta comienza con "/categoria/"
+    },
+    isSearchPage() {
+      return this.$route.path.startsWith("/buscar"); // Verifica si la ruta comienza con "/categoria/"
     },
   },
 };

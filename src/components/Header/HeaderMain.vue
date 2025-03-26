@@ -98,5 +98,9 @@ a {
   margin-right: calc(var(--bs-gutter-x)* -.5);
   margin-top: calc(var(--bs-gutter-y)* -1);
 }
-
+.tp-header-style-primary {
+  box-shadow: 0 2px 6px #010f1c29;
+  position: relative;
+  z-index: 11;
+}
 </style>
