@@ -205,8 +205,9 @@ export default {
 
 .slider-image img {
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ajustar la imagen sin distorsionarla */
+  height: auto;
+  max-height: 350px; /* Alto máximo para pantallas grandes */
+  object-fit: contain; /* Mantiene la proporción sin recortar la imagen */
   animation: fadeInRight 1s ease-in-out;
 }
 
@@ -293,7 +294,7 @@ export default {
 /* Responsividad */
 @media (max-width: 992px) {
   .slider-item {
-    height: 600px; /* Alto más grande para pantallas medianas */
+    height: 80vh; /* Alto más grande para pantallas medianas */
   }
 
   .slider-title {
@@ -303,11 +304,14 @@ export default {
   .slider-subtitle {
     font-size: 1rem; /* Subtítulo más pequeño */
   }
+  .slider-image img {
+    max-height: 80vh; /* Limitar la altura de la imagen en pantallas pequeñas */
+  }
 }
 
 @media (max-width: 768px) {
   .slider-item {
-    height: 700px; /* Alto más grande para pantallas pequeñas */
+    height: 70vh; /* Alto más grande para pantallas pequeñas */
   }
 
   .slider-title {
@@ -316,6 +320,9 @@ export default {
 
   .slider-subtitle {
     font-size: 0.875rem; /* Subtítulo más pequeño */
+  }
+  .slider-image img {
+    max-height: 70vh; /* Limitar la altura de la imagen en pantallas pequeñas */
   }
 }
 </style>
