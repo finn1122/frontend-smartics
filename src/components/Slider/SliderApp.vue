@@ -28,8 +28,13 @@
                 class="col-lg-5 col-md-6"
                 :class="{ 'order-lg-1': slide.textPosition === 'left', 'order-lg-2': slide.textPosition === 'right' }"
             >
-              <div class="slider-content position-relative z-index-1">
-                <span v-if="slide.price" class="d-block mb-2">Starting at <b>{{ formatPrice(slide.price) }}</b></span>
+              <div
+                  class="slider-content position-relative z-index-1"
+                  :class="{ 'no-price': !slide.price }"
+              >
+                <span v-if="slide.price" class="slider-price d-block mb-2">
+                  Starting at <b>{{ formatPrice(slide.price) }}</b>
+                </span>
                 <h3 class="slider-title mb-3">{{ slide.title }}</h3>
                 <p class="slider-subtitle mb-4">
                   {{ slide.subtitle }}
@@ -41,6 +46,7 @@
                 </a>
               </div>
             </div>
+
             <!-- Imagen a la derecha o izquierda -->
             <div
                 class="col-lg-7 col-md-6"
@@ -165,6 +171,16 @@ export default {
 </script>
 
 <style scoped>
+.btn-primary {
+  background-color: var(--tp-theme-primary);
+  border: 0;
+  border-radius: 6px;
+  font-family: var(--tp-ff-roboto),sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 26px 7px;
+  margin-bottom: -1rem; /* Ajusta el valor según la separación deseada */
+}
 /* Estilos generales */
 .slider-area {
   position: relative;
@@ -313,9 +329,18 @@ export default {
   .slider-item {
     height: 70vh; /* Alto más grande para pantallas pequeñas */
   }
+  .slider-content {
+    padding-top: 1rem;
+    padding-bottom: 1rem; /* Reduce el espacio inferior del texto */
+  }
+  /* Si no hay precio, aumentar el margen superior del título */
+  .no-price .slider-title {
+    margin-top: 1.5rem; /* Ajusta según la separación que necesites */
+  }
 
-  .slider-title {
-    font-size: 1.5rem; /* Título más pequeño */
+  /* Reducir margen cuando sí hay precio */
+  .slider-price + .slider-title {
+    margin-top: 0;
   }
 
   .slider-subtitle {
@@ -323,6 +348,17 @@ export default {
   }
   .slider-image img {
     max-height: 70vh; /* Limitar la altura de la imagen en pantallas pequeñas */
+  }
+
+  .slider-image {
+    padding: 0; /* Elimina el padding extra */
+    margin-top: 0; /* Asegura que la imagen no tenga margen extra */
+    display: flex;
+    justify-content: center;
+  }
+
+  .slider-image img {
+    max-height: 60vh; /* Ajusta la imagen sin ocupar demasiado espacio */
   }
 }
 </style>
