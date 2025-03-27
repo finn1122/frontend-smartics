@@ -61,13 +61,13 @@ export default {
   },
   data() {
     return {
-      activeTab: 'nuevos', // Pestaña activa por defecto (debe coincidir con un valor en categoryPaths)
-      categoryPaths: ['tendencias','nuevos'], // Lista de categorías
+      activeTab: 'tendencias', // Pestaña activa por defecto (debe coincidir con un valor en categoryPaths)
+      categoryPaths: ['tendencias'], // Lista de categorías
       categories: {}, // Almacenar categorías dinámicamente
       products: {}, // Almacenar productos dinámicamente
       categoryLabels: { // Mapeo de nombres amigables para las categorías
         tendencias: 'Tendencias',
-        nuevos: 'Productos recien llegados',
+        //nuevos: 'Productos recien llegados',
       },
     };
   },

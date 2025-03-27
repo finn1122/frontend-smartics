@@ -7,7 +7,7 @@
           <HeaderLogo
             alt-text="Mi Tienda Online"
             :logo-height="70"
-            home-route="/inicio"
+            home-route="/"
         />
         </div>
 

@@ -5,6 +5,7 @@ import ConfirmEmail from '@/views/ConfirmEmail.vue'; // Ajusta la ruta según tu
 import HomeView from "@/views/HomeView.vue";
 import CategoryPage from "@/components/product-category/CategoryPage.vue";
 import SearchResults from "@/components/products/SearchResults.vue";
+import ProductDetails from "@/components/product-details/ProductDetails.vue";
 
 
 const routes = [
@@ -27,6 +28,12 @@ const routes = [
             search: route.query.search // Asegúrate que coincida
         })
     },
+    {
+        path: '/:category/:subcategory?/:productname',
+        name: 'product-details',
+        component: ProductDetails,
+        props: true
+    }
 ];
 
 const router = createRouter({
