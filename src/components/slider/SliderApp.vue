@@ -9,7 +9,7 @@
         :loop="true"
         :autoplay="{ delay: 3000, disableOnInteraction: true }"
         :pagination="{ clickable: true }"
-        :navigation="{ nextEl: '.Slider-button-next', prevEl: '.Slider-button-prev' }"
+        :navigation="{ nextEl: '.slider-button-next', prevEl: '.slider-button-prev' }"
         class="swiper-container"
     >
       <!-- Slides -->
@@ -238,7 +238,7 @@ export default {
   transition: opacity 0.6s ease; /* Transición más lenta (0.6 segundos) */
 }
 
-/* Mostrar botones al hacer hover sobre el Slider */
+/* Mostrar botones al hacer hover sobre el slider */
 .slider-area:hover .slider-navigation {
   opacity: 1;
 }

@@ -27,9 +27,9 @@
 import { ref } from 'vue';
 import { useNotificationStore } from "@/stores/notificationStore";
 import api from "@/services/api";
-import HeaderBottomCategoryDropdown from "./HeaderBottom/CategoryDropdown.vue";
-import HeaderBottomMainNavigation from "./HeaderBottom/MainNavigation.vue";
-import HeaderBottomContactInfo from "./HeaderBottom/ContactInfo.vue";
+import HeaderBottomCategoryDropdown from "@/components/header/header-bottom/CategoryDropdown.vue";
+import HeaderBottomMainNavigation from "@/components/header/header-bottom/MainNavigation.vue";
+import HeaderBottomContactInfo from "@/components/header/header-bottom/ContactInfo.vue";
 
 export default {
   name: "HeaderBottom",

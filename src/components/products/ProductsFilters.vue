@@ -6,7 +6,7 @@
       <div class="tp-shop-widget-content">
         <div class="tp-shop-widget-filter price__slider">
           <div id="slider-range" class="mb-10">
-            <!-- Renderizar el Slider solo si priceRange tiene valores válidos -->
+            <!-- Renderizar el slider solo si priceRange tiene valores válidos -->
             <vue-slider
                 v-if="isPriceRangeValid"
                 :key="sliderKey"
@@ -58,7 +58,7 @@
 
     <!-- Productos Mejor Valorados -->
     <!--<div class="tp-shop-widget mb-50">
-      <h3 class="tp-shop-widget-title">Top Rated Products</h3>
+      <h3 class="tp-shop-widget-title">Top Rated products</h3>
       <div class="tp-shop-widget-content">
         <div v-for="product in topRatedProducts" :key="product.id" class="tp-shop-widget-product-item d-flex align-items-center mb-3">
           <div class="tp-shop-widget-product-thumb me-3">
@@ -113,7 +113,7 @@ export default {
         // Agrega más productos aquí
       ],
       selectedPriceRange: [0, 0], // Inicializar con valores por defecto
-      sliderKey: 0, // Clave para forzar la reinicialización del Slider
+      sliderKey: 0, // Clave para forzar la reinicialización del slider
       filters: {
         inStock: false, // Nuevo filtro para productos en stock
         // Aquí puedes tener otros filtros como priceRange, categories, etc.
@@ -140,7 +140,7 @@ export default {
         if (this.isPriceRangeValid) {
           // Actualizar el rango de precios seleccionado
           this.selectedPriceRange = [newRange[0], newRange[1]];
-          // Forzar la reinicialización del Slider
+          // Forzar la reinicialización del slider
           this.sliderKey += 1;
         }
       },
@@ -365,7 +365,7 @@ a, button {
   color: inherit;
   outline: none;
 }
-/* Estilos personalizados para el Slider */
+/* Estilos personalizados para el slider */
 .vue-slider {
   margin: 20px 0;
 }

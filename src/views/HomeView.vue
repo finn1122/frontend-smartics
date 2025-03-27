@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import SliderApp from "@/components/Slider/SliderApp.vue";
-import ProductCategory from "@/components/ProductCategory/ProductCategory.vue";
-import FeatureSection from "@/components/Feature/FeatureSection.vue";
-import TrendingSection from "@/components/Trending/TrendingSection.vue";
+import SliderApp from "@/components/slider/SliderApp.vue";
+import ProductCategory from "@/components/product-category/ProductCategory.vue";
+import FeatureSection from "@/components/feature/FeatureSection.vue";
+import TrendingSection from "@/components/trending/TrendingSection.vue";
 
 export default {
   name: 'HomeView',
@@ -35,7 +35,7 @@ export default {
       return this.$route.path === "/register";
     },
     isProfilePage() {
-      return this.$route.path === "/Profile";
+      return this.$route.path === "/profile";
     },
   },
   async created() {},

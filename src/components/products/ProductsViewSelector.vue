@@ -75,10 +75,10 @@ export default {
     ResultsCounter,
     ViewToggle,
     ProductGridItem: defineAsyncComponent(() =>
-        import('./ProductGridItem.vue')
+        import('./ProductsGridItem.vue')
     ),
     ProductListRow: defineAsyncComponent(() =>
-        import('./ProductListRow.vue')
+        import('./ProductsListRow.vue')
     ),
   },
 

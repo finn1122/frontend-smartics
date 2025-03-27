@@ -17,9 +17,9 @@
 
 <script>
 import HeaderMain from "./HeaderMain";
-import HeaderBottom from "@/components/Header/HeaderBottom.vue";
-import HeaderBottom2 from "@/components/Header/HeaderBottom2.vue";
-import MobileMenu from "@/components/Header/partials/MobileMenu.vue";
+import HeaderBottom from "@/components/header/HeaderBottom.vue";
+import HeaderBottom2 from "@/components/header/HeaderBottom2.vue";
+import MobileMenu from "@/components/header/partials/MobileMenu.vue";
 
 export default {
   name: 'HeaderApp', // Nombre del componente con más de una palabra
@@ -43,7 +43,7 @@ export default {
       return this.$route.path === "/register";
     },
     isProfilePage() {
-      return this.$route.path === "/Profile";
+      return this.$route.path === "/profile";
     },
     isCategoryPage() {
       return this.$route.path.startsWith("/categoria"); // Verifica si la ruta comienza con "/categoria/"

@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import ProductFilters from "@/components/Product/ProductFilters.vue";
-import ProductViewSelector from "@/components/Product/ProductViewSelector.vue";
+import ProductFilters from "@/components/products/ProductsFilters.vue";
+import ProductViewSelector from "@/components/products/ProductsViewSelector.vue";
 import api from "@/services/api"; // Importar la instancia de API
 import { useNotificationStore } from "@/stores/notificationStore";
 import CommonBreadcrumb from "@/components/common/CommonBreadcrumb.vue";

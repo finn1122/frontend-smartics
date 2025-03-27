@@ -62,9 +62,9 @@
 
 <script>
 import HeaderSearch from "./partials/HeaderSearch.vue";
-import HeaderLogin from "@/components/Header/partials/HeaderLogin.vue";
-import HeaderActions from "@/components/Header/partials/HeaderActions.vue";
-import HeaderLogo from "@/components/Header/partials/HeaderLogo.vue";
+import HeaderLogin from "@/components/header/partials/HeaderLogin.vue";
+import HeaderActions from "@/components/header/partials/HeaderActions.vue";
+import HeaderLogo from "@/components/header/partials/HeaderLogo.vue";
 
 export default {
   name: "HeaderMain",

@@ -2,7 +2,7 @@
   <div class="tp-shop-main-wrapper">
     <div class="search-results-container">
       <CommonBreadcrumb
-          :title="search ? `Results for: '${search}'` : 'Search Products'"
+          :title="search ? `Results for: '${search}'` : 'Search products'"
           home-text="Search Products"
       >
         <template #breadcrumb-items>
@@ -40,7 +40,7 @@
                   </div>
                 </div>
 
-                <!-- Product Grid -->
+                <!-- products Grid -->
                 <div class="tp-shop-items-wrapper tp-shop-item-primary">
                   <div>
                     <!-- Vista de cuadrícula -->
@@ -68,7 +68,7 @@
                   </div>
                 </div>
 
-                <!-- End of Products Message -->
+                <!-- End of products Message -->
                 <div class="text-center" v-if="filteredProducts.length > 0">
                   <p class="btn-loadmore-text">End Of Products</p>
                 </div>
@@ -88,8 +88,8 @@
 
 
 <script>
-import ProductGridItem from '@/components/Product/ProductGridItem.vue';
-import ProductListRow from '@/components/Product/ProductListRow.vue';
+import ProductGridItem from '@/components/products/ProductsGridItem.vue';
+import ProductListRow from '@/components/products/ProductsListRow.vue';
 import api from '@/services/api';
 import { useNotificationStore } from "@/stores/notificationStore";
 import CommonBreadcrumb from "@/components/common/CommonBreadcrumb.vue";

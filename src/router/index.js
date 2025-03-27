@@ -3,8 +3,8 @@ import LoginView from '@/views/LoginView.vue';      // Nombre actualizado
 import RegisterView from "@/views/RegisterView.vue";        // Nombre actualizado
 import ConfirmEmail from '@/views/ConfirmEmail.vue'; // Ajusta la ruta según tu estructura
 import HomeView from "@/views/HomeView.vue";
-import CategoryPage from "@/components/ProductCategory/CategoryPage.vue";
-import SearchResults from "@/components/Product/SearchResults.vue";
+import CategoryPage from "@/components/product-category/CategoryPage.vue";
+import SearchResults from "@/components/products/SearchResults.vue";
 
 
 const routes = [

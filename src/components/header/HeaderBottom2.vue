@@ -51,10 +51,10 @@
   </div>
 </template>
 <script>
-import HeaderSearch2 from "@/components/Header/partials/HeaderSearch2.vue";
-import HeaderLogo from "@/components/Header/partials/HeaderLogo.vue";
-import HeaderActions from "@/components/Header/partials/HeaderActions.vue";
-import HeaderBottomMainNavigation from "@/components/Header/HeaderBottom/MainNavigation.vue";
+import HeaderSearch2 from "@/components/header/partials/HeaderSearch2.vue";
+import HeaderLogo from "@/components/header/partials/HeaderLogo.vue";
+import HeaderActions from "@/components/header/partials/HeaderActions.vue";
+import HeaderBottomMainNavigation from "@/components/header/header-bottom/MainNavigation.vue";
 
 export default {
   name: 'HeaderBottom2',
