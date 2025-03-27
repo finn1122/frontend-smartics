@@ -57,7 +57,7 @@
     </div>
 
     <!-- Productos Mejor Valorados -->
-    <div class="tp-shop-widget mb-50">
+    <!--<div class="tp-shop-widget mb-50">
       <h3 class="tp-shop-widget-title">Top Rated Products</h3>
       <div class="tp-shop-widget-content">
         <div v-for="product in topRatedProducts" :key="product.id" class="tp-shop-widget-product-item d-flex align-items-center mb-3">
@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 <script>
