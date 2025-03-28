@@ -1,66 +1,72 @@
 <template>
   <div class="tp-product-list">
     <div class="tp-product-item transition-3">
-    <div class="tp-product-thumb p-relative fix m-img">
-      <a v-if="product.gallery && product.gallery.length > 0" :href="product.gallery[0].imageUrl">
-        <img :src="product.gallery[0].imageUrl" :alt="product.name">
-      </a>
-      <!-- Mostrar "Sin inventario" en el espacio del badge cuando quantity es 0 -->
-      <div class="tp-product-badge" v-if="!hasInventory">
-        <span class="product-no-stock">Sin inventario</span>
+      <div class="tp-product-thumb p-relative fix m-img">
+        <a v-if="product.gallery && product.gallery.length > 0" :href="product.gallery[0].imageUrl">
+          <img :src="product.gallery[0].imageUrl" :alt="product.name">
+        </a>
+        <!-- Mostrar "Sin inventario" en el espacio del badge cuando quantity es 0 -->
+        <div class="tp-product-badge" v-if="!hasInventory">
+          <span class="product-no-stock">Sin inventario</span>
+        </div>
+        <!-- Mostrar el badge normal si hay inventario y hay un badge definido -->
+        <div class="tp-product-badge" v-else-if="product.badge">
+          <span class="product-hot">{{ product.badge }}</span>
+        </div>
+        <div v-if="hasInventory" class="tp-product-action">
+          <button type="button" class="tp-product-action-btn tp-product-add-cart-btn" :disabled="!hasInventory">
+            <div class="icon-rectangle">
+              <font-awesome-icon :icon="['fas', 'cart-shopping']" />
+              <span class="tp-product-tooltip">Add to Cart</span>
+            </div>
+          </button>
+          <button type="button" class="tp-product-action-btn tp-product-quick-view-btn" :disabled="!hasInventory">
+            <div class="icon-rectangle">
+              <font-awesome-icon :icon="['fas', 'eye']" />
+              <span class="tp-product-tooltip">Quick View</span>
+            </div>
+          </button>
+          <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" :disabled="!hasInventory">
+            <div class="icon-rectangle">
+              <font-awesome-icon :icon="['fas', 'heart']" />
+              <span class="tp-product-tooltip">Add To Wishlist</span>
+            </div>
+          </button>
+        </div>
       </div>
-      <!-- Mostrar el badge normal si hay inventario y hay un badge definido -->
-      <div class="tp-product-badge" v-else-if="product.badge">
-        <span class="product-hot">{{ product.badge }}</span>
-      </div>
-      <div v-if="hasInventory" class="tp-product-action">
-        <button type="button" class="tp-product-action-btn tp-product-add-cart-btn" :disabled="!hasInventory">
-          <div class="icon-rectangle">
-            <font-awesome-icon :icon="['fas', 'cart-shopping']" />
-            <span class="tp-product-tooltip">Add to Cart</span>
+      <div class="tp-product-content">
+        <div class="tp-product-category">
+          <!-- Mostrar categoría o tag según lo que esté disponible -->
+          <a v-if="category" :href="`/category/${category.path || category.id}`">
+            {{ category.name }}
+          </a>
+          <a v-else-if="tag" :href="`/tag/${tag.id}`">
+            {{ tag.name }}
+          </a>
+        </div>
+        <h3 class="tp-product-title">
+          <a :href="`/product/${product.id}`">{{ product.name }}</a>
+        </h3>
+        <div class="tp-product-rating d-flex align-items-center">
+          <div class="tp-product-rating-icon">
+            <span v-if="!product.rating">No rating available</span>
+            <span v-else v-for="(star, index) in product.rating" :key="index">
+              <font-awesome-icon :icon="star === 0.5 ? ['fas', 'star-half-stroke'] : ['fas', 'star']" />
+            </span>
           </div>
-        </button>
-        <button type="button" class="tp-product-action-btn tp-product-quick-view-btn" :disabled="!hasInventory">
-          <div class="icon-rectangle">
-            <font-awesome-icon :icon="['fas', 'eye']" />
-            <span class="tp-product-tooltip">Quick View</span>
+          <div class="tp-product-rating-text">
+            <span>({{ product.reviews || 0 }} Review)</span>
           </div>
-        </button>
-        <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" :disabled="!hasInventory">
-          <div class="icon-rectangle">
-            <font-awesome-icon :icon="['fas', 'heart']" />
-            <span class="tp-product-tooltip">Add To Wishlist</span>
+        </div>
+        <div class="tp-product-price-wrapper">
+          <div v-if="product.bestPrice?.salePrice">
+            <span class="tp-product-price old-price">${{ product.bestPrice.salePrice }}</span>
+            <span class="tp-product-price new-price">${{ product.bestPrice.newSalePrice }}</span>
           </div>
-        </button>
+          <span v-else class="tp-product-price new-price">${{ product.bestPrice?.newSalePrice || '0.00' }}</span>
+        </div>
       </div>
     </div>
-    <div class="tp-product-content">
-      <div class="tp-product-category">
-        <a :href="`/category/${category}`">{{ category?.name }}</a>
-      </div>
-      <h3 class="tp-product-title">
-        <a :href="`/product/${product.id}`">{{ product.name }}</a>
-      </h3>
-      <div class="tp-product-rating d-flex align-items-center">
-        <div class="tp-product-rating-icon">
-          <span v-if="!product.rating">No rating available</span>
-          <span v-else v-for="(star, index) in product.rating" :key="index">
-            <font-awesome-icon :icon="star === 0.5 ? ['fas', 'star-half-stroke'] : ['fas', 'star']" />
-          </span>
-        </div>
-        <div class="tp-product-rating-text">
-          <span>({{ product.reviews || 0 }} Review)</span>
-        </div>
-      </div>
-      <div class="tp-product-price-wrapper">
-        <div v-if="product.bestPrice?.salePrice">
-          <span class="tp-product-price old-price">${{ product.bestPrice.salePrice }}</span>
-          <span class="tp-product-price new-price">${{ product.bestPrice.newSalePrice }}</span>
-        </div>
-        <span v-else class="tp-product-price new-price">${{ product.bestPrice?.newSalePrice || '0.00' }}</span>
-      </div>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -70,7 +76,13 @@ export default {
   props: {
     category: {
       type: Object,
-      required: true,
+      required: false,
+      default: null
+    },
+    tag: {
+      type: Object,
+      required: false,
+      default: null
     },
     product: {
       type: Object,
@@ -83,6 +95,12 @@ export default {
       return this.product.bestPrice?.quantity > 0;
     },
   },
+  created() {
+    // Validación para asegurar que al menos uno de los dos (category o tag) esté presente
+    if (!this.category && !this.tag) {
+      console.warn('ProductGridItem: Se requiere al menos una categoría o un tag');
+    }
+  }
 };
 </script>
 <style scoped>

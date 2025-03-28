@@ -202,5 +202,29 @@ export default {
             throw new Error(error.response?.data?.message || "Error al obtener los sliders");
         }
     },
+    // En tu archivo api.js - agregar estos métodos
+    async getActiveTags() {
+        try {
+            const response = await api.get(`/tags`);
+            if(response.data.success){
+                return response.data.data;
+            }
+        } catch (error) {
+            console.error("❌ Error al obtener tags activas:", error);
+            throw new Error(error.response?.data?.message || "Error al obtener tags activas");
+        }
+    },
+
+    async getProductsByTag(tagId) {
+        try {
+            const response = await api.get(`/tags/${tagId}/products`);
+            if(response.data.success){
+                return response.data;
+            }
+        } catch (error) {
+            console.error("❌ Error al obtener productos por tag:", error);
+            throw new Error(error.response?.data?.message || "Error al obtener productos por tag");
+        }
+    },
 
 };

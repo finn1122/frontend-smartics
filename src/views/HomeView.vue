@@ -11,7 +11,7 @@
 import SliderApp from "@/components/slider/SliderApp.vue";
 import ProductCategory from "@/components/product-category/ProductCategory.vue";
 import FeatureSection from "@/components/feature/FeatureSection.vue";
-import TrendingSection from "@/components/trending/TrendingSection.vue";
+import TrendingSection from "@/components/tags/TagsSection.vue";
 
 export default {
   name: 'HomeView',
