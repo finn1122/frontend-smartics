@@ -52,6 +52,7 @@
 import api from "@/services/api";
 import { useNotificationStore } from '@/stores/notificationStore';
 import ProductGridItem from "@/components/products/ProductsGridItem.vue";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: 'TagsSection',
@@ -60,10 +61,11 @@ export default {
   },
   data() {
     return {
-      activeTab: null, // ID de la tag activa
-      tags: [], // Lista de tags disponibles
-      products: {}, // Almacenar productos por tag
-      loading: false
+      activeTab: null,
+      tags: [],
+      products: {},
+      loading: false,
+      loader: useLoaderStore()
     };
   },
   computed: {
@@ -81,23 +83,19 @@ export default {
   methods: {
     setActiveTab(tagId) {
       this.activeTab = tagId;
-      // Cargar productos si no están ya cargados
       if (!this.products[tagId]) {
         this.loadProductsForTag(tagId);
       }
     },
     async loadTagsAndProducts() {
-      this.$root.loading = true;
+      this.loader.show() // Aquí usas loader directamente desde data
       const notificationStore = useNotificationStore();
 
       try {
-        // Obtener tags activas
         this.tags = await api.getActiveTags();
 
         if (this.tags.length > 0) {
-          // Establecer primera tag como activa
           this.activeTab = this.tags[0].id;
-          // Cargar productos para la primera tag
           await this.loadProductsForTag(this.activeTab);
         }
       } catch (error) {
@@ -107,16 +105,15 @@ export default {
             "error"
         );
       } finally {
-        this.$root.loading = false;
+        this.loader.hide() // Aquí también
       }
     },
     async loadProductsForTag(tagId) {
-      this.$root.loading = true;
+      this.loader.show()
       const notificationStore = useNotificationStore();
 
       try {
         const response = await api.getProductsByTag(tagId);
-        // Reemplazar this.$set con asignación reactiva directa
         this.products = {
           ...this.products,
           [tagId]: response.products || []
@@ -128,12 +125,13 @@ export default {
             "error"
         );
       } finally {
-        this.$root.loading = false;
+        this.loader.hide()
       }
     }
   }
 };
 </script>
+
 <style scoped>
 /* Estilos generales para los productos */
 .tp-product-area {

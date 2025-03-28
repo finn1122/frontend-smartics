@@ -11,18 +11,18 @@
 import AppHeader from '@/components/header/HeaderApp.vue';
 import AppNotifications from '@/components/AppNotifications.vue';
 import AppLoader from "@/components/AppLoader.vue";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: 'App',
   components: {
     AppLoader,AppHeader,AppNotifications
   },
-  data() {
-    return {
-      categories: [],
-      isLoading: false,
-    };
-  },
+  computed: {
+    isLoading() {
+      return useLoaderStore().isLoading
+    }
+  }
 }
 </script>
 

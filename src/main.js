@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia'; // Importa Pinia
 import App from './App.vue';
-import AppLoader from '@/components/AppLoader.vue';
 import router from './router';
 
 // Importa Font Awesome
@@ -62,9 +61,6 @@ app.use(router);
 
 // Registra el componente FontAwesomeIcon globalmente
 app.component('font-awesome-icon', FontAwesomeIcon);
-
-// Registra el componente AppLoader
-app.component('AppLoader', AppLoader);
 
 // Inyectar el store en la instancia de Vue
 app.config.globalProperties.$notificationStore = useNotificationStore();
