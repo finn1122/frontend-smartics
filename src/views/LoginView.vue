@@ -63,6 +63,8 @@ import LoginForm from '@/components/auth/LoginForm.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useAuthStore } from "@/stores/authStore";
+import { useLoaderStore } from '@/stores/loaderStore'
+
 
 export default {
   name: 'LoginView',
@@ -76,7 +78,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false
+      loader: useLoaderStore()
     };
   },
   created() {
@@ -90,7 +92,7 @@ export default {
   },
   methods: {
     async handleLogin(formData) {
-      this.$root.isLoading = true; // Activa el loader
+      this.loader.show() // Aquí usas loader directamente desde data
 
       try {
         const response = await api.login(formData); // Llama a la función login
@@ -120,7 +122,7 @@ export default {
         // Error inesperado
         this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
-        this.$root.isLoading = false; // Desactiva el loader
+        this.loader.hide() // Aquí usas loader directamente desde data
       }
     },
   }

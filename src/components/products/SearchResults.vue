@@ -95,6 +95,7 @@ import { useNotificationStore } from "@/stores/notificationStore";
 import CommonBreadcrumb from "@/components/common/CommonBreadcrumb.vue";
 import ResultsCounter from "@/components/common/ResultsCounter.vue";
 import SortDropdown from "@/components/common/SortDropdown.vue";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: "SearchResults",
@@ -118,6 +119,7 @@ export default {
       category: [],
       currentView: 'grid',
       currentSort: 'default', // Usamos currentSort consistentemente
+      loader: useLoaderStore()
     };
   },
   props: {
@@ -148,7 +150,7 @@ export default {
   },
   methods: {
     async executeSearch() {
-      this.$root.isLoading = true;
+      this.loader.show()
       this.error = null;
 
       try {
@@ -169,12 +171,12 @@ export default {
         console.error("Error en búsqueda:", error);
         this.error = error.message || "Error al buscar productos";
       } finally {
-        this.$root.isLoading = false;
+        this.loader.hide()
       }
     },
 
     async loadCategoryData() {
-      this.$root.isLoading = true;
+      this.loader.show()
       try {
         this.category = await api.getCategoryByPath(this.path);
       } catch (error) {
@@ -184,7 +186,7 @@ export default {
             "error"
         );
       } finally {
-        this.$root.isLoading = false;
+        this.loader.hide()
       }
     },
 

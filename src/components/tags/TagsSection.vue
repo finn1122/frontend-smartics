@@ -64,7 +64,6 @@ export default {
       activeTab: null,
       tags: [],
       products: {},
-      loading: false,
       loader: useLoaderStore()
     };
   },

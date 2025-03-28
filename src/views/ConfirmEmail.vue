@@ -49,13 +49,15 @@
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useAuthStore } from "@/stores/authStore";
+import { useLoaderStore } from '@/stores/loaderStore'
+
 export default {
   name: 'ConfirmEmail',
   components: {},
   data() {
     return {
       email: '', // Obtén el email de la URL
-      isLoading: false,
+      loader: useLoaderStore()
     };
   },
   setup() {
@@ -77,7 +79,7 @@ export default {
   },
   methods: {
     async resendConfirmationEmail() {
-      this.$root.isLoading = true; // Activa el loader
+      this.loader.show() // Aquí usas loader directamente desde data
 
       try {
         // Realiza la solicitud para reenviar el correo de confirmación
@@ -99,7 +101,7 @@ export default {
           this.notificationStore.showNotification("Error de conexión. Inténtalo de nuevo más tarde.", 'error');
         }
       } finally {
-        this.$root.isLoading = false; // Desactiva el loader
+        this.loader.hide() // Aquí usas loader directamente desde data
       }
     },
   },

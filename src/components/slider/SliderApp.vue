@@ -96,13 +96,6 @@
       <div v-if="apiSlides.length > 1" class="slider-pagination swiper-pagination"></div>
     </swiper>
 
-    <!-- Loading State -->
-    <div v-if="loading" class="slider-loading text-center py-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-
     <!-- Error State -->
     <div v-if="error" class="slider-error text-center py-5">
       <div class="alert alert-danger">
@@ -117,6 +110,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import api from "@/services/api";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: "SliderApp",
@@ -127,7 +121,7 @@ export default {
   data() {
     return {
       apiSlides: [],
-      loading: false,
+      loader: useLoaderStore(),
       error: null
     };
   },
@@ -136,7 +130,7 @@ export default {
   },
   methods: {
     async fetchSliders() {
-      this.$root.isLoading = true; // Activar el loader
+      this.loader.show() // Activar el loader
       this.error = null;
 
       try {
@@ -148,7 +142,7 @@ export default {
             "error"
         );
       } finally {
-        this.$root.isLoading = false; // Activar el loader
+        this.loader.hide() // Activar el loader
       }
     },
     isHexColor(color) {

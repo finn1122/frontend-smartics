@@ -33,6 +33,8 @@ import ProductViewSelector from "@/components/products/ProductsViewSelector.vue"
 import api from "@/services/api"; // Importar la instancia de API
 import { useNotificationStore } from "@/stores/notificationStore";
 import CommonBreadcrumb from "@/components/common/CommonBreadcrumb.vue";
+import { useLoaderStore } from '@/stores/loaderStore'
+
 
 export default {
   name: "CategoryPage",
@@ -48,6 +50,8 @@ export default {
       filteredProducts: [], // Lista de productos filtrados
       priceRange: [0, 0], // Rango de precios dinámico (filtro independiente)
       activeFilters: {}, // Filtros activos (se llena dinámicamente)
+      loader: useLoaderStore()
+
     };
   },
   computed: {
@@ -68,7 +72,7 @@ export default {
   },
   methods: {
     async loadCategoryData() {
-      this.$root.isLoading = true; // Activar el loader
+      this.loader.show() // Activar el loader
 
       try {
         // Obtener los detalles de la categoría por su path
@@ -82,12 +86,12 @@ export default {
             "error"
         );
       } finally {
-        this.$root.isLoading = false; // Desactivar el loader
+        this.loader.hide() // Desactivar el loader
       }
     },
     async fetchProductsForCategory(categoryId) {
       try {
-        this.$root.isLoading = true; // Desactivar el loader
+        this.loader.show() // Desactivar el loader
         this.products = await api.getProductsByCategory(categoryId);
         this.filteredProducts = this.products; // Inicializar los productos filtrados
         this.calculatePriceRange(); // Calcular el rango de precios
@@ -95,7 +99,7 @@ export default {
         console.error("❌ Error al cargar los productos:", error);
         throw new Error(error.response?.data?.message || "Error al cargar los productos");
       } finally {
-        this.$root.isLoading = false; // Desactivar el loader
+        this.loader.hide() // Desactivar el loader
       }
     },
     // Método para calcular el rango de precios

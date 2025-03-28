@@ -26,21 +26,21 @@
 
 <script>
 import api from "@/services/api";
-import {useNotificationStore} from "@/stores/notificationStore";
+import { useNotificationStore } from "@/stores/notificationStore";
+import { useLoaderStore } from "@/stores/loaderStore";
 
 export default {
   name: "ProductCategory",
   setup() {
     const notificationStore = useNotificationStore();
-    return { notificationStore };
+    const loader = useLoaderStore(); // Mueve esto a setup()
+
+    // Puedes devolver el loader aquí si lo necesitas en el template
+    return { notificationStore, loader };
   },
   data() {
     return {
-      categories: {
-        type: Array,
-        required: false,
-        default: () => [], // Define un valor por defecto
-      },
+      categories: [], // Remueve loader de aquí
       // Categorías por defecto
       defaultCategories: [
         {
@@ -87,18 +87,17 @@ export default {
   },
   methods: {
     async handleCategories() {
-      this.$root.isLoading = true; // Accede al loader global en App.vue
+      this.loader.show(); // Ahora puedes acceder a loader desde setup
 
       try {
         const response = await api.getTopCategories();
         if (response.length > 0) {
           this.categories = response;
-          console.log(this.categories)
         }
       } catch (error) {
         this.notificationStore.showNotification(error.message || "Error inesperado", "error");
       } finally {
-        this.$root.isLoading = false; // Desactiva el loader global
+        this.loader.hide(); // Desactiva el loader global
       }
     },
     goToCategory(category) {

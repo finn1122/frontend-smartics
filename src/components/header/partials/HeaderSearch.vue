@@ -42,6 +42,7 @@
 <script>
 import api from "@/services/api";
 import { useNotificationStore } from "@/stores/notificationStore";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: "HeaderSearch",
@@ -55,6 +56,7 @@ export default {
       selectedCategory: "",
       isDropdownOpen: false,
       allCategories: [],
+      loader: useLoaderStore()
     };
   },
   async created() {
@@ -93,14 +95,14 @@ export default {
       this.isDropdownOpen = false;
     },
     async loadAllCategoriesData() {
-      this.$root.isLoading = true;
+      this.loader.show() // Aquí usas loader directamente desde data
       try {
         this.allCategories = await api.getAllCategories();
       } catch (error) {
         console.error("❌ Error al cargar la categoría:", error);
         this.notificationStore.showNotification(error.message || "Error al cargar la categoría", "error");
       } finally {
-        this.$root.isLoading = false;
+        this.loader.hide()
       }
     },
     closeDropdownOnClickOutside(event) {

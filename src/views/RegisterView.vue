@@ -61,6 +61,7 @@ import RegisterForm from '@/components/auth/RegisterForm.vue';
 import api from '@/services/api';
 import { useNotificationStore } from '@/stores/notificationStore';
 import {useAuthStore} from "@/stores/authStore";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: 'RegisterApp',
@@ -74,7 +75,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
+      loader: useLoaderStore()
     };
   },
   created() {
@@ -85,7 +86,7 @@ export default {
   },
   methods: {
     async handleRegister(formData) {
-      this.$root.isLoading = true;
+      this.loader.show()
       try {
         const response = await api.register(formData);
         console.log("Respuesta del servidor:", response); // Depuración
@@ -111,7 +112,7 @@ export default {
             "error" // <-- Usa "error" para errores inesperados
         );
       } finally {
-        this.$root.isLoading = false;
+        this.loader.hide()
       }
     },
   },

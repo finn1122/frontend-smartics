@@ -6,6 +6,7 @@ import HomeView from "@/views/HomeView.vue";
 import CategoryPage from "@/components/product-category/CategoryPage.vue";
 import SearchResults from "@/components/products/SearchResults.vue";
 import ProductDetails from "@/components/product-details/ProductDetails.vue";
+import ProfileView from "@/views/ProfileView.vue";
 
 
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
     { path: '/login', component: LoginView },
     { path: '/register', component: RegisterView},
     { path: '/confirm-email', component: ConfirmEmail},
+    { path: '/profile', component: ProfileView},
     {
         path: '/categoria/:path', // Ruta dinámica con el parámetro :path
         name: 'CategoryPage', // Nombre de la ruta (debe coincidir con el que usas en this.$router.push)

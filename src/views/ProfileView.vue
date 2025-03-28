@@ -21,6 +21,7 @@
 import ProfileTabs from '@/components/profile/ProfileTabs.vue';
 import {useAuthStore} from "@/stores/authStore";
 import api from "@/services/api";
+import { useLoaderStore } from '@/stores/loaderStore'
 
 export default {
   name: 'ProfileView',
@@ -30,11 +31,12 @@ export default {
   data() {
     return {
       user: null,
+      loader: useLoaderStore()
     };
   },
   methods: {
     async fetchUser() {
-      this.$root.isLoading = true;
+      this.loader.show() // Aquí usas loader directamente desde data
       const authStore = useAuthStore(); // Obtener el store
       const userId = authStore.user?.id; // Obtener el userId desde el store
 
@@ -43,7 +45,6 @@ export default {
         return;
       }
 
-      this.$root.isLoading = true; // Activar el indicador de carga
       this.error = false; // Reiniciar el estado de error
 
       try {
@@ -60,12 +61,12 @@ export default {
         this.error = true;
         this.errorMessage = "Error inesperado al obtener el usuario"; // Manejar errores inesperados
       } finally {
-        this.$root.isLoading = false; // Desactivar el indicador de carga
+        this.loader.hide() // Aquí usas loader directamente desde data
       }
     },
     async handleLogout() {
       console.log('handleLogout')
-      this.$root.isLoading = true; // Activar el indicador de carga
+      this.loader.show() // Aquí usas loader directamente desde data
       this.error = false; // Reiniciar el estado de error
 
       try {
@@ -81,7 +82,7 @@ export default {
         this.error = true;
         this.errorMessage = "Error inesperado al obtener el usuario"; // Manejar errores inesperados
       } finally {
-        this.$root.isLoading = false; // Desactivar el indicador de carga
+        this.loader.hide() // Aquí usas loader directamente desde data
       }
     },
   },

@@ -81,6 +81,8 @@ import VueSlider from 'vue-slider-component';
 import 'vue-slider-component/theme/default.css';
 import api from "@/services/api";
 import {useNotificationStore} from "@/stores/notificationStore";
+import { useLoaderStore } from '@/stores/loaderStore'
+
 
 export default {
   components: {
@@ -118,6 +120,7 @@ export default {
         inStock: false, // Nuevo filtro para productos en stock
         // Aquí puedes tener otros filtros como priceRange, categories, etc.
       },
+      loader: useLoaderStore()
     };
   },
   computed: {
@@ -169,7 +172,7 @@ export default {
       this.$emit("filter-products-status", this.filters);
     },
     async loadAllCategoriesData() {
-      this.$root.isLoading = true; // Activar el loader
+      this.loader.show() // Activar el loader
 
       try {
         // Obtener los detalles de la categoría por su path
@@ -186,7 +189,7 @@ export default {
             "error"
         );
       } finally {
-        this.$root.isLoading = false; // Desactivar el loader
+        this.loader.hide() // Desactivar el loader
       }
     },
     // Método para marcar la categoría que coincide con this.category
@@ -205,7 +208,7 @@ export default {
     },
     // Método para cambiar la categoría seleccionada
     async toggleCategory(category) {
-      this.$root.isLoading = true; // Activar el loader
+      this.loader.show() // Activar el loader
 
       try {
         // Desmarcar todas las categorías
@@ -229,7 +232,7 @@ export default {
             "error"
         );
       } finally {
-        this.$root.isLoading = false; // Desactivar el loader
+        this.loader.hide() // Desactivar el loader
       }
     },
   },
