@@ -139,7 +139,7 @@ export default {
     },
     async getCategoryByPath(path) {
         try {
-            const response = await api.get(`/shop-categories/${path}`);
+            const response = await api.get(`/categories/by-path/${path}`);
             return  response.data;
         } catch (error) {
             console.error("❌ Error al obtener la categoría por path:", error);
@@ -148,7 +148,7 @@ export default {
     },
     async getProductsByCategory(categoryId) {
         try {
-            const response = await api.get(`/shop-categories/${categoryId}/products`);
+            const response = await api.get(`/categories/${categoryId}/products`);
             return  response.data;
         } catch (error) {
             console.error("❌ Error al obtener los products de la categoria:", error);
@@ -214,7 +214,6 @@ export default {
             throw new Error(error.response?.data?.message || "Error al obtener tags activas");
         }
     },
-
     async getProductsByTag(tagId) {
         try {
             const response = await api.get(`/tags/${tagId}/products`);

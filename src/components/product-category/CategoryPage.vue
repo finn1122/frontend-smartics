@@ -92,8 +92,8 @@ export default {
     async fetchProductsForCategory(categoryId) {
       try {
         this.loader.show() // Desactivar el loader
-        this.products = await api.getProductsByCategory(categoryId);
-        this.filteredProducts = this.products; // Inicializar los productos filtrados
+        const response = await api.getProductsByCategory(categoryId);
+        this.filteredProducts = response.products; // Inicializar los productos filtrados
         this.calculatePriceRange(); // Calcular el rango de precios
       } catch (error) {
         console.error("❌ Error al cargar los productos:", error);
