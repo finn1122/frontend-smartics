@@ -110,7 +110,8 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import "swiper/swiper-bundle.css";
 import api from "@/services/api";
-import { useLoaderStore } from '@/stores/loaderStore'
+import { useLoaderStore } from "@/stores/loaderStore";
+import { useNotificationStore } from "@/stores/notificationStore";
 
 export default {
   name: "SliderApp",
@@ -122,6 +123,7 @@ export default {
     return {
       apiSlides: [],
       loader: useLoaderStore(),
+      notificationStore: useNotificationStore(), // ✅ Agregar aquí para que esté disponible en methods
       error: null
     };
   },
@@ -130,7 +132,7 @@ export default {
   },
   methods: {
     async fetchSliders() {
-      this.loader.show() // Activar el loader
+      this.loader.show(); // Activar el loader
       this.error = null;
 
       try {
@@ -142,17 +144,17 @@ export default {
             "error"
         );
       } finally {
-        this.loader.hide() // Activar el loader
+        this.loader.hide(); // Desactivar el loader
       }
     },
     isHexColor(color) {
       return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
     },
     formatPrice(price) {
-      if (!price) return '';
-      return new Intl.NumberFormat('es-MX', {
-        style: 'currency',
-        currency: 'MXN'
+      if (!price) return "";
+      return new Intl.NumberFormat("es-MX", {
+        style: "currency",
+        currency: "MXN",
       }).format(price);
     }
   },

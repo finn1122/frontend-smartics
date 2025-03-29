@@ -147,11 +147,22 @@ export default {
   width: 180px;
 }
 
+.tp-product-category-thumb img {
+  max-height: 70%; /* Establece la altura máxima como porcentaje del contenedor */
+  max-width: 70%; /* También limita el ancho para mantener la proporción */
+  object-fit: contain; /* Mantiene la relación de aspecto */
+  display: block; /* Elimina espacio extra debajo de la imagen */
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px),
 only screen and (min-width: 992px) and (max-width: 1199px) {
   .tp-product-category-thumb a {
     height: 150px;
     width: 150px;
+  }
+  .tp-product-category-thumb img {
+    max-height: 75%; /* Puedes ajustar este valor para dispositivos más pequeños */
+    max-width: 75%;
   }
 }
 

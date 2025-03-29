@@ -130,7 +130,7 @@ export default {
     },
     async getTopCategories() {
         try {
-            const response = await api.get(`/shop-categories/top`);
+            const response = await api.get(`/categories/top`);
             return  response.data;
         } catch (error) {
             console.error("❌ Error al obtener el categorias top:", error);
